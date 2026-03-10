@@ -1,0 +1,1185 @@
+/* =========================================
+   1. CSS VARIABLES & THEME DEFINITIONS
+   ========================================= */
+:root {
+    /* Base Color Palette */
+    --color-pure-black: #000000;
+    --color-void-black: #050505;
+    --color-charcoal: #121212;
+    --color-iron: #2a2a2a;
+    --color-dust: #e0e0e0;
+    --color-bone: #dcd3b6;
+    --color-blood: #5e1111;
+    --color-rust: #8b4513;
+    --color-bronze: #cd7f32;
+    --color-gold-tarnished: #b89947;
+    
+    /* Timeline 1998 (Archivist) - Cold, stark, degraded */
+    --bg-1998-base: #0a0a0c;
+    --filter-1998-contrast: 1.2;
+    --filter-1998-brightness: 0.6;
+    --filter-1998-saturation: 0.2;
+    --ui-accent-1998: #4a5d6e;
+    
+    /* Timeline 1952 (Child) - Warm, sepia, soft */
+    --bg-1952-base: #1f1b14;
+    --filter-1952-contrast: 1.1;
+    --filter-1952-brightness: 0.85;
+    --filter-1952-saturation: 0.8;
+    --filter-1952-sepia: 0.6;
+    --ui-accent-1952: #7a5c43;
+    
+    /* UI Overlays */
+    --ui-panel-bg: rgba(10, 10, 12, 0.92);
+    --ui-panel-border: rgba(255, 255, 255, 0.15);
+    --ui-modal-bg: rgba(20, 20, 22, 0.98);
+    --ui-text-primary: #d3d3d3;
+    --ui-text-secondary: #888888;
+    
+    /* Typography */
+    --font-primary: 'Courier New', Courier, monospace;
+    --font-serif: 'Georgia', serif;
+    --font-handwritten: 'Brush Script MT', cursive;
+    
+    /* Timings & Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.8s ease-in-out;
+    --transition-timeline-shift: 2.5s ease-in-out;
+    
+    /* Dimensions */
+    --app-width: 1280px;
+    --app-height: 720px;
+    --sidebar-width: 320px;
+    --header-height: 60px;
+}
+
+/* =========================================
+   2. RESET & BASE STYLES
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-pure-black);
+}
+
+body {
+    color: var(--ui-text-primary);
+    font-family: var(--font-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: default;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    font-family: var(--font-primary);
+    outline: none;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-charcoal);
+    border-left: 1px solid var(--ui-panel-border);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-iron);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ui-text-secondary);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.fade-in {
+    animation: fadeIn var(--transition-slow) forwards;
+}
+
+.fade-out {
+    animation: fadeOut var(--transition-slow) forwards;
+}
+
+/* =========================================
+   3. GLOBAL ANIMATIONS
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes pulse-slow {
+    0% { opacity: 0.6; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.6; transform: scale(0.98); }
+}
+
+@keyframes clock-tick {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(6deg); }
+    100% { transform: rotate(6deg); }
+}
+
+@keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(-10deg); }
+    40% { transform: skew(10deg); }
+    60% { transform: skew(-5deg); }
+    80% { transform: skew(5deg); }
+    100% { transform: skew(0deg); }
+}
+
+@keyframes crt-flicker {
+    0% { opacity: 0.95; }
+    5% { opacity: 0.85; }
+    10% { opacity: 0.95; }
+    15% { opacity: 1; }
+    50% { opacity: 0.9; }
+    60% { opacity: 1; }
+    100% { opacity: 0.95; }
+}
+
+@keyframes float-dust {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+}
+
+/* =========================================
+   4. MAIN APP CONTAINER & LAYOUT
+   ========================================= */
+#app-container {
+    position: relative;
+    width: var(--app-width);
+    height: var(--app-height);
+    background-color: var(--color-pure-black);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#game-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 1fr var(--sidebar-width);
+    grid-template-areas: 
+        "header header"
+        "viewport inventory";
+    background-color: var(--color-void-black);
+    transition: background-color var(--transition-timeline-shift);
+    opacity: 1;
+}
+
+/* =========================================
+   5. ATMOSPHERIC OVERLAYS (CRT & DUST)
+   ========================================= */
+.screen-fx-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.fx-vignette {
+    background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+}
+
+.fx-scanlines {
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.1) 50%,
+        rgba(0,0,0,0.1)
+    );
+    background-size: 100% 4px;
+    opacity: 0.3;
+}
+
+.fx-noise {
+    background-image: url('assets/ui/noise.png'); /* Placeholder */
+    opacity: 0.05;
+    animation: crt-flicker 0.15s infinite;
+}
+
+/* =========================================
+   6. TIMELINE FILTERS (1952 vs 1998)
+   ========================================= */
+.timeline-1998 #room-viewport {
+    filter: 
+        grayscale(calc(1 - var(--filter-1998-saturation))) 
+        contrast(var(--filter-1998-contrast)) 
+        brightness(var(--filter-1998-brightness));
+}
+
+.timeline-1952 #room-viewport {
+    filter: 
+        sepia(var(--filter-1952-sepia)) 
+        saturate(var(--filter-1952-saturation)) 
+        contrast(var(--filter-1952-contrast)) 
+        brightness(var(--filter-1952-brightness));
+}
+
+.timeline-1998 #current-year-display {
+    color: var(--ui-accent-1998);
+    text-shadow: 0 0 5px rgba(74, 93, 110, 0.5);
+}
+
+.timeline-1952 #current-year-display {
+    color: var(--ui-accent-1952);
+    text-shadow: 0 0 5px rgba(122, 92, 67, 0.5);
+}
+
+/* =========================================
+   7. MAIN MENU STYLES
+   ========================================= */
+#main-menu {
+    background-image: url('assets/ui/menu_bg.png'); /* Placeholder */
+    background-size: cover;
+    background-position: center;
+    z-index: 1000;
+}
+
+.menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+}
+
+.game-title {
+    font-family: var(--font-serif);
+    font-size: 56px;
+    color: var(--color-dust);
+    text-align: center;
+    letter-spacing: 8px;
+    line-height: 1.2;
+    margin-bottom: 60px;
+    text-shadow: 0 5px 15px rgba(0,0,0,1);
+    animation: pulse-slow 5s infinite;
+}
+
+.game-title span.hollow {
+    color: var(--color-gold-tarnished);
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 350px;
+}
+
+.btn-primary {
+    background: transparent;
+    border: 1px solid var(--color-iron);
+    color: var(--color-dust);
+    padding: 18px 24px;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-medium);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    border-color: var(--color-dust);
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--color-charcoal);
+}
+
+.menu-warning {
+    position: absolute;
+    bottom: 30px;
+    font-size: 13px;
+    color: var(--ui-text-secondary);
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   8. GAME HEADER UI
+   ========================================= */
+#game-header {
+    grid-area: header;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.95), rgba(5,5,5,0));
+    border-bottom: 1px solid var(--ui-panel-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 50;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.header-center {
+    justify-content: center;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+#location-display {
+    font-size: 22px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px var(--color-pure-black);
+}
+
+#timeline-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 20px;
+    border: 1px solid var(--color-iron);
+    border-radius: 2px;
+}
+
+.timeline-label {
+    font-size: 10px;
+    color: var(--ui-text-secondary);
+    letter-spacing: 2px;
+}
+
+#current-year-display {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    transition: color var(--transition-medium);
+}
+
+.btn-icon {
+    background: transparent;
+    border: 1px solid var(--ui-panel-border);
+    color: var(--ui-text-primary);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-icon:hover {
+    background: var(--color-dust);
+    color: var(--color-pure-black);
+}
+
+/* =========================================
+   9. ROOM VIEWPORT & SCENES
+   ========================================= */
+#room-viewport {
+    grid-area: viewport;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.room-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.room-scene.active {
+    display: block;
+    opacity: 1;
+}
+
+.room-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* =========================================
+   10. HOTSPOTS & INTERACTIONS
+   ========================================= */
+.hotspot-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    background: rgba(255, 0, 0, 0); /* Invisible by default */
+    border: 1px solid transparent;
+    transition: var(--transition-fast);
+}
+
+/* Hotspot Hover States based on Type */
+.hotspot.type-door:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    cursor: url('assets/ui/cursor_door.png'), pointer;
+}
+
+.hotspot.type-inspect:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: url('assets/ui/cursor_eye.png'), pointer;
+}
+
+.hotspot.type-item:hover {
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+    cursor: url('assets/ui/cursor_hand.png'), pointer;
+}
+
+.hotspot.type-puzzle:hover {
+    background: rgba(184, 153, 71, 0.05);
+    border: 1px solid rgba(184, 153, 71, 0.3);
+    cursor: url('assets/ui/cursor_puzzle.png'), pointer;
+}
+
+/* =========================================
+   11. INVENTORY SYSTEM UI
+   ========================================= */
+#inventory-sidebar {
+    grid-area: inventory;
+    background-color: var(--ui-panel-bg);
+    border-left: 1px solid var(--ui-panel-border);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 20px rgba(0,0,0,0.5);
+    z-index: 40;
+}
+
+.inventory-header {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--ui-panel-border);
+    font-size: 16px;
+    letter-spacing: 4px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+}
+
+.inventory-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: calc(var(--sidebar-width) / 3 - 15px);
+    gap: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.inv-slot {
+    background-color: rgba(20, 20, 20, 0.8);
+    border: 1px solid var(--color-iron);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    transition: var(--transition-fast);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inv-slot:hover {
+    border-color: var(--color-dust);
+    background-color: rgba(30, 30, 30, 0.9);
+}
+
+.inv-slot.active-item {
+    border-color: var(--color-gold-tarnished);
+    box-shadow: inset 0 0 15px rgba(184, 153, 71, 0.2);
+}
+
+.inv-slot.empty {
+    cursor: default;
+}
+
+.inv-slot.empty:hover {
+    border-color: var(--color-iron);
+    background-color: rgba(20, 20, 20, 0.8);
+}
+
+.item-icon {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.8));
+    transition: transform 0.2s ease;
+}
+
+.inv-slot:hover .item-icon {
+    transform: scale(1.1);
+}
+
+/* =========================================
+   12. INVENTORY INSPECTION PANEL
+   ========================================= */
+.inspection-panel {
+    height: 300px;
+    border-top: 1px solid var(--ui-panel-border);
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+}
+
+.inspect-image-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+
+#inspect-large-icon {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#inspect-title {
+    font-size: 18px;
+    color: var(--color-bone);
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+    min-height: 22px;
+}
+
+#inspect-description {
+    font-size: 13px;
+    color: var(--ui-text-secondary);
+    text-align: center;
+    line-height: 1.4;
+    flex-grow: 1;
+    font-style: italic;
+}
+
+.inspect-controls {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-action {
+    flex: 1;
+    padding: 10px 0;
+    background: var(--color-charcoal);
+    border: 1px solid var(--color-iron);
+    color: var(--ui-text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-action:hover:not(:disabled) {
+    background: var(--ui-panel-border);
+    color: #fff;
+}
+
+.btn-action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   13. DIALOGUE SYSTEM & SUBTITLES
+   ========================================= */
+#dialogue-layer {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 900px;
+    z-index: 80;
+    pointer-events: none;
+}
+
+.dialogue-box {
+    display: flex;
+    background-color: var(--ui-panel-bg);
+    border: 1px solid var(--ui-panel-border);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    height: 180px;
+    pointer-events: auto;
+    position: relative;
+}
+
+.dialogue-portrait-container {
+    width: 180px;
+    height: 100%;
+    border-right: 1px solid var(--ui-panel-border);
+    background-color: var(--color-pure-black);
+    position: relative;
+    overflow: hidden;
+}
+
+.portrait-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.5) contrast(1.1);
+}
+
+/* Timeline Specific Portrait Effects */
+.timeline-1952 .portrait-image {
+    filter: sepia(0.4) contrast(1.1);
+}
+
+.dialogue-text-container {
+    flex-grow: 1;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.speaker-name {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-gold-tarnished);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+.dialogue-content {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ui-text-primary);
+}
+
+.dialogue-indicator {
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+    width: 0; 
+    height: 0; 
+    border-top: 8px solid var(--color-dust);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    animation: pulse-slow 1s infinite;
+    cursor: pointer;
+}
+
+/* =========================================
+   14. MODAL OVERLAYS (PUZZLES & DOCUMENTS)
+   ========================================= */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-window {
+    background-color: var(--ui-modal-bg);
+    border: 1px solid var(--color-iron);
+    box-shadow: 0 0 50px rgba(0,0,0,1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--ui-text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 10;
+}
+
+.btn-close-modal:hover {
+    color: var(--color-dust);
+}
+
+/* =========================================
+   15. DOCUMENT VIEWER UI
+   ========================================= */
+.document-modal {
+    width: 650px;
+    height: 85%;
+    background-color: #eaddcf; /* Old paper color */
+    background-image: url('assets/ui/paper_texture.png'); /* Placeholder */
+    border: none;
+    border-radius: 2px;
+    box-shadow: inset 0 0 60px rgba(100, 70, 30, 0.5), 0 10px 40px rgba(0,0,0,0.8);
+    color: #2b2520;
+    padding: 60px 50px;
+    overflow-y: auto;
+}
+
+.document-title {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding-bottom: 15px;
+}
+
+.document-text {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.document-text p {
+    margin-bottom: 20px;
+}
+
+.handwriting {
+    font-family: var(--font-handwritten);
+    font-size: 24px;
+    color: #1a1a1a;
+    transform: rotate(-2deg);
+}
+
+.blood-stain {
+    color: var(--color-blood);
+    font-weight: bold;
+}
+
+/* =========================================
+   16. PUZZLE 1: SYMBOL LOCK (STUDY DESK)
+   ========================================= */
+.puzzle-modal-symbol {
+    width: 600px;
+    height: 400px;
+    padding: 40px;
+    background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+    border: 4px solid #222;
+    border-radius: 10px;
+}
+
+.puzzle-header {
+    text-align: center;
+    font-size: 24px;
+    color: var(--color-bone);
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.dial-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.symbol-dial {
+    width: 100px;
+    height: 160px;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.dial-btn {
+    background: #222;
+    border: 1px solid #444;
+    color: #888;
+    width: 60%;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 3px;
+    transition: background 0.1s;
+}
+
+.dial-btn:hover {
+    background: #333;
+    color: #fff;
+}
+
+.dial-btn:active {
+    background: #111;
+    transform: translateY(2px);
+}
+
+.dial-display {
+    width: 80px;
+    height: 80px;
+    background: #000;
+    border: 1px solid #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    overflow: hidden;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,1);
+}
+
+.dial-value {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* =========================================
+   17. PUZZLE 2: PIANO MELODY (MUSIC ROOM)
+   ========================================= */
+.puzzle-modal-piano {
+    width: 800px;
+    height: 400px;
+    background: #2b1d12; /* Wood color */
+    border: 10px solid #1a1008;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.piano-brand {
+    font-family: var(--font-serif);
+    color: #d4af37;
+    margin: 20px 0;
+    font-size: 20px;
+    letter-spacing: 5px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.keyboard-container {
+    display: flex;
+    position: relative;
+    padding: 20px;
+    background: #111;
+    border-top: 5px solid #000;
+    border-bottom: 5px solid #000;
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.8);
+}
+
+.key-white {
+    width: 50px;
+    height: 200px;
+    background: linear-gradient(to bottom, #fff 0%, #e6e6e6 100%);
+    border: 1px solid #ccc;
+    border-radius: 0 0 4px 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1;
+    position: relative;
+}
+
+.key-white:active, .key-white.active {
+    background: linear-gradient(to bottom, #e6e6e6 0%, #ccc 100%);
+    transform: rotateX(2deg);
+    transform-origin: top;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.key-black {
+    width: 30px;
+    height: 120px;
+    background: linear-gradient(to bottom, #333 0%, #000 100%);
+    border: 1px solid #000;
+    border-radius: 0 0 3px 3px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+.key-black:active, .key-black.active {
+    background: linear-gradient(to bottom, #000 0%, #000 100%);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Positioning Black Keys */
+.kb-cs { left: 55px; }
+.kb-ds { left: 105px; }
+.kb-fs { left: 205px; }
+.kb-gs { left: 255px; }
+.kb-as { left: 305px; }
+
+/* =========================================
+   18. FINAL PUZZLE: THE CLOCK MECHANISM
+   ========================================= */
+.puzzle-modal-clock {
+    width: 700px;
+    height: 550px;
+    background: #151515;
+    border: 5px solid #3a2e24;
+    border-radius: 50% 50% 0 0; /* Arch shape */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.gear-bg {
+    position: absolute;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.gear-1 { top: -20px; left: -20px; width: 200px; animation: clock-tick 2s infinite linear; }
+.gear-2 { top: 100px; right: -50px; width: 150px; animation: clock-tick 2s infinite reverse linear; }
+
+.mechanism-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    color: var(--color-gold-tarnished);
+    z-index: 1;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(184, 153, 71, 0.3);
+}
+
+.slot-container {
+    display: flex;
+    gap: 30px;
+    z-index: 1;
+}
+
+.insert-slot {
+    width: 120px;
+    height: 140px;
+    background: rgba(0,0,0,0.6);
+    border: 2px dashed #555;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-medium);
+}
+
+.insert-slot.highlight {
+    border-color: var(--color-gold-tarnished);
+    background: rgba(184, 153, 71, 0.1);
+}
+
+.insert-slot.filled {
+    border: 2px solid var(--color-gold-tarnished);
+    background: rgba(0,0,0,0.8);
+    box-shadow: inset 0 0 20px rgba(184, 153, 71, 0.2);
+}
+
+.slot-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-activate {
+    margin-top: 50px;
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid var(--color-blood);
+    color: var(--color-dust);
+    font-size: 18px;
+    letter-spacing: 3px;
+    z-index: 1;
+    cursor: pointer;
+    transition: var(--transition-medium);
+}
+
+.btn-activate:hover:not(:disabled) {
+    background: var(--color-blood);
+    box-shadow: 0 0 20px rgba(94, 17, 17, 0.6);
+}
+
+.btn-activate:disabled {
+    border-color: #333;
+    color: #444;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   19. ENDING SEQUENCE
+   ========================================= */
+#ending-screen {
+    background-color: var(--color-pure-black);
+    z-index: 9999;
+}
+
+.ending-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    text-align: center;
+}
+
+.final-photo-frame {
+    width: 400px;
+    height: 300px;
+    background: #fff;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,1);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 4s ease-in-out;
+}
+
+.final-photo-frame.reveal {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.final-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.8) contrast(1.2) brightness(0.8);
+}
+
+.ending-text-block {
+    font-size: 20px;
+    line-height: 1.8;
+    color: var(--color-dust);
+    opacity: 0;
+    transition: opacity 3s ease;
+}
+
+.ending-quote {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    color: var(--color-blood);
+    margin-top: 50px;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 3s ease;
+    text-shadow: 0 0 10px rgba(255,0,0,0.2);
+}
+
+/* =========================================
+   20. RESPONSIVE DESIGN (SCALING)
+   ========================================= */
+@media screen and (max-width: 1300px) {
+    #app-container {
+        transform: scale(0.9);
+        transform-origin: center center;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    #app-container {
+        transform: scale(0.8);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #app-container {
+        transform: scale(0.65);
+    }
+}
