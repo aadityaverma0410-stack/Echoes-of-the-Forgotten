@@ -5,168 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap');
 
         /* --- Core Variables --- */
         :root {
-            --bg-color: #050505;
+            --bg-color: #030305;
             --text-color: #e0e0e0;
             --accent-color: #d4af37;
-            --accent-glow: 0 0 30px rgba(212, 175, 55, 0.8);
-            --panel-bg: rgba(15, 15, 20, 0.85);
-            --border-color: rgba(212, 175, 55, 0.5);
+            --accent-glow: 0 0 25px rgba(212, 175, 55, 0.6);
+            --panel-bg: rgba(12, 12, 16, 0.85);
+            --border-color: rgba(212, 175, 55, 0.4);
             --font-main: 'Courier Prime', monospace;
+            --font-matrix: 'VT323', monospace;
             --system-green: #4ade80;
             --system-red: #ff4d4d;
         }
 
         body.alternate-universe {
-            --bg-color: #0b001a;
+            --bg-color: #080014;
             --text-color: #e2e8f0;
             --accent-color: #9d4edd;
-            --accent-glow: 0 0 30px rgba(157, 78, 221, 0.8);
-            --panel-bg: rgba(20, 5, 35, 0.85);
-            --border-color: rgba(157, 78, 221, 0.5);
+            --accent-glow: 0 0 25px rgba(157, 78, 221, 0.6);
+            --panel-bg: rgba(18, 5, 30, 0.85);
+            --border-color: rgba(157, 78, 221, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-            transition: background-color 1s ease, color 1s ease;
-            min-height: 100vh;
+            background-color: var(--bg-color); color: var(--text-color);
+            font-family: var(--font-main); overflow-x: hidden;
+            transition: background-color 1s ease; min-height: 100vh;
         }
 
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
+        /* Background Aesthetics */
+        .floating-element { position: fixed; z-index: 2; animation: floatUp 10s linear forwards; font-size: 24px; opacity: 0.6; pointer-events: none; }
+        .meme-comet { position: fixed; z-index: 1; opacity: 0.25; animation: shootAcross 6s linear forwards; border-radius: 8px; width: 120px; pointer-events: none; box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        @keyframes shootAcross { 0% { transform: translate(-150px, 80vh) rotate(-15deg); } 100% { transform: translate(120vw, -20vh) rotate(15deg); } }
+
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 80px 20px 60px 20px; z-index: 10; transition: opacity 0.5s ease;
+            padding: 80px 20px 40px 20px; z-index: 10; transition: opacity 0.5s ease;
         }
 
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
 
-        /* --- UI Panels --- */
+        /* UI Panels */
         .glass-panel {
-            background: var(--panel-bg); backdrop-filter: blur(15px);
-            border: 2px solid var(--border-color); border-radius: 12px;
-            padding: 40px 25px; max-width: 500px; width: 100%;
-            text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+            background: var(--panel-bg); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 40px 30px; max-width: 500px; width: 100%;
+            text-align: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
         }
 
-        h1, h2 { color: var(--accent-color); text-shadow: var(--accent-glow); margin-bottom: 20px; letter-spacing: 2px; }
-        p { margin-bottom: 20px; line-height: 1.6; font-size: 1.1em; }
+        h1, h2 { color: var(--accent-color); text-shadow: var(--accent-glow); margin-bottom: 20px; letter-spacing: 1px; }
+        p { margin-bottom: 15px; line-height: 1.6; font-size: 1.05em; }
         
-        .system-text { color: var(--system-green); font-size: 1.1em; margin-top: 15px; font-weight: bold; min-height: 25px; }
-        .error-text { color: var(--system-red); font-size: 1.1em; margin-top: 15px; min-height: 25px; }
-        .quote { font-style: italic; border-left: 3px solid var(--accent-color); padding-left: 20px; margin: 30px 0; text-align: left; opacity: 0.9; }
-        .terminal-box { background: #000; border: 1px solid #444; padding: 20px; margin: 20px 0; border-radius: 6px; text-align: left; min-height: 80px; }
+        .system-text { color: var(--system-green); font-size: 1em; margin-top: 15px; font-weight: bold; min-height: 24px; }
+        .error-text { color: var(--system-red); font-size: 1em; margin-top: 15px; min-height: 24px; }
+        .terminal-box { background: rgba(0,0,0,0.7); border: 1px solid #333; padding: 20px; margin: 20px 0; border-radius: 4px; text-align: left; min-height: 80px; }
 
-        /* --- Inputs & Buttons --- */
         input[type="text"] {
-            width: 100%; background: #000; border: 2px solid var(--accent-color);
-            color: var(--text-color); padding: 18px; border-radius: 6px; font-family: inherit;
+            width: 100%; background: #000; border: 1px solid var(--accent-color);
+            color: var(--text-color); padding: 15px; border-radius: 4px; font-family: inherit;
             font-size: 1.2em; text-align: center; outline: none;
         }
         input[type="text"]:focus { box-shadow: var(--accent-glow); }
 
         button {
-            width: 100%; background: #000; border: 2px solid var(--accent-color);
-            color: var(--accent-color); padding: 18px; margin-top: 12px; border-radius: 6px;
-            font-family: inherit; font-size: 1.1em; font-weight: bold; cursor: pointer;
-            transition: all 0.3s ease; text-transform: uppercase;
+            width: 100%; background: #000; border: 1px solid var(--accent-color);
+            color: var(--accent-color); padding: 15px; margin-top: 10px; border-radius: 4px;
+            font-family: inherit; font-size: 1em; cursor: pointer; transition: all 0.3s;
         }
         button:hover { background: var(--accent-color); color: #000; box-shadow: var(--accent-glow); }
+        .back-btn { border-color: #555; color: #999; margin-top: 25px; }
+        .back-btn:hover { background: #555; color: #fff; }
 
-        .back-btn { border-color: #666; color: #aaa; margin-top: 30px; font-size: 0.9em; }
-        .back-btn:hover { background: #666; color: #fff; }
+        #universe-toggle { position: fixed; top: 15px; right: 15px; width: auto; z-index: 100; padding: 10px 15px; font-size: 0.85em; background: rgba(0,0,0,0.8); }
 
-        #universe-toggle { position: fixed; top: 15px; right: 15px; width: auto; z-index: 100; padding: 12px 20px; font-size: 0.9em; background: rgba(0,0,0,0.8); }
-
-        /* --- Map --- */
+        /* Map */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
-        
         #map-container {
-            position: relative; width: 100%; height: 75vh; min-height: 500px;
-            border: 2px dashed var(--border-color); border-radius: 50%;
-            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 80%);
+            position: relative; width: 100%; height: 70vh; min-height: 450px;
+            border: 1px dashed var(--border-color); border-radius: 50%;
+            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0) 70%);
         }
 
         .planet {
-            position: absolute; width: 70px; height: 70px;
+            position: absolute; width: 60px; height: 60px;
             background: radial-gradient(circle at 30% 30%, #fff, var(--accent-color), #000);
             border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%);
-            box-shadow: var(--accent-glow), inset -10px -10px 20px rgba(0,0,0,0.8);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            z-index: 20; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--accent-glow), inset -5px -5px 15px rgba(0,0,0,0.8);
+            transition: transform 0.2s, box-shadow 0.2s; z-index: 20;
         }
-
-        .planet::before {
-            content: attr(data-tooltip); position: absolute; top: -40px;
-            background: var(--panel-bg); padding: 5px 10px; border: 1px solid var(--accent-color);
-            border-radius: 4px; font-size: 12px; white-space: nowrap; opacity: 0; transition: opacity 0.3s;
-        }
-        .planet:hover::before { opacity: 1; }
-        
         .planet::after {
-            content: attr(data-label); position: absolute; bottom: -35px;
-            font-size: 16px; font-weight: bold; color: var(--text-color);
-            text-shadow: 0 0 10px #000, 0 0 20px #000; letter-spacing: 1px;
-            background: rgba(0,0,0,0.7); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border-color);
+            content: attr(data-label); position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+            font-size: 14px; color: var(--text-color); background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px;
         }
+        .planet:hover { transform: translate(-50%, -50%) scale(1.15); }
+        .planet.visited { filter: grayscale(40%); border: 2px solid var(--system-green); }
 
-        .planet:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 50px var(--accent-color); }
-        .planet.visited { filter: grayscale(50%); border: 2px solid var(--system-green); }
+        /* Music Player (Vintage) */
+        .record-player { position: relative; width: 180px; height: 180px; margin: 20px auto; background: #1a1a1a; border-radius: 10px; border: 2px solid #333; padding: 10px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 20px #000; }
+        .vinyl { width: 140px; height: 140px; background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+        .vinyl-label { width: 45px; height: 45px; background: var(--accent-color); border-radius: 50%; border: 2px solid #000; }
+        .vinyl.spin { animation: spinRecord 2s linear infinite; }
+        .tonearm { position: absolute; top: 15px; right: 15px; width: 10px; height: 80px; background: silver; transform-origin: top center; transform: rotate(-30deg); transition: transform 0.5s ease; border-radius: 5px; border-bottom: 10px solid #444; }
+        .tonearm.playing { transform: rotate(25deg); }
+        @keyframes spinRecord { 100% { transform: rotate(360deg); } }
 
-        .arrakis-text { margin-top: 40px; font-size: 1em; opacity: 0; transition: opacity 2s; color: var(--accent-color); }
-        #secret-trigger-area { height: 100px; width: 100%; margin-top: 50px; display: none; align-items: center; justify-content: center; }
+        /* Dot Matrix Games */
+        .dot-matrix-container { font-family: var(--font-matrix); color: #0ff; text-shadow: 0 0 8px #0ff; background: #001111; border: 2px solid #0ff; padding: 20px; border-radius: 8px; }
+        .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 20px auto; max-width: 250px; }
+        .cell { background: #000; border: 1px solid #0ff; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; cursor: pointer; transition: background 0.3s; }
+        .cell:hover { background: #003333; }
+        .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 20px auto; }
+        .simon-btn { height: 80px; border-radius: 4px; border: 2px solid #333; cursor: pointer; opacity: 0.4; transition: opacity 0.1s; }
+        .simon-btn.active { opacity: 1; box-shadow: 0 0 20px currentColor; }
 
-        /* --- Tic-Tac-Toe --- */
-        .tictactoe-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px auto;
-            max-width: 300px;
-        }
-        .cell {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color);
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5em;
-            color: var(--text-color);
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-        .cell:hover { background: rgba(255, 255, 255, 0.1); }
-
-        /* --- Floating Aesthetics --- */
-        .floating-element {
-            position: fixed;
-            pointer-events: none;
-            z-index: 5;
-            animation: floatUp 12s linear forwards;
-            font-size: 28px;
-            opacity: 0.7;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- Cinematic --- */
-        .movie-fade { opacity: 0; animation: movieFadeIn 5s forwards; font-size: 1.5em; line-height: 2; margin: 40px 0; text-shadow: 0 0 15px rgba(255,255,255,0.4); text-align: center; }
-        @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.05); } }
+        /* Cinematic Final */
+        .movie-fade { opacity: 0; animation: movieFadeIn 5s forwards; margin: 20px 0; text-align: center; }
+        .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+        @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.98); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0.1; } }
+        .permanent-fade { animation: fadeHold 3s forwards; }
+        @keyframes fadeHold { 0% { opacity: 0; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -176,22 +143,33 @@
 
     <div id="gate-1" class="screen">
         <div class="glass-panel">
-            <h2>SYSTEM LOCK</h2>
-            <p>Verification required: Solve to continue.</p>
-            <h1 style="font-size: 3em; margin: 30px 0;">5 × 5 = ?</h1>
-            <input type="text" id="math-input" placeholder="Answer..." autocomplete="off">
+            <h2>STAGE 1: LOGIC</h2>
+            <p>Solve to continue.</p>
+            <h2 style="font-size: 2.5em; margin: 25px 0;">√144 + 2³ = ?</h2>
+            <input type="text" id="math-input" placeholder="Enter integer..." autocomplete="off">
             <div id="math-msg" class="system-text"></div>
         </div>
     </div>
 
     <div id="gate-2" class="screen hidden">
         <div class="glass-panel">
-            <h2>CHEMISTRY PROTOCOL</h2>
+            <h2>STAGE 2: PHYSICS</h2>
+            <p>What is the universal force of attraction acting between all matter?</p>
+            <button onclick="checkGate2(this, false)">Magnetism</button>
+            <button onclick="checkGate2(this, true)">Gravity</button>
+            <button onclick="checkGate2(this, false)">Friction</button>
+            <div id="phys-msg" class="system-text"></div>
+            <div id="phys-error" class="error-text"></div>
+        </div>
+    </div>
+
+    <div id="gate-3" class="screen hidden">
+        <div class="glass-panel">
+            <h2>STAGE 3: CHEMISTRY</h2>
             <p>Which element is known as the "element of love" because it strengthens emotional bonding?</p>
-            <button onclick="checkChem(this, 'Oxygen')">Oxygen</button>
-            <button onclick="checkChem(this, 'Oxytocin')">Oxytocin (technically a hormone, but commonly used in this context)</button>
-            <button onclick="checkChem(this, 'Nitrogen')">Nitrogen</button>
-            <button onclick="checkChem(this, 'Carbon')">Carbon</button>
+            <button onclick="checkChem(this, false)">Oxygen</button>
+            <button onclick="checkChem(this, true)">Oxytocin (technically a hormone)</button>
+            <button onclick="checkChem(this, false)">Carbon</button>
             <div id="chem-msg" class="system-text"></div>
             <div id="chem-error" class="error-text"></div>
         </div>
@@ -200,104 +178,101 @@
     <div id="main-site" class="screen hidden">
         <div class="map-wrapper">
             <h1>GALACTIC NAVIGATION</h1>
-            <p>Tap a planet to explore.</p>
-            
+            <p>Select coordinates.</p>
             <div id="map-container">
-                <div class="planet" data-label="Music" data-tooltip="> Unknown planet detected" style="top: 15%; left: 50%; background: radial-gradient(circle, #ff9a9e, #fecfef);" onclick="openSection('music-section', this)"></div>
-                <div class="planet" data-label="Mini-Game" data-tooltip="> Unknown planet detected" style="top: 40%; left: 15%; background: radial-gradient(circle, #4facfe, #00f2fe);" onclick="openSection('game-section', this)"></div>
-                <div class="planet" data-label="Quiz" data-tooltip="> Unknown planet detected" style="top: 40%; left: 85%; background: radial-gradient(circle, #84fab0, #8fd3f4);" onclick="openSection('quiz-section', this)"></div>
-                <div class="planet" data-label="Terminal" data-tooltip="> Unknown planet detected" style="top: 75%; left: 30%; background: radial-gradient(circle, #fccb90, #d57eeb);" onclick="openSection('compliment-section', this)"></div>
-                <div class="planet" data-label="Transmission" data-tooltip="> Unknown planet detected" style="top: 75%; left: 70%; background: radial-gradient(circle, #e0c3fc, #8ec5fc);" onclick="openSection('cinema-section', this)"></div>
-                
-                <div id="hidden-star" class="planet hidden" data-label="???" data-tooltip="> Anomaly detected" style="top: 50%; left: 50%; background: radial-gradient(circle, red, darkred); box-shadow: 0 0 40px red;" onclick="openSection('droid-section', this)"></div>
-            </div>
-
-            <div id="secret-trigger-area">
-                <button onclick="openSection('secret-section', null)" style="border-color: red; color: red; background: rgba(255,0,0,0.1);">ACCESS CLASSIFIED DATA</button>
+                <div class="planet" data-label="Audio" style="top: 20%; left: 50%; background: radial-gradient(circle, #ff9a9e, #fecfef);" onclick="openSection('music-section', this)"></div>
+                <div class="planet" data-label="Combat" style="top: 45%; left: 20%; background: radial-gradient(circle, #4facfe, #00f2fe);" onclick="openSection('ttt-section', this)"></div>
+                <div class="planet" data-label="Matrix" style="top: 45%; left: 80%; background: radial-gradient(circle, #f83600, #f9d423);" onclick="openSection('simon-section', this)"></div>
+                <div class="planet" data-label="Quiz" style="top: 75%; left: 35%; background: radial-gradient(circle, #84fab0, #8fd3f4);" onclick="openSection('quiz-section', this)"></div>
+                <div class="planet" data-label="End" style="top: 75%; left: 65%; background: radial-gradient(circle, #e0c3fc, #8ec5fc);" onclick="openSection('cinema-section', this)"></div>
             </div>
         </div>
     </div>
 
-    <div id="music-section" class="screen hidden" onscroll="handleScroll()">
+    <div id="music-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>Vibe Generator</h2>
-            <button onclick="generateMood()">Generate today's vibe</button>
-            <div id="mood-display" class="quote hidden" style="font-size: 1.2em;"></div>
-            <p class="arrakis-text" id="arrakis-quote">> “Some people are rare like water on Arrakis.”</p>
+            <h2>Audio Terminal</h2>
+            <div class="record-player">
+                <div class="vinyl" id="vinyl-disk"><div class="vinyl-label"></div></div>
+                <div class="tonearm" id="tone-arm"></div>
+            </div>
+            <div id="mood-display" class="system-text" style="color:var(--accent-color); margin-bottom: 10px;">> System Ready</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                <button onclick="playSong('audio-frank', 'Frank Ocean')">Frank Ocean</button>
+                <button onclick="playSong('audio-tvgirl', 'TV Girl')">TV Girl</button>
+                <button onclick="playSong('audio-daniel', 'Daniel Caesar')">Daniel Caesar</button>
+                <button onclick="playSong('audio-arcane', 'Arcane')">Arcane</button>
+                <button onclick="playSong('audio-flatline', 'Justin Bieber')">J. Bieber</button>
+                <button onclick="playSong('random', 'Random Vibe')" style="color:#0ff; border-color:#0ff;">Random</button>
+            </div>
+            <button onclick="stopAudio()" style="border-color:var(--system-red); color:var(--system-red);">Stop Playback</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
-        <div style="height: 150vh; width: 10px;"></div> 
     </div>
 
-    <div id="game-section" class="screen hidden">
-        <div class="glass-panel">
-            <h2>Combat Simulator</h2>
-            <p>Beat the system. You are 'X'.</p>
-            <div class="tictactoe-board" id="board">
-                <div class="cell" onclick="makeMove(this, 0)"></div>
-                <div class="cell" onclick="makeMove(this, 1)"></div>
-                <div class="cell" onclick="makeMove(this, 2)"></div>
-                <div class="cell" onclick="makeMove(this, 3)"></div>
-                <div class="cell" onclick="makeMove(this, 4)"></div>
-                <div class="cell" onclick="makeMove(this, 5)"></div>
-                <div class="cell" onclick="makeMove(this, 6)"></div>
-                <div class="cell" onclick="makeMove(this, 7)"></div>
-                <div class="cell" onclick="makeMove(this, 8)"></div>
+    <div id="ttt-section" class="screen hidden">
+        <div class="glass-panel dot-matrix-container">
+            <h2 style="color:#0ff; text-shadow: none;">COMBAT_SIM_V1</h2>
+            <p>Defeat the Minimax Algorithm.</p>
+            <div class="tictactoe-board">
+                <div class="cell" onclick="makeMove(0)"></div><div class="cell" onclick="makeMove(1)"></div><div class="cell" onclick="makeMove(2)"></div>
+                <div class="cell" onclick="makeMove(3)"></div><div class="cell" onclick="makeMove(4)"></div><div class="cell" onclick="makeMove(5)"></div>
+                <div class="cell" onclick="makeMove(6)"></div><div class="cell" onclick="makeMove(7)"></div><div class="cell" onclick="makeMove(8)"></div>
             </div>
-            <div id="game-msg" class="system-text"></div>
-            <button onclick="resetGame()" style="margin-top: 10px;">Reset Board</button>
-            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+            <div id="ttt-msg" style="color:#0ff; min-height:20px; margin-top:10px;"></div>
+            <button onclick="resetTTT()" style="border-color:#0ff; color:#0ff;">Reboot Board</button>
+            <button class="back-btn" onclick="returnToMap()">Exit Sim</button>
+        </div>
+    </div>
+
+    <div id="simon-section" class="screen hidden">
+        <div class="glass-panel dot-matrix-container" style="border-color:#f0f; color:#f0f; text-shadow: 0 0 8px #f0f;">
+            <h2 style="color:#f0f; text-shadow: none;">MEMORY_MATRIX</h2>
+            <p>Replicate the system sequence.</p>
+            <div class="simon-board">
+                <div class="simon-btn" id="simon-0" style="background:#f00; color:#f00;" onclick="handleSimonClick(0)"></div>
+                <div class="simon-btn" id="simon-1" style="background:#0f0; color:#0f0;" onclick="handleSimonClick(1)"></div>
+                <div class="simon-btn" id="simon-2" style="background:#00f; color:#00f;" onclick="handleSimonClick(2)"></div>
+                <div class="simon-btn" id="simon-3" style="background:#ff0; color:#ff0;" onclick="handleSimonClick(3)"></div>
+            </div>
+            <div id="simon-msg" style="min-height:20px; margin-top:10px;"></div>
+            <button onclick="startSimon()" style="border-color:#f0f; color:#f0f;">Initialize</button>
+            <button class="back-btn" onclick="returnToMap()">Exit Sim</button>
         </div>
     </div>
 
     <div id="quiz-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>Personality Protocol</h2>
+            <h2>Data Interrogation</h2>
             
-            <div id="quiz-q1">
-                <p>Who is the best character in Star Wars?</p>
-                <button onclick="checkQuiz(1, 'correct')">Anakin Skywalker</button>
-                <button onclick="checkQuiz(1, 'correct')">R2-D2</button>
-                <button onclick="checkQuiz(1, 'wrong')">Jar Jar Binks</button>
+            <div id="q1">
+                <p>1. Who is the best character in Star Wars?</p>
+                <button onclick="ansQuiz(1, true)">Anakin Skywalker</button>
+                <button onclick="ansQuiz(1, true)">R2-D2</button>
+                <button onclick="ansQuiz(1, false)">Jar Jar Binks</button>
             </div>
 
-            <div id="quiz-q2" class="hidden">
-                <p>Physics Protocol: What is the universal force of attraction acting between all matter?</p>
-                <button onclick="checkQuiz(2, 'wrong')">Magnetism</button>
-                <button onclick="checkQuiz(2, 'correct')">Gravity</button>
-                <button onclick="checkQuiz(2, 'wrong')">Friction</button>
+            <div id="q2" class="hidden">
+                <p>2. What is the most valuable substance in the universe found on Arrakis?</p>
+                <button onclick="ansQuiz(2, true)">Spice (Melange)</button>
+                <button onclick="ansQuiz(2, false)">Water</button>
+                <button onclick="ansQuiz(2, false)">Vibranium</button>
             </div>
 
-            <div id="quiz-complete" class="hidden">
-                <h2 style="color: var(--system-green);">Analysis Complete</h2>
-                <p>You have passed all logical assessments.</p>
+            <div id="q3" class="hidden">
+                <p>3. In which film does Timothée Chalamet portray a cannibal?</p>
+                <button onclick="ansQuiz(3, false)">Wonka</button>
+                <button onclick="ansQuiz(3, true)">Bones and All</button>
+                <button onclick="ansQuiz(3, false)">Dune</button>
+            </div>
+
+            <div id="q-end" class="hidden">
+                <h2 style="color: var(--system-green);">Verification Complete</h2>
+                <p>Niche knowledge confirmed.</p>
             </div>
 
             <div id="quiz-feedback" class="system-text"></div>
-            <div id="quiz-error" class="error-text"></div>
-            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
-        </div>
-    </div>
-
-    <div id="droid-section" class="screen hidden">
-        <div class="glass-panel">
-            <h2>Astromech Interface</h2>
-            <div class="terminal-box">
-                <p id="droid-raw" style="letter-spacing: 2px;">BEEP BOOP BEEP — 011010</p>
-                <p id="droid-translated" class="system-text"></p>
-            </div>
-            <button onclick="translateDroid()">Translate</button>
-            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
-        </div>
-    </div>
-
-    <div id="compliment-section" class="screen hidden">
-        <div class="glass-panel">
-            <h2>Terminal Interface</h2>
-            <button onclick="generateCompliment()">Press when you need a random compliment.</button>
-            <div class="terminal-box">
-                <div id="compliment-output" class="system-text">> Awaiting input...</div>
-            </div>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
     </div>
@@ -305,292 +280,242 @@
     <div id="cinema-section" class="screen hidden">
         <div class="glass-panel" id="cinema-panel">
             <h2>Final Sequence</h2>
-            <button onclick="startEnding()">Initialize</button>
+            <button onclick="startEnding()">Initialize Transmission</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
-        <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px;"></div>
-    </div>
-
-    <div id="secret-section" class="screen hidden">
-        <div class="glass-panel" style="border-color: #ff4d4d; box-shadow: 0 0 50px rgba(255,0,0,0.3);">
-            <h2 style="color: #ff4d4d;">CLASSIFIED</h2>
-            <p class="quote">“If you found this, you’re officially too smart to cr*ck JEE 💔💔💔”</p>
-            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
-        </div>
+        <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center;"></div>
     </div>
 
     <audio id="audio-frank" src="frank.mp3"></audio>
     <audio id="audio-tvgirl" src="tvgirl.mp3"></audio>
     <audio id="audio-daniel" src="daniel.mp3"></audio>
-    <audio id="audio-ladygaga" src="ladygaga.mp3"></audio>
-    <audio id="audio-kinggnu" src="kinggnu.mp3"></audio>
-    <audio id="audio-birthday" src="cornershop.mp3"></audio>
+    <audio id="audio-arcane" src="arcane.mp3"></audio>
+    <audio id="audio-flatline" src="flatline.mp3"></audio>
+    <audio id="audio-cornershop" src="cornershop.mp3"></audio>
 
     <script>
-        // --- Core Setup ---
+        // --- Setup ---
         let isAlternate = false;
-        let planetsVisited = 0;
-        let mouseDistance = 0;
-        let lastX = null, lastY = null;
-
-        // --- Gate 1: Math ---
+        
+        // --- Verification Gates ---
         document.getElementById('math-input').addEventListener('input', (e) => {
-            if(e.target.value.trim() === '25') {
-                e.target.disabled = true;
-                e.target.style.borderColor = "var(--system-green)";
-                document.getElementById('math-msg').innerText = "Correct. Logical processing confirmed.";
-                setTimeout(() => {
-                    document.getElementById('gate-1').classList.add('hidden');
-                    document.getElementById('gate-2').classList.remove('hidden');
-                }, 1500);
+            if(e.target.value.trim() === '20') {
+                e.target.disabled = true; e.target.style.borderColor = "var(--system-green)";
+                document.getElementById('math-msg').innerText = "Correct. (12 + 8 = 20).";
+                setTimeout(() => { document.getElementById('gate-1').classList.add('hidden'); document.getElementById('gate-2').classList.remove('hidden'); }, 1200);
             }
         });
 
-        // --- Gate 2: Chemistry ---
-        function checkChem(btn, answer) {
-            document.getElementById('chem-error').innerText = "";
-            if(answer === 'Oxytocin') {
-                document.getElementById('chem-msg').innerText = "Bond detected. Access granted twinn.";
-                btn.style.backgroundColor = "var(--system-green)";
-                btn.style.color = "#000";
-                setTimeout(() => {
-                    document.getElementById('gate-2').classList.add('hidden');
-                    document.getElementById('main-site').classList.remove('hidden');
-                    document.getElementById('universe-toggle').classList.remove('hidden');
-                }, 1800);
-            } else {
-                document.getElementById('chem-error').innerText = "Incorrect compound detected.";
-                btn.style.borderColor = "var(--system-red)";
-            }
+        function checkGate2(btn, isCorrect) {
+            if(isCorrect) {
+                btn.style.background = "var(--system-green)"; btn.style.color = "#000";
+                document.getElementById('phys-msg').innerText = "Physics confirmed.";
+                setTimeout(() => { document.getElementById('gate-2').classList.add('hidden'); document.getElementById('gate-3').classList.remove('hidden'); }, 1200);
+            } else { btn.style.borderColor = "var(--system-red)"; document.getElementById('phys-error').innerText = "Incorrect force."; setTimeout(() => document.getElementById('phys-error').innerText="", 1000); }
         }
 
-        // --- Map Navigation ---
+        function checkChem(btn, isCorrect) {
+            if(isCorrect) {
+                btn.style.background = "var(--system-green)"; btn.style.color = "#000";
+                document.getElementById('chem-msg').innerText = "Chemistry confirmed.";
+                setTimeout(() => { document.getElementById('gate-3').classList.add('hidden'); document.getElementById('main-site').classList.remove('hidden'); }, 1200);
+            } else { btn.style.borderColor = "var(--system-red)"; document.getElementById('chem-error').innerText = "Incorrect compound."; setTimeout(() => document.getElementById('chem-error').innerText="", 1000); }
+        }
+
+        // --- Navigation ---
         function openSection(id, planetElement) {
             document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-            document.getElementById('universe-toggle').classList.add('hidden');
-            window.scrollTo(0, 0);
-
-            if(planetElement && !planetElement.classList.contains('visited')) {
-                planetElement.classList.add('visited');
-                planetsVisited++;
-                if(planetsVisited >= 5) {
-                    document.getElementById('secret-trigger-area').style.display = 'flex';
-                }
-            }
+            if(planetElement) planetElement.classList.add('visited');
+            stopAudio(); // Reset audio on navigation
         }
 
         function returnToMap() {
             document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById('main-site').classList.remove('hidden');
-            document.getElementById('universe-toggle').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            stopAudio();
         }
 
-        document.addEventListener('mousemove', (e) => {
-            if (!document.getElementById('main-site').classList.contains('hidden')) {
-                if (lastX !== null) {
-                    mouseDistance += Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
-                    if (mouseDistance > 4000) document.getElementById('hidden-star').classList.remove('hidden');
-                }
-                lastX = e.clientX; lastY = e.clientY;
-            }
-        });
+        // --- Vintage Music Player ---
+        const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline'];
+        const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber'];
 
-        // --- Arrakis ---
-        document.getElementById('music-section').addEventListener('scroll', () => {
-            if(document.getElementById('music-section').scrollTop > 100) {
-                document.getElementById('arrakis-quote').style.opacity = 1;
+        function playSong(id, name) {
+            stopAudio();
+            if (id === 'random') {
+                let idx = Math.floor(Math.random() * allSongs.length);
+                id = allSongs[idx];
+                name = songNames[idx];
             }
-        });
+            
+            document.getElementById('vinyl-disk').classList.add('spin');
+            document.getElementById('tone-arm').classList.add('playing');
+            document.getElementById('mood-display').innerText = "> Playing: " + name;
+            
+            let audio = document.getElementById(id);
+            if(audio) { audio.currentTime = 0; audio.play().catch(e => console.log(e)); }
+        }
 
-        // --- Mood Generator ---
-        const moods = [
-            { text: "Frank Ocean midnight sadness", audio: "audio-frank" },
-            { text: "TV Girl chaotic nostalgia", audio: "audio-tvgirl" },
-            { text: "Daniel Caesar soft romance", audio: "audio-daniel" },
-            { text: "Lady Gaga pop energy", audio: "audio-ladygaga" },
-            { text: "King Gnu rock vibe", audio: "audio-kinggnu" }
-        ];
-        function generateMood() {
+        function stopAudio() {
+            document.getElementById('vinyl-disk').classList.remove('spin');
+            document.getElementById('tone-arm').classList.remove('playing');
+            document.getElementById('mood-display').innerText = "> Playback Stopped";
             document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
-            const m = moods[Math.floor(Math.random() * moods.length)];
-            document.getElementById('mood-display').innerText = "> " + m.text;
-            document.getElementById('mood-display').classList.remove('hidden');
-            let sound = document.getElementById(m.audio);
-            if(sound) sound.play().catch(e => console.log("Audio play blocked."));
         }
 
-        // --- Quiz Logic ---
-        function checkQuiz(questionNumber, status) {
-            const feedback = document.getElementById('quiz-feedback');
-            const error = document.getElementById('quiz-error');
-            feedback.innerText = "";
-            error.innerText = "";
+        // --- Tic-Tac-Toe (Unbeatable Minimax) ---
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let tttActive = true;
 
-            if(status === 'correct') {
-                feedback.innerText = "> Logical. Proceeding to next phase.";
-                setTimeout(() => {
-                    document.getElementById(`quiz-q${questionNumber}`).classList.add('hidden');
-                    feedback.innerText = "";
-                    if(document.getElementById(`quiz-q${questionNumber + 1}`)) {
-                        document.getElementById(`quiz-q${questionNumber + 1}`).classList.remove('hidden');
-                    } else {
-                        document.getElementById('quiz-complete').classList.remove('hidden');
-                    }
-                }, 1500);
-            } else {
-                error.innerText = "> Error: Suboptimal response detected. Try again.";
-            }
-        }
-
-        // --- Tic-Tac-Toe ---
-        let boardState = ["", "", "", "", "", "", "", "", ""];
-        let gameActive = true;
-
-        function makeMove(cell, index) {
-            if (boardState[index] !== "" || !gameActive) return;
+        function makeMove(idx) {
+            if(!tttActive || board[idx] !== "") return;
+            board[idx] = "X"; updateTTT();
+            if(checkWin(board, "X")) { document.getElementById('ttt-msg').innerText = "Error: User Win Impossible."; tttActive = false; return; }
+            if(!board.includes("")) { document.getElementById('ttt-msg').innerText = "Draw."; tttActive = false; return; }
             
-            boardState[index] = "X";
-            cell.innerText = "X";
-            cell.style.color = "var(--system-green)";
-            
-            if (checkWin("X")) { endGame("> User victory registered."); return; }
-            if (!boardState.includes("")) { endGame("> Draw sequence registered."); return; }
-            
-            // Basic Bot Logic
-            setTimeout(() => {
-                let available = boardState.map((val, i) => val === "" ? i : null).filter(val => val !== null);
-                if(available.length > 0) {
-                    let move = available[Math.floor(Math.random() * available.length)];
-                    boardState[move] = "O";
-                    let botCell = document.querySelectorAll('.cell')[move];
-                    botCell.innerText = "O";
-                    botCell.style.color = "var(--system-red)";
-                    
-                    if (checkWin("O")) { endGame("> System victory. You lose."); return; }
+            // Bot Move
+            let bestScore = -Infinity; let move;
+            for(let i=0; i<9; i++) {
+                if(board[i] === "") {
+                    board[i] = "O"; let score = minimax(board, 0, false); board[i] = "";
+                    if(score > bestScore) { bestScore = score; move = i; }
                 }
-            }, 400);
+            }
+            board[move] = "O"; updateTTT();
+            if(checkWin(board, "O")) { document.getElementById('ttt-msg').innerText = "System Wins."; tttActive = false; }
         }
 
-        function checkWin(player) {
-            const winPaths = [
-                [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
-            ];
-            return winPaths.some(path => path.every(i => boardState[i] === player));
+        function updateTTT() {
+            let cells = document.querySelectorAll('.tictactoe-board .cell');
+            board.forEach((val, i) => {
+                cells[i].innerText = val;
+                cells[i].style.color = val === 'X' ? '#0f0' : '#f00';
+            });
         }
 
-        function endGame(msg) {
-            gameActive = false;
-            document.getElementById('game-msg').innerText = msg;
+        function checkWin(b, p) {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return wins.some(w => w.every(i => b[i] === p));
         }
 
-        function resetGame() {
-            boardState = ["", "", "", "", "", "", "", "", ""];
-            gameActive = true;
-            document.getElementById('game-msg').innerText = "";
-            document.querySelectorAll('.cell').forEach(c => { c.innerText = ""; c.style.color = "var(--text-color)"; });
-        }
+        function minimax(b, depth, isMax) {
+            if(checkWin(b, "O")) return 10 - depth;
+            if(checkWin(b, "X")) return depth - 10;
+            if(!b.includes("")) return 0;
 
-        // --- Droid & Compliments ---
-        let isTranslating = false;
-        function translateDroid() {
-            if(isTranslating) return;
-            isTranslating = true;
-            let el = document.getElementById('droid-translated');
-            let msg = "> Translation: someone here thinks you’re incredibly cool.";
-            el.innerText = "";
-            let i = 0;
-            let int = setInterval(() => {
-                el.innerText += msg.charAt(i); i++;
-                if(i >= msg.length) { clearInterval(int); isTranslating = false; }
-            }, 50);
-        }
-
-        const comps = ["Certified main character energy.", "Performative divaa", "Scientifically proven kooool.", "Rare niche personality detected."];
-        function generateCompliment() {
-            document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
-        }
-
-        // --- Aesthetics Spawner ---
-        const aesthetics = ['🌸', '✨', '🐈', '🐕'];
-        function spawnAesthetic() {
-            const el = document.createElement('div');
-            el.className = 'floating-element';
-            el.innerText = aesthetics[Math.floor(Math.random() * aesthetics.length)];
-            el.style.left = Math.random() * 90 + 'vw';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 12000); // Clean up DOM
-        }
-        setInterval(spawnAesthetic, 2000); // Spawns an element every 2 seconds
-
-        // --- Universe & Keys ---
-        function toggleUniverse() {
-            isAlternate = !isAlternate;
-            let btn = document.getElementById('universe-toggle');
-            if (isAlternate) {
-                document.body.classList.add('alternate-universe');
-                btn.innerText = "Alternate Timeline";
+            if(isMax) {
+                let best = -Infinity;
+                for(let i=0; i<9; i++) { if(b[i]==="") { b[i]="O"; best = Math.max(best, minimax(b, depth+1, false)); b[i]=""; } }
+                return best;
             } else {
-                document.body.classList.remove('alternate-universe');
-                btn.innerText = "Normal Universe";
+                let best = Infinity;
+                for(let i=0; i<9; i++) { if(b[i]==="") { b[i]="X"; best = Math.min(best, minimax(b, depth+1, true)); b[i]=""; } }
+                return best;
             }
         }
 
-        let r2Seq = '';
-        document.addEventListener('keydown', (e) => {
-            if (document.activeElement.tagName === "INPUT") return;
-            let k = e.key.toLowerCase();
-            if (k === 'f') openSection('music-section', null);
-            
-            r2Seq += k;
-            if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
-        });
+        function resetTTT() { board = ["", "", "", "", "", "", "", "", ""]; tttActive = true; document.getElementById('ttt-msg').innerText = ""; updateTTT(); }
 
-        // --- Cinema Ending ---
+        // --- Memory Matrix (Simon) ---
+        let sequence = []; let playerSeq = []; let simonLevel = 0; let simonActive = false;
+
+        function startSimon() {
+            sequence = []; playerSeq = []; simonLevel = 0; simonActive = true;
+            document.getElementById('simon-msg').innerText = "Observe..."; nextSimonRound();
+        }
+
+        function nextSimonRound() {
+            playerSeq = []; simonLevel++;
+            sequence.push(Math.floor(Math.random() * 4));
+            playSimonSequence();
+        }
+
+        function playSimonSequence() {
+            let i = 0; simonActive = false;
+            let int = setInterval(() => {
+                flashSimon(sequence[i]); i++;
+                if(i >= sequence.length) { clearInterval(int); simonActive = true; document.getElementById('simon-msg').innerText = "Your Turn."; }
+            }, 800);
+        }
+
+        function flashSimon(id) {
+            let btn = document.getElementById('simon-'+id);
+            btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 400);
+        }
+
+        function handleSimonClick(id) {
+            if(!simonActive) return;
+            flashSimon(id); playerSeq.push(id);
+            if(playerSeq[playerSeq.length-1] !== sequence[playerSeq.length-1]) {
+                document.getElementById('simon-msg').innerText = "Sequence Failed. Level: " + simonLevel; simonActive = false; return;
+            }
+            if(playerSeq.length === sequence.length) {
+                simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000);
+            }
+        }
+
+        // --- Quiz ---
+        function ansQuiz(qNum, isCorrect) {
+            let fb = document.getElementById('quiz-feedback');
+            if(isCorrect) {
+                fb.innerText = "> Valid data."; fb.style.color = "var(--system-green)";
+                setTimeout(() => {
+                    document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
+                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden');
+                    else document.getElementById('q-end').classList.remove('hidden');
+                }, 1000);
+            } else { fb.innerText = "> Invalid data."; fb.style.color = "var(--system-red)"; }
+        }
+
+        // --- Aesthetics (Flowers, Sparkles, Cats, Memes) ---
+        const aesthetics = ['🌸', '✨', '🐈'];
+        function spawnAesthetic() {
+            let el = document.createElement('div'); el.className = 'floating-element';
+            el.innerText = aesthetics[Math.floor(Math.random() * aesthetics.length)];
+            el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el);
+            setTimeout(() => el.remove(), 10000);
+        }
+        setInterval(spawnAesthetic, 2500);
+
+        function spawnMeme() {
+            let num = Math.floor(Math.random() * 5) + 1;
+            let img = document.createElement('img');
+            img.src = "meme" + num + ".jpg"; img.className = 'meme-comet';
+            // Randomize starting vertical position slightly
+            img.style.top = (Math.random() * 40 + 20) + 'vh';
+            document.body.appendChild(img);
+            setTimeout(() => img.remove(), 6000);
+        }
+        setInterval(spawnMeme, 8000); // Spawns a background meme every 8 seconds
+
+        // --- Cinematic Ending ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
-            
-            // Trigger Birthday Audio
-            const bdAudio = document.getElementById('audio-birthday');
-            if(bdAudio) {
-                bdAudio.currentTime = 0;
-                bdAudio.play().catch(e => console.log("Audio blocked."));
-            }
+            let bdAudio = document.getElementById('audio-cornershop');
+            if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
 
-            let box = document.getElementById('cinema-text-container');
-            box.innerHTML = "";
+            let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
             
-            let lines = isAlternate ? 
-                ["In every universe I’d still think you’re amazing.", "Master OBI-WAN."] : 
-                ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
+            // Image reveal
+            let img = document.createElement('img');
+            img.src = "goat.jpg"; img.className = "goat-img permanent-fade";
+            box.appendChild(img);
 
-            let d = 0;
+            let lines = ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
+            let d = 2000;
             lines.forEach((l) => {
-                setTimeout(() => {
-                    let p = document.createElement('p');
-                    p.innerText = l;
-                    p.className = 'movie-fade';
-                    box.appendChild(p);
-                }, d);
-                d += 5000; 
+                setTimeout(() => { let p = document.createElement('p'); p.innerText = l; p.className = 'movie-fade'; box.appendChild(p); }, d);
+                d += 4500; 
             });
-
-            setTimeout(() => { document.getElementById('cinema-panel').classList.remove('hidden'); box.innerHTML=""; }, d + 2000);
         }
 
-        // --- Canvas ---
-        const cvs = document.getElementById('bg-canvas');
-        const ctx = cvs.getContext('2d');
-        let parts = [];
-        window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
+        // --- Background Canvas ---
+        const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
+        let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
-        
-        for(let i=0; i<150; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
-        
+        for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         function draw() {
-            ctx.clearRect(0,0,cvs.width,cvs.height);
-            ctx.fillStyle = isAlternate ? 'rgba(157, 78, 221, 0.5)' : 'rgba(212, 175, 55, 0.5)';
+            ctx.clearRect(0,0,cvs.width,cvs.height); ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
             parts.forEach(p => {
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
                 p.x += p.dx; p.y += p.dy;
