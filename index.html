@@ -3,271 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Echoes of the Hollow Clock - A 2D Psychological Mystery Puzzle Game">
-    <title>Echoes of the Hollow Clock</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Verification Required</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --bg-color: #050505;
+            --text-color: #00ff00;
+            --font-main: 'Courier New', Courier, monospace;
+            --alt-bg: #1a0505;
+            --alt-text: #ff3333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        body.alternate-universe {
+            --bg-color: var(--alt-bg);
+            --text-color: var(--alt-text);
+        }
+
+        .hidden { display: none !important; }
+        
+        /* Container Styles */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Inputs and Buttons */
+        input[type="text"] {
+            background: #000;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 10px;
+            margin-top: 10px;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Canvas Background */
+        #sand-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Galactic Map */
+        #galactic-map {
+            position: relative;
+            width: 100vw;
+            height: 80vh;
+        }
+
+        .star {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .star:hover {
+            transform: scale(1.5);
+        }
+
+        .star::after {
+            content: "Unknown planet detected";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--text-color);
+            padding: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .star:hover::after { opacity: 1; }
+
+        /* Sections */
+        .content-section {
+            padding: 50px;
+            max-width: 800px;
+            margin: auto;
+            min-height: 100vh;
+            z-index: 10;
+            position: relative;
+        }
+
+        .arrakis-text {
+            opacity: 0;
+            transition: opacity 2s;
+            font-style: italic;
+            margin: 40px 0;
+        }
+
+        /* Utilities */
+        #universe-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        
+        #secret-trigger {
+            height: 50px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .movie-fade {
+            opacity: 0;
+            animation: fadeInOut 4s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="app-container">
+    <div id="gate-1" class="container">
+        <p>Verification required: Solve to continue.</p>
+        <p>5 × 5 = ?</p>
+        <input type="text" id="math-input" autocomplete="off">
+        <p id="math-msg" class="hidden">Correct. Logical processing confirmed.</p>
+    </div>
 
-        <div id="main-menu" class="screen-overlay active">
-            <h1 class="game-title">ECHOES OF THE<br>HOLLOW CLOCK</h1>
-            <div class="menu-options">
-                <button id="btn-new-game" class="menu-btn">New Game</button>
-                <button id="btn-load-game" class="menu-btn" disabled>Continue</button>
-                <button id="btn-settings" class="menu-btn">Settings</button>
-                <button id="btn-credits" class="menu-btn">Credits</button>
-            </div>
-            <div class="menu-footer">
-                <p>Warning: Contains psychological horror elements.</p>
+    <div id="gate-2" class="container hidden">
+        <p>Which element is known as the "element of love" because it strengthens emotional bonding?</p>
+        <button onclick="checkChem('Oxygen')">Oxygen</button>
+        <button onclick="checkChem('Oxytocin')">Oxytocin</button>
+        <button onclick="checkChem('Nitrogen')">Nitrogen</button>
+        <button onclick="checkChem('Carbon')">Carbon</button>
+        <p id="chem-msg" class="hidden">Bond detected. Access granted twinn.</p>
+    </div>
+
+    <div id="main-site" class="hidden">
+        <canvas id="sand-canvas"></canvas>
+        <button id="universe-toggle" onclick="toggleUniverse()">Normal Universe</button>
+
+        <div id="galactic-map">
+            <div class="star" style="top: 20%; left: 30%;" onclick="openSection('music-section')"></div>
+            <div class="star" style="top: 50%; left: 60%;" onclick="openSection('droid-section')"></div>
+            <div class="star" style="top: 70%; left: 20%;" onclick="openSection('compliment-section')"></div>
+            <div class="star" style="top: 30%; left: 80%;" onclick="openSection('cinema-section')"></div>
+            <div class="star hidden" id="hidden-star" style="top: 85%; left: 50%;" onclick="openSection('secret-section')"></div>
+        </div>
+
+        <div id="music-section" class="content-section hidden">
+            <h2>Vibe Generator</h2>
+            <button onclick="generateMood()">Generate today's vibe</button>
+            <p id="mood-output"></p>
+            <p class="arrakis-text">"Some people are rare like water on Arrakis."</p>
+        </div>
+
+        <div id="droid-section" class="content-section hidden">
+            <h2>Astromech Interface</h2>
+            <p id="droid-text">BEEP BOOP BEEP — 011010</p>
+            <button onclick="translateDroid()">Translate</button>
+        </div>
+
+        <div id="compliment-section" class="content-section hidden">
+            <h2>Terminal Interface</h2>
+            <button onclick="generateCompliment()">Press when you need a random compliment.</button>
+            <p id="compliment-output"></p>
+        </div>
+
+        <div id="cinema-section" class="content-section hidden">
+            <div id="cinema-container">
+                <button onclick="startEnding()">Initialize Sequence</button>
             </div>
         </div>
 
-        <div id="settings-menu" class="screen-overlay hidden">
-            <h2>Settings</h2>
-            <div class="settings-group">
-                <label for="vol-master">Master Volume</label>
-                <input type="range" id="vol-master" min="0" max="100" value="80">
-            </div>
-            <div class="settings-group">
-                <label for="vol-music">Music</label>
-                <input type="range" id="vol-music" min="0" max="100" value="70">
-            </div>
-            <div class="settings-group">
-                <label for="vol-sfx">Effects</label>
-                <input type="range" id="vol-sfx" min="0" max="100" value="90">
-            </div>
-            <button id="btn-close-settings" class="menu-btn">Back</button>
+        <div id="secret-section" class="content-section hidden">
+            <h2 style="color: red;">CLASSIFIED</h2>
+            <p>If you found this, you’re officially too smart to cr*ck JEE 💔💔💔</p>
         </div>
 
-        <div id="game-container" class="hidden timeline-1998">
-            
-            <header id="game-header">
-                <div class="header-left">
-                    <span id="location-display">Hallway</span>
-                </div>
-                <div class="header-center">
-                    <div id="timeline-indicator">
-                        <span class="timeline-label">YEAR</span>
-                        <span id="current-year-display">1998</span>
-                    </div>
-                </div>
-                <div class="header-right">
-                    <button id="btn-pause" class="ui-icon-btn">Pause</button>
-                </div>
-            </header>
+        <div id="secret-trigger"></div>
+    </div>
 
-            <main id="room-viewport">
+    <script>
+        // --- Gate Logic ---
+        const mathInput = document.getElementById('math-input');
+        mathInput.addEventListener('input', (e) => {
+            if(e.target.value === '25') {
+                document.getElementById('math-msg').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('gate-1').classList.add('hidden');
+                    document.getElementById('gate-2').classList.remove('hidden');
+                }, 1500);
+            }
+        });
+
+        function checkChem(answer) {
+            if(answer === 'Oxytocin') {
+                document.getElementById('chem-msg').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('gate-2').classList.add('hidden');
+                    document.getElementById('main-site').classList.remove('hidden');
+                    initCanvas();
+                    document.title = "Galactic Map";
+                }, 1500);
+            } else {
+                alert("Incorrect compound detected.");
+            }
+        }
+
+        // --- Navigation Logic ---
+        let starClicks = 0;
+        let mouseMoves = 0;
+
+        document.addEventListener('mousemove', () => {
+            if (!document.getElementById('main-site').classList.contains('hidden')) {
+                mouseMoves++;
+                if (mouseMoves > 200) {
+                    document.getElementById('hidden-star').classList.remove('hidden');
+                }
+            }
+        });
+
+        function openSection(id) {
+            starClicks++;
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById(id).offsetTop, behavior: 'smooth' });
+        }
+
+        // --- Sand Canvas Animation ---
+        function initCanvas() {
+            const canvas = document.getElementById('sand-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2,
+                    speedY: Math.random() * 1 + 0.5,
+                    speedX: (Math.random() - 0.5) * 1
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(210, 180, 140, 0.8)'; // Sand color
                 
-                <section id="room-hallway" class="room-scene active">
-                    <img class="room-background" src="assets/rooms/hallway_base.png" alt="A dark, dusty hallway">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-hallway-study" data-target="room-study" style="left: 15%; top: 30%; width: 12%; height: 50%;"></div>
-                        <div class="hotspot door" id="hs-hallway-kitchen" data-target="room-kitchen" style="left: 80%; top: 35%; width: 10%; height: 45%;"></div>
-                        <div class="hotspot inspect" id="hs-hallway-portrait" style="left: 45%; top: 20%; width: 15%; height: 25%;"></div>
-                        <div class="hotspot item" id="hs-hallway-tape1" data-item="tape_1" style="left: 50%; top: 85%; width: 5%; height: 5%;"></div>
-                    </div>
-                </section>
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    if(p.y > canvas.height) p.y = 0;
+                    if(p.x > canvas.width) p.x = 0;
+                    if(p.x < 0) p.x = canvas.width;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
 
-                <section id="room-study" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/study_base.png" alt="A cluttered study room">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-study-hallway" data-target="room-hallway" style="left: 5%; top: 40%; width: 8%; height: 50%;"></div>
-                        <div class="hotspot puzzle" id="hs-study-desk" data-puzzle="puzzle-symbol-lock" style="left: 40%; top: 60%; width: 25%; height: 20%;"></div>
-                        <div class="hotspot inspect" id="hs-study-bookshelf" style="left: 70%; top: 10%; width: 20%; height: 70%;"></div>
-                        <div class="hotspot item" id="hs-study-document" data-item="doc_experiment1" style="left: 45%; top: 55%; width: 8%; height: 6%;"></div>
-                    </div>
-                </section>
+        // Scroll listener for Arrakis text
+        window.addEventListener('scroll', () => {
+            const text = document.querySelector('.arrakis-text');
+            if(text && window.scrollY > 100) {
+                text.style.opacity = 1;
+            }
+        });
 
-                <section id="room-kitchen" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/kitchen_base.png" alt="An abandoned kitchen">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-kitchen-hallway" data-target="room-hallway" style="left: 10%; top: 30%; width: 12%; height: 60%;"></div>
-                        <div class="hotspot door" id="hs-kitchen-basement" data-target="room-basement" style="left: 85%; top: 30%; width: 10%; height: 60%;"></div>
-                        <div class="hotspot inspect" id="hs-kitchen-sink" style="left: 40%; top: 50%; width: 15%; height: 15%;"></div>
-                        <div class="hotspot puzzle" id="hs-kitchen-cabinet" data-puzzle="puzzle-pattern" style="left: 60%; top: 20%; width: 15%; height: 30%;"></div>
-                    </div>
-                </section>
+        // --- Mood Generator ---
+        const moods = [
+            { text: "Frank Ocean midnight sadness", audio: "song1.mp3" },
+            { text: "TV Girl chaotic nostalgia", audio: "song2.mp3" },
+            { text: "Daniel Caesar soft romance", audio: "song3.mp3" }
+        ];
+        let currentAudio = null;
 
-                <section id="room-music" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/music_base.png" alt="A room with a grand piano">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-music-hallway" data-target="room-hallway" style="left: 5%; top: 35%; width: 10%; height: 55%;"></div>
-                        <div class="hotspot puzzle" id="hs-music-piano" data-puzzle="puzzle-melody" style="left: 30%; top: 40%; width: 40%; height: 35%;"></div>
-                        <div class="hotspot item" id="hs-music-sheet" data-item="sheet_music" style="left: 45%; top: 30%; width: 10%; height: 10%;"></div>
-                    </div>
-                </section>
+        function generateMood() {
+            const mood = moods[Math.floor(Math.random() * moods.length)];
+            document.getElementById('mood-output').innerText = mood.text;
+            
+            if(currentAudio) currentAudio.pause();
+            // Uncomment the lines below when you have the audio files in the directory
+            // currentAudio = new Audio(mood.audio);
+            // currentAudio.play();
+        }
 
-            </main>
+        // --- Droid Translator ---
+        function translateDroid() {
+            const textElement = document.getElementById('droid-text');
+            const message = "Translation: someone here thinks you’re incredibly cool.";
+            textElement.innerText = "";
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                textElement.innerText += message.charAt(i);
+                i++;
+                if (i >= message.length) clearInterval(typeInterval);
+            }, 50);
+        }
 
-            <aside id="inventory-sidebar">
-                <div class="inventory-title">INVENTORY</div>
-                <div id="inventory-grid">
-                    <div class="inv-slot empty" id="inv-slot-1"></div>
-                    <div class="inv-slot empty" id="inv-slot-2"></div>
-                    <div class="inv-slot empty" id="inv-slot-3"></div>
-                    <div class="inv-slot empty" id="inv-slot-4"></div>
-                    <div class="inv-slot empty" id="inv-slot-5"></div>
-                    <div class="inv-slot empty" id="inv-slot-6"></div>
-                    <div class="inv-slot empty" id="inv-slot-7"></div>
-                    <div class="inv-slot empty" id="inv-slot-8"></div>
-                    <div class="inv-slot empty" id="inv-slot-9"></div>
-                    <div class="inv-slot empty" id="inv-slot-10"></div>
-                    <div class="inv-slot empty" id="inv-slot-11"></div>
-                    <div class="inv-slot empty" id="inv-slot-12"></div>
-                    <div class="inv-slot empty" id="inv-slot-13"></div>
-                    <div class="inv-slot empty" id="inv-slot-14"></div>
-                    <div class="inv-slot empty" id="inv-slot-15"></div>
-                </div>
-                <div id="inventory-inspect-panel">
-                    <img id="inspect-image" src="" alt="Selected Item">
-                    <h3 id="inspect-name">Select an item</h3>
-                    <p id="inspect-desc"></p>
-                    <div class="inspect-actions">
-                        <button id="btn-use-item" class="action-btn" disabled>Use</button>
-                        <button id="btn-combine-item" class="action-btn" disabled>Combine</button>
-                    </div>
-                </div>
-            </aside>
+        // --- Compliment Machine ---
+        const compliments = [
+            "Certified main character energy.",
+            "Performative divaa",
+            "Scientifically proven kooool.",
+            "Rare niche personality detected."
+        ];
+        function generateCompliment() {
+            const comp = compliments[Math.floor(Math.random() * compliments.length)];
+            document.getElementById('compliment-output').innerText = `> ${comp}`;
+        }
 
-            <footer id="dialogue-footer" class="hidden">
-                <div class="dialogue-wrapper">
-                    <div class="portrait-box">
-                        <img id="dialogue-portrait" src="" alt="Character Portrait">
-                    </div>
-                    <div class="text-box">
-                        <h4 id="dialogue-speaker"></h4>
-                        <p id="dialogue-text"></p>
-                        <span class="dialogue-prompt">Click to continue...</span>
-                    </div>
-                </div>
-            </footer>
+        // --- Parallel Universe Toggle ---
+        let isAlternate = false;
+        function toggleUniverse() {
+            isAlternate = !isAlternate;
+            const btn = document.getElementById('universe-toggle');
+            if (isAlternate) {
+                document.body.classList.add('alternate-universe');
+                btn.innerText = "Alternate Timeline";
+                // Change greeting logic dynamically if needed
+            } else {
+                document.body.classList.remove('alternate-universe');
+                btn.innerText = "Normal Universe";
+            }
+        }
 
-        </div>
-                <section id="room-basement" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/basement_base.png" alt="A dark, damp basement">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-basement-kitchen" data-target="room-kitchen" style="left: 10%; top: 20%; width: 15%; height: 70%;"></div>
-                        <div class="hotspot puzzle" id="hs-basement-fusebox" data-puzzle="puzzle-fusebox" style="left: 60%; top: 30%; width: 12%; height: 25%;"></div>
-                        <div class="hotspot item" id="hs-basement-key" data-item="heart_key" style="left: 75%; top: 80%; width: 5%; height: 5%;"></div>
-                        <div class="hotspot inspect" id="hs-basement-water" style="left: 30%; top: 85%; width: 40%; height: 15%;"></div>
-                    </div>
-                </section>
+        // --- Keyboard Easter Eggs ---
+        let r2Sequence = '';
+        document.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'a') alert("The Force is strong with this one.");
+            if (key === 'f') openSection('music-section');
+            
+            r2Sequence += key;
+            if (r2Sequence.length > 2) r2Sequence = r2Sequence.substring(1);
+            if (r2Sequence === 'r2') alert("*Happy Astromech noises*");
+        });
 
-                <section id="room-attic" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/attic_base.png" alt="A dusty attic filled with boxes">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-attic-hallway" data-target="room-hallway" style="left: 80%; top: 40%; width: 10%; height: 50%;"></div>
-                        <div class="hotspot item" id="hs-attic-mask" data-item="porcelain_mask" style="left: 30%; top: 50%; width: 8%; height: 12%;"></div>
-                        <div class="hotspot item" id="hs-attic-photo" data-item="photograph" style="left: 50%; top: 65%; width: 6%; height: 8%;"></div>
-                        <div class="hotspot inspect" id="hs-attic-mirror" style="left: 15%; top: 20%; width: 15%; height: 45%;"></div>
-                        <div class="hotspot door" id="hs-attic-chamber" data-target="room-chamber" style="left: 40%; top: 20%; width: 20%; height: 60%;"></div>
-                    </div>
-                </section>
+        // --- Cinematic Ending ---
+        function startEnding() {
+            const container = document.getElementById('cinema-container');
+            container.innerHTML = "";
+            
+            const lines = isAlternate ? 
+                ["In every universe I’d still think you’re amazing. Master OBI-WAN. "] : 
+                [
+                    "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.",
+                    "Happyyyy birthdayy twinnn 🎀🦄🍎"
+                ];
 
-                <section id="room-chamber" class="room-scene hidden">
-                    <img class="room-background" src="assets/rooms/chamber_base.png" alt="A chamber housing a massive grandfather clock">
-                    <div class="hotspot-layer">
-                        <div class="hotspot door" id="hs-chamber-attic" data-target="room-attic" style="left: 5%; top: 30%; width: 10%; height: 60%;"></div>
-                        <div class="hotspot interact" id="hs-chamber-clock" data-action="open-final-mechanism" style="left: 35%; top: 5%; width: 30%; height: 90%;"></div>
-                        <div class="hotspot inspect" id="hs-chamber-notes" style="left: 75%; top: 60%; width: 15%; height: 15%;"></div>
-                    </div>
-                </section>
-
-            <div id="overlay-document" class="screen-overlay hidden">
-                <div class="modal-content document-reader">
-                    <button class="btn-close-modal" data-target="overlay-document">X</button>
-                    <h2 id="doc-title">Document Title</h2>
-                    <div class="doc-body" id="doc-content">
-                        </div>
-                </div>
-            </div>
-
-            <div id="overlay-puzzle-symbol" class="screen-overlay hidden">
-                <div class="modal-content puzzle-board">
-                    <button class="btn-close-modal" data-target="overlay-puzzle-symbol">X</button>
-                    <h2>Desk Drawer Lock</h2>
-                    <div class="puzzle-interface">
-                        <div class="symbol-dial" id="dial-1" data-value="0">
-                            <span class="symbol-display">☀️</span>
-                            <button class="btn-dial-up">▲</button>
-                            <button class="btn-dial-down">▼</button>
-                        </div>
-                        <div class="symbol-dial" id="dial-2" data-value="0">
-                            <span class="symbol-display">🌙</span>
-                            <button class="btn-dial-up">▲</button>
-                            <button class="btn-dial-down">▼</button>
-                        </div>
-                        <div class="symbol-dial" id="dial-3" data-value="0">
-                            <span class="symbol-display">⭐</span>
-                            <button class="btn-dial-up">▲</button>
-                            <button class="btn-dial-down">▼</button>
-                        </div>
-                    </div>
-                    <button id="btn-submit-symbol" class="btn-puzzle-action">Unlock</button>
-                    <p class="puzzle-feedback" id="feedback-symbol"></p>
-                </div>
-            </div>
-
-            <div id="overlay-puzzle-melody" class="screen-overlay hidden">
-                <div class="modal-content puzzle-board">
-                    <button class="btn-close-modal" data-target="overlay-puzzle-melody">X</button>
-                    <h2>Piano Keys</h2>
-                    <div class="puzzle-interface piano-keys">
-                        <div class="piano-key white" data-note="C"></div>
-                        <div class="piano-key black" data-note="C#"></div>
-                        <div class="piano-key white" data-note="D"></div>
-                        <div class="piano-key black" data-note="D#"></div>
-                        <div class="piano-key white" data-note="E"></div>
-                        <div class="piano-key white" data-note="F"></div>
-                        <div class="piano-key black" data-note="F#"></div>
-                        <div class="piano-key white" data-note="G"></div>
-                        <div class="piano-key black" data-note="G#"></div>
-                        <div class="piano-key white" data-note="A"></div>
-                        <div class="piano-key black" data-note="A#"></div>
-                        <div class="piano-key white" data-note="B"></div>
-                    </div>
-                    <button id="btn-play-melody" class="btn-puzzle-action">Play Sequence</button>
-                    <button id="btn-reset-melody" class="btn-puzzle-action">Reset</button>
-                    <p class="puzzle-feedback" id="feedback-melody"></p>
-                </div>
-            </div>
-
-            <div id="overlay-final-mechanism" class="screen-overlay hidden">
-                <div class="modal-content final-board">
-                    <button class="btn-close-modal" data-target="overlay-final-mechanism">X</button>
-                    <h2>The Mechanism</h2>
-                    <p>Insert the required components to initiate the sequence.</p>
-                    <div class="mechanism-slots">
-                        <div class="component-slot" id="slot-mask" data-requirement="porcelain_mask">
-                            <span class="slot-label">Mask</span>
-                            <div class="slot-status">Empty</div>
-                        </div>
-                        <div class="component-slot" id="slot-photo" data-requirement="photograph">
-                            <span class="slot-label">Photograph</span>
-                            <div class="slot-status">Empty</div>
-                        </div>
-                        <div class="component-slot" id="slot-key" data-requirement="heart_key">
-                            <span class="slot-label">Key</span>
-                            <div class="slot-status">Empty</div>
-                        </div>
-                    </div>
-                    <button id="btn-activate-machine" class="btn-puzzle-action" disabled>Activate Sequence</button>
-                </div>
-            </div>
-
-            <div id="ending-sequence" class="screen-overlay hidden black-screen">
-                <div class="ending-content">
-                    <div id="ending-image-container">
-                        <img id="ending-photo" src="" alt="The final photograph">
-                    </div>
-                    <p id="ending-text"></p>
-                    <p id="ending-quote" class="hidden">"A person is only complete when someone else is forgotten."</p>
-                    <button id="btn-return-main" class="hidden menu-btn">Return to Menu</button>
-                </div>
-            </div>
-
-        </div> </div> <script src="js/engine.js"></script>
+            let delay = 0;
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    const p = document.createElement('p');
+                    p.innerText = line;
+                    p.className = 'movie-fade';
+                    container.appendChild(p);
+                }, delay);
+                delay += 4000; 
+            });
+        }
+    </script>
 </body>
 </html>
