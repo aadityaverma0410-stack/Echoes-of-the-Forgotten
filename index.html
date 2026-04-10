@@ -69,7 +69,18 @@
         
         .system-text { color: var(--system-green); font-size: 1em; margin-top: 15px; font-weight: bold; min-height: 24px; }
         .error-text { color: var(--system-red); font-size: 1em; margin-top: 15px; min-height: 24px; }
-        .terminal-box { background: rgba(0,0,0,0.7); border: 1px solid #333; padding: 20px; margin: 20px 0; border-radius: 4px; text-align: left; min-height: 80px; }
+        
+        /* Fixed Terminal Text Wrapping */
+        .terminal-box { 
+            background: rgba(0,0,0,0.7); border: 1px solid #333; padding: 20px; 
+            margin: 20px 0; border-radius: 4px; text-align: left; min-height: 80px; 
+            width: 100%; overflow: hidden;
+        }
+        .terminal-box p, .terminal-box div {
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
 
         input[type="text"] {
             width: 100%; background: #000; border: 1px solid var(--accent-color);
@@ -120,7 +131,7 @@
         .tonearm.playing { transform: rotate(25deg); }
         @keyframes spinRecord { 100% { transform: rotate(360deg); } }
 
-        /* Games Container & Matrix TTT */
+        /* Games Container */
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: #111; padding: 8px; border-radius: 8px; border: 2px solid #333; }
         .cell {
             background-color: #050505;
@@ -130,19 +141,17 @@
         }
         .cell:hover { background-color: #1a1a1a; }
         
-        /* Pastel Simon Board */
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
         .simon-btn { height: 80px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.4); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
-        /* Cinematic Fixed Visibility */
+        /* Cinematic */
         .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; color: #ffffff; font-weight: bold; text-shadow: 0 0 10px rgba(255,255,255,0.6); }
         .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
         @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
         .permanent-fade { animation: fadeHold 3s forwards; }
         @keyframes fadeHold { 0% { opacity: 0; } 100% { opacity: 1; } }
         
-        /* Custom scrollbar for glass panel */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
@@ -295,7 +304,7 @@
             <h2>Terminal Interface</h2>
             <div class="terminal-box">
                 <p id="droid-raw" style="letter-spacing: 2px;">BEEP BOOP BEEP — 011010</p>
-                <p id="droid-translated" class="system-text"></p>
+                <div id="droid-translated" class="system-text"></div>
             </div>
             <button onclick="translateDroid()">Translate Astromech</button>
             <div style="margin: 20px 0; border-top: 1px solid #333; padding-top: 20px;"></div>
@@ -313,7 +322,7 @@
             <button onclick="startEnding()">Initialize Transmission</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
-        <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center;"></div>
+        <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; z-index: 50;"></div>
     </div>
 
     <audio id="audio-frank" src="frank.mp3"></audio>
@@ -326,6 +335,7 @@
     <script>
         // --- Setup ---
         let isAlternate = false;
+        let isLightspeed = false;
         
         // --- Verification Gates ---
         document.getElementById('math-input').addEventListener('input', (e) => {
@@ -407,7 +417,6 @@
                 let available = board.map((val, i) => val === "" ? i : null).filter(val => val !== null);
                 let move;
                 
-                // 40% chance for random move (lowers difficulty to moderate)
                 if (Math.random() < 0.4) {
                     move = available[Math.floor(Math.random() * available.length)];
                 } else {
@@ -513,11 +522,13 @@
             if(isTranslating) return;
             isTranslating = true;
             let el = document.getElementById('droid-translated');
-            let msg = "> Translation: someone here thinks you’re incredibly cool.";
-            el.innerText = "";
+            let msg = "> Translation: someone here thinks you're incredibly cool.";
+            el.textContent = "";
             let i = 0;
             let int = setInterval(() => {
-                el.innerText += msg.charAt(i); i++;
+                i++;
+                // Fixed text wrapping issue using textContent and CSS word-wrap
+                el.textContent = msg.substring(0, i); 
                 if(i >= msg.length) { clearInterval(int); isTranslating = false; }
             }, 50);
         }
@@ -547,24 +558,31 @@
         }
         setInterval(spawnMeme, 8000); 
 
-        // --- Cinematic Ending ---
+        // --- Cinematic Ending & Lightspeed ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
             let bdAudio = document.getElementById('audio-cornershop');
             if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
 
-            let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
+            // Trigger Lightspeed Jump
+            isLightspeed = true;
             
-            let img = document.createElement('img');
-            img.src = "goat.jpg"; img.className = "goat-img permanent-fade";
-            box.appendChild(img);
+            setTimeout(() => {
+                isLightspeed = false; // End hyperjump
+                
+                let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
+                
+                let img = document.createElement('img');
+                img.src = "goat.jpg"; img.className = "goat-img permanent-fade";
+                box.appendChild(img);
 
-            let lines = ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
-            let d = 1500;
-            lines.forEach((l) => {
-                setTimeout(() => { let p = document.createElement('p'); p.innerText = l; p.className = 'movie-fade'; box.appendChild(p); }, d);
-                d += 3500; 
-            });
+                let lines = ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
+                let d = 1500;
+                lines.forEach((l) => {
+                    setTimeout(() => { let p = document.createElement('p'); p.innerText = l; p.className = 'movie-fade'; box.appendChild(p); }, d);
+                    d += 3500; 
+                });
+            }, 2500); // Lightspeed lasts 2.5 seconds before showing text
         }
 
         // --- Universe Toggle & Keys ---
@@ -582,17 +600,41 @@
             if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
         });
 
-        // --- Canvas ---
+        // --- Dynamic Canvas ---
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+        
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
+        
         function draw() {
-            ctx.clearRect(0,0,cvs.width,cvs.height); ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
+            if(isLightspeed) {
+                // Trail effect for hyperspace
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; 
+                ctx.fillRect(0, 0, cvs.width, cvs.height);
+            } else {
+                ctx.clearRect(0,0,cvs.width,cvs.height); 
+            }
+            
+            ctx.fillStyle = isAlternate ? 'rgba(157, 78, 221, 0.8)' : 'rgba(212, 175, 55, 0.8)';
+            
             parts.forEach(p => {
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
-                p.x += p.dx; p.y += p.dy;
+                ctx.beginPath(); 
+                if (isLightspeed) {
+                    // Stretch out and accelerate massively downwards
+                    ctx.arc(p.x, p.y, p.s * 1.5, 0, Math.PI*2);
+                    p.y += (p.dy * 25);
+                    p.x += (p.dx * 5); 
+                } else {
+                    // Normal slow float
+                    ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); 
+                    p.x += p.dx; p.y += p.dy;
+                }
+                ctx.fill();
+                
+                // Screen wrapping logic
                 if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; }
+                if(p.y < 0) { p.y = cvs.height; p.x = Math.random()*cvs.width; }
                 if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width;
             });
             requestAnimationFrame(draw);
