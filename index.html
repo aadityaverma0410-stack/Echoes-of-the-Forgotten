@@ -4,18 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+        /* --- Core Variables --- */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #d4af37; /* Dune Sand/Gold */
+            --accent-glow: 0 0 30px rgba(212, 175, 55, 0.8);
+            --panel-bg: rgba(15, 15, 20, 0.85);
+            --border-color: rgba(212, 175, 55, 0.5);
+            --font-main: 'Courier Prime', monospace;
+            --system-green: #4ade80;
+            --system-red: #ff4d4d;
+        }
+
+        body.alternate-universe {
+            --bg-color: #0b001a;
+            --text-color: #e2e8f0;
+            --accent-color: #9d4edd; /* Sci-fi Purple */
+            --accent-glow: 0 0 30px rgba(157, 78, 221, 0.8);
+            --panel-bg: rgba(20, 5, 35, 0.85);
+            --border-color: rgba(157, 78, 221, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            transition: background-color 1s ease, color 1s ease;
+            min-height: 100vh;
+        }
+
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 80px 20px 60px 20px; z-index: 10; transition: opacity 0.5s ease;
+        }
+
+        .hidden { display: none !important; opacity: 0; pointer-events: none; }
+
+        /* --- UI Panels --- */
+        .glass-panel {
+            background: var(--panel-bg); backdrop-filter: blur(15px);
+            border: 2px solid var(--border-color); border-radius: 12px;
+            padding: 40px 25px; max-width: 500px; width: 100%;
+            text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+        }
+
+        h1, h2 { color: var(--accent-color); text-shadow: var(--accent-glow); margin-bottom: 20px; letter-spacing: 2px; }
+        p { margin-bottom: 20px; line-height: 1.6; font-size: 1.1em; }
+        
+        .system-text { color: var(--system-green); font-size: 1.1em; margin-top: 15px; font-weight: bold; }
+        .error-text { color: var(--system-red); font-size: 1.1em; margin-top: 15px; }
+        .quote { font-style: italic; border-left: 3px solid var(--accent-color); padding-left: 20px; margin: 30px 0; text-align: left; opacity: 0.9; }
+        .terminal-box { background: #000; border: 1px solid #444; padding: 20px; margin: 20px 0; border-radius: 6px; text-align: left; min-height: 80px; }
+
+        /* --- Inputs & Buttons --- */
+        input[type="text"] {
+            width: 100%; background: #000; border: 2px solid var(--accent-color);
+            color: var(--text-color); padding: 18px; border-radius: 6px; font-family: inherit;
+            font-size: 1.2em; text-align: center; outline: none;
+        }
+        input[type="text"]:focus { box-shadow: var(--accent-glow); }
+
+        button {
+            width: 100%; background: #000; border: 2px solid var(--accent-color);
+            color: var(--accent-color); padding: 18px; margin-top: 12px; border-radius: 6px;
+            font-family: inherit; font-size: 1.1em; font-weight: bold; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase;
+        }
+        button:hover { background: var(--accent-color); color: #000; box-shadow: var(--accent-glow); }
+
+        .back-btn { border-color: #666; color: #aaa; margin-top: 30px; font-size: 0.9em; }
+        .back-btn:hover { background: #666; color: #fff; }
+
+        #universe-toggle { position: fixed; top: 15px; right: 15px; width: auto; z-index: 100; padding: 12px 20px; font-size: 0.9em; background: rgba(0,0,0,0.8); }
+
+        /* --- NEW: Highly Visible Map --- */
+        .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
+        
+        #map-container {
+            position: relative; width: 100%; height: 75vh; min-height: 500px;
+            border: 2px dashed var(--border-color); border-radius: 50%;
+            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 80%);
+        }
+
+        .planet {
+            position: absolute; width: 70px; height: 70px; /* Massive size */
+            background: radial-gradient(circle at 30% 30%, #fff, var(--accent-color), #000);
+            border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%);
+            box-shadow: var(--accent-glow), inset -10px -10px 20px rgba(0,0,0,0.8);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 20; display: flex; align-items: center; justify-content: center;
+        }
+
+        .planet::before {
+            content: attr(data-tooltip); position: absolute; top: -40px;
+            background: var(--panel-bg); padding: 5px 10px; border: 1px solid var(--accent-color);
+            border-radius: 4px; font-size: 12px; white-space: nowrap; opacity: 0; transition: opacity 0.3s;
+        }
+        .planet:hover::before { opacity: 1; }
+        
+        .planet::after {
+            content: attr(data-label); position: absolute; bottom: -35px;
+            font-size: 16px; font-weight: bold; color: var(--text-color);
+            text-shadow: 0 0 10px #000, 0 0 20px #000; letter-spacing: 1px;
+            background: rgba(0,0,0,0.7); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border-color);
+        }
+
+        .planet:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 50px var(--accent-color); }
+        .planet.visited { filter: grayscale(50%); border: 2px solid var(--system-green); }
+
+        /* Arrakis Sand Effect */
+        .arrakis-text { margin-top: 40px; font-size: 1em; opacity: 0; transition: opacity 2s; color: var(--accent-color); }
+        
+        /* Secret Unlock Area */
+        #secret-trigger-area { height: 100px; width: 100%; margin-top: 50px; display: none; align-items: center; justify-content: center; }
+
+        /* Cinematic */
+        .movie-fade { opacity: 0; animation: movieFadeIn 5s forwards; font-size: 1.5em; line-height: 2; margin: 40px 0; text-shadow: 0 0 15px rgba(255,255,255,0.4); text-align: center; }
+        @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.05); } }
+    </style>
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
 
+    <canvas id="bg-canvas"></canvas>
     <button id="universe-toggle" class="hidden" onclick="toggleUniverse()">Normal Universe</button>
 
     <div id="gate-1" class="screen">
         <div class="glass-panel">
-            <h2 class="terminal-header">SYSTEM LOCK</h2>
+            <h2>SYSTEM LOCK</h2>
             <p>Verification required: Solve to continue.</p>
-            <div class="math-problem">5 × 5 = ?</div>
+            <h1 style="font-size: 3em; margin: 30px 0;">5 × 5 = ?</h1>
             <input type="text" id="math-input" placeholder="Answer..." autocomplete="off">
             <div id="math-msg" class="system-text"></div>
         </div>
@@ -23,14 +150,12 @@
 
     <div id="gate-2" class="screen hidden">
         <div class="glass-panel">
-            <h2 class="terminal-header">CHEMISTRY PROTOCOL</h2>
+            <h2>CHEMISTRY PROTOCOL</h2>
             <p>Which element is known as the "element of love" because it strengthens emotional bonding?</p>
-            <div class="btn-grid">
-                <button onclick="checkChem(this, 'Oxygen')">Oxygen</button>
-                <button onclick="checkChem(this, 'Oxytocin')">Oxytocin (technically a hormone, but commonly used in this context)</button>
-                <button onclick="checkChem(this, 'Nitrogen')">Nitrogen</button>
-                <button onclick="checkChem(this, 'Carbon')">Carbon</button>
-            </div>
+            <button onclick="checkChem(this, 'Oxygen')">Oxygen</button>
+            <button onclick="checkChem(this, 'Oxytocin')">Oxytocin (technically a hormone, but commonly used in this context)</button>
+            <button onclick="checkChem(this, 'Nitrogen')">Nitrogen</button>
+            <button onclick="checkChem(this, 'Carbon')">Carbon</button>
             <div id="chem-msg" class="system-text"></div>
             <div id="chem-error" class="error-text"></div>
         </div>
@@ -39,28 +164,54 @@
     <div id="main-site" class="screen hidden">
         <div class="map-wrapper">
             <h1>GALACTIC NAVIGATION</h1>
-            <p>Select a destination to continue.</p>
+            <p>Tap a planet to explore.</p>
             
             <div id="map-container">
-                <div class="star-node" style="top: 15%; left: 20%;" onclick="openSection('music-section')"></div>
-                <div class="star-node" style="top: 45%; left: 70%;" onclick="openSection('droid-section')"></div>
-                <div class="star-node" style="top: 80%; left: 30%;" onclick="openSection('compliment-section')"></div>
-                <div class="star-node" style="top: 30%; left: 85%;" onclick="openSection('cinema-section')"></div>
+                <div class="planet" data-label="Music" data-tooltip="> Unknown planet detected" style="top: 15%; left: 50%; background: radial-gradient(circle, #ff9a9e, #fecfef);" onclick="openSection('music-section', this)"></div>
+                <div class="planet" data-label="Memories" data-tooltip="> Unknown planet detected" style="top: 40%; left: 15%; background: radial-gradient(circle, #a18cd1, #fbc2eb);" onclick="openSection('memory-section', this)"></div>
+                <div class="planet" data-label="Quiz" data-tooltip="> Unknown planet detected" style="top: 40%; left: 85%; background: radial-gradient(circle, #84fab0, #8fd3f4);" onclick="openSection('quiz-section', this)"></div>
+                <div class="planet" data-label="Terminal" data-tooltip="> Unknown planet detected" style="top: 75%; left: 30%; background: radial-gradient(circle, #fccb90, #d57eeb);" onclick="openSection('compliment-section', this)"></div>
+                <div class="planet" data-label="Transmission" data-tooltip="> Unknown planet detected" style="top: 75%; left: 70%; background: radial-gradient(circle, #e0c3fc, #8ec5fc);" onclick="openSection('cinema-section', this)"></div>
                 
-                <div id="hidden-star" class="star-node hidden" style="top: 90%; left: 50%;" onclick="openSection('secret-section')"></div>
+                <div id="hidden-star" class="planet hidden" data-label="???" data-tooltip="> Anomaly detected" style="top: 50%; left: 50%; background: radial-gradient(circle, red, darkred); box-shadow: 0 0 40px red;" onclick="openSection('droid-section', this)"></div>
+            </div>
+
+            <div id="secret-trigger-area">
+                <button onclick="openSection('secret-section', null)" style="border-color: red; color: red; background: rgba(255,0,0,0.1);">ACCESS CLASSIFIED DATA</button>
             </div>
         </div>
     </div>
 
-    <div id="music-section" class="screen hidden">
+    <div id="music-section" class="screen hidden" onscroll="handleScroll()">
         <div class="glass-panel">
             <h2>Vibe Generator</h2>
-            <p>Initialize audio mood sequence.</p>
             <button onclick="generateMood()">Generate today's vibe</button>
-            <div id="mood-display" class="quote hidden"></div>
-            <div class="arrakis-text fade-scroll">
-                > "Some people are rare like water on Arrakis."
+            <div id="mood-display" class="quote hidden" style="font-size: 1.2em;"></div>
+            <p class="arrakis-text" id="arrakis-quote">> “Some people are rare like water on Arrakis.”</p>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
+        <div style="height: 150vh; width: 10px;"></div> 
+    </div>
+
+    <div id="memory-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2>Data Archives</h2>
+            <div class="terminal-box">
+                <p>> Loading core memories...</p>
+                <p>> Error 404: Too many good moments to compute.</p>
+                <p>> Displaying manual override.</p>
             </div>
+            <p>[Insert your favorite photo or memory text here]</p>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
+    </div>
+
+    <div id="quiz-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2>Personality Protocol</h2>
+            <p>Who is the best character in Star Wars?</p>
+            <button onclick="alert('Logical. The correct answer is always R2-D2 or Anakin.')">Anakin Skywalker</button>
+            <button onclick="alert('Logical. The correct answer is always R2-D2 or Anakin.')">R2-D2</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
     </div>
@@ -69,7 +220,7 @@
         <div class="glass-panel">
             <h2>Astromech Interface</h2>
             <div class="terminal-box">
-                <p id="droid-raw">BEEP BOOP BEEP — 011010</p>
+                <p id="droid-raw" style="letter-spacing: 2px;">BEEP BOOP BEEP — 011010</p>
                 <p id="droid-translated" class="system-text"></p>
             </div>
             <button onclick="translateDroid()">Translate</button>
@@ -82,7 +233,7 @@
             <h2>Terminal Interface</h2>
             <button onclick="generateCompliment()">Press when you need a random compliment.</button>
             <div class="terminal-box">
-                <div id="compliment-output" class="system-text">Awaiting input...</div>
+                <div id="compliment-output" class="system-text">> Awaiting input...</div>
             </div>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
@@ -90,25 +241,216 @@
 
     <div id="cinema-section" class="screen hidden">
         <div class="glass-panel" id="cinema-panel">
-            <h2>Final Transmission</h2>
-            <button onclick="startEnding()">Initialize Sequence</button>
+            <h2>Final Sequence</h2>
+            <button onclick="startEnding()">Initialize</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
-        <div id="cinema-text-container" class="cinematic-wrapper"></div>
+        <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px;"></div>
     </div>
 
     <div id="secret-section" class="screen hidden">
-        <div class="glass-panel secret-panel">
-            <h2>CLASSIFIED</h2>
+        <div class="glass-panel" style="border-color: #ff4d4d; box-shadow: 0 0 50px rgba(255,0,0,0.3);">
+            <h2 style="color: #ff4d4d;">CLASSIFIED</h2>
             <p class="quote">“If you found this, you’re officially too smart to cr*ck JEE 💔💔💔”</p>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
     </div>
 
-    <audio id="audio-frank" src="song1.mp3"></audio>
-    <audio id="audio-tvgirl" src="song2.mp3"></audio>
-    <audio id="audio-daniel" src="song3.mp3"></audio>
+    <audio id="audio-frank" src="frank.mp3"></audio>
+    <audio id="audio-tvgirl" src="tvgirl.mp3"></audio>
+    <audio id="audio-daniel" src="daniel.mp3"></audio>
+    <audio id="audio-universe" src="cornershop.mp3" loop></audio>
 
-    <script src="script.js"></script>
+    <script>
+        // --- Setup Variables ---
+        let isAlternate = false;
+        let planetsVisited = 0;
+        let mouseDistance = 0;
+        let lastX = null, lastY = null;
+
+        // --- Gate 1: Math ---
+        document.getElementById('math-input').addEventListener('input', (e) => {
+            if(e.target.value.trim() === '25') {
+                e.target.disabled = true;
+                e.target.style.borderColor = "var(--system-green)";
+                document.getElementById('math-msg').innerText = "Correct. Logical processing confirmed.";
+                setTimeout(() => {
+                    document.getElementById('gate-1').classList.add('hidden');
+                    document.getElementById('gate-2').classList.remove('hidden');
+                }, 1500);
+            }
+        });
+
+        // --- Gate 2: Chemistry ---
+        function checkChem(btn, answer) {
+            document.getElementById('chem-error').innerText = "";
+            if(answer === 'Oxytocin') {
+                document.getElementById('chem-msg').innerText = "Bond detected. Access granted twinn.";
+                btn.style.backgroundColor = "var(--system-green)";
+                btn.style.color = "#000";
+                setTimeout(() => {
+                    document.getElementById('gate-2').classList.add('hidden');
+                    document.getElementById('main-site').classList.remove('hidden');
+                    document.getElementById('universe-toggle').classList.remove('hidden');
+                }, 1800);
+            } else {
+                document.getElementById('chem-error').innerText = "Incorrect compound detected.";
+                btn.style.borderColor = "var(--system-red)";
+            }
+        }
+
+        // --- Map Navigation & Tracking ---
+        function openSection(id, planetElement) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('universe-toggle').classList.add('hidden');
+            window.scrollTo(0, 0);
+
+            if(planetElement && !planetElement.classList.contains('visited')) {
+                planetElement.classList.add('visited');
+                planetsVisited++;
+                if(planetsVisited >= 5) {
+                    document.getElementById('secret-trigger-area').style.display = 'flex';
+                }
+            }
+        }
+
+        function returnToMap() {
+            document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
+            document.getElementById('main-site').classList.remove('hidden');
+            document.getElementById('universe-toggle').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Track mouse to reveal hidden Droid star
+        document.addEventListener('mousemove', (e) => {
+            if (!document.getElementById('main-site').classList.contains('hidden')) {
+                if (lastX !== null) {
+                    mouseDistance += Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
+                    if (mouseDistance > 4000) document.getElementById('hidden-star').classList.remove('hidden');
+                }
+                lastX = e.clientX; lastY = e.clientY;
+            }
+        });
+
+        // --- Arrakis Sand Effect (Scroll) ---
+        document.getElementById('music-section').addEventListener('scroll', () => {
+            if(document.getElementById('music-section').scrollTop > 100) {
+                document.getElementById('arrakis-quote').style.opacity = 1;
+            }
+        });
+
+        // --- Mood Generator ---
+        const moods = [
+            { text: "Frank Ocean midnight sadness", audio: "audio-frank" },
+            { text: "TV Girl chaotic nostalgia", audio: "audio-tvgirl" },
+            { text: "Daniel Caesar soft romance", audio: "audio-daniel" }
+        ];
+        function generateMood() {
+            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+            const m = moods[Math.floor(Math.random() * moods.length)];
+            document.getElementById('mood-display').innerText = "> " + m.text;
+            document.getElementById('mood-display').classList.remove('hidden');
+            let sound = document.getElementById(m.audio);
+            if(sound) sound.play().catch(e => console.log("Audio play blocked."));
+        }
+
+        // --- Droid Translator ---
+        let isTranslating = false;
+        function translateDroid() {
+            if(isTranslating) return;
+            isTranslating = true;
+            let el = document.getElementById('droid-translated');
+            let msg = "> Translation: someone here thinks you’re incredibly cool.";
+            el.innerText = "";
+            let i = 0;
+            let int = setInterval(() => {
+                el.innerText += msg.charAt(i); i++;
+                if(i >= msg.length) { clearInterval(int); isTranslating = false; }
+            }, 50);
+        }
+
+        // --- Compliments ---
+        const comps = ["Certified main character energy.", "Performative divaa", "Scientifically proven kooool.", "Rare niche personality detected."];
+        function generateCompliment() {
+            document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
+        }
+
+        // --- Parallel Universe ---
+        function toggleUniverse() {
+            isAlternate = !isAlternate;
+            let btn = document.getElementById('universe-toggle');
+            let uniAudio = document.getElementById('audio-universe');
+            
+            if (isAlternate) {
+                document.body.classList.add('alternate-universe');
+                btn.innerText = "Alternate Timeline";
+                if(uniAudio) uniAudio.play().catch(e=>console.log(e));
+            } else {
+                document.body.classList.remove('alternate-universe');
+                btn.innerText = "Normal Universe";
+                if(uniAudio) uniAudio.pause();
+            }
+        }
+
+        // --- Easter Eggs ---
+        let r2Seq = '';
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement.tagName === "INPUT") return;
+            let k = e.key.toLowerCase();
+            if (k === 'a') alert("> Anakin Protocol: I don't like sand. It's coarse and rough and irritating.");
+            if (k === 'f') openSection('music-section', null);
+            
+            r2Seq += k;
+            if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
+            if (r2Seq === 'r2') { alert("> 🤖 BEEP BOOP. *Happy droid noises*"); r2Seq = ''; }
+        });
+
+        // --- Cinema Ending ---
+        function startEnding() {
+            document.getElementById('cinema-panel').classList.add('hidden');
+            let box = document.getElementById('cinema-text-container');
+            box.innerHTML = "";
+            
+            let lines = isAlternate ? 
+                ["In every universe I’d still think you’re amazing.", "Master OBI-WAN."] : 
+                ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
+
+            let d = 0;
+            lines.forEach((l) => {
+                setTimeout(() => {
+                    let p = document.createElement('p');
+                    p.innerText = l;
+                    p.className = 'movie-fade';
+                    box.appendChild(p);
+                }, d);
+                d += 5000; 
+            });
+
+            setTimeout(() => { document.getElementById('cinema-panel').classList.remove('hidden'); box.innerHTML=""; }, d + 2000);
+        }
+
+        // --- Background Canvas ---
+        const cvs = document.getElementById('bg-canvas');
+        const ctx = cvs.getContext('2d');
+        let parts = [];
+        window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
+        cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+        
+        for(let i=0; i<150; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
+        
+        function draw() {
+            ctx.clearRect(0,0,cvs.width,cvs.height);
+            ctx.fillStyle = isAlternate ? 'rgba(157, 78, 221, 0.5)' : 'rgba(212, 175, 55, 0.5)';
+            parts.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+                p.x += p.dx; p.y += p.dy;
+                if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; }
+                if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
 </body>
 </html>
