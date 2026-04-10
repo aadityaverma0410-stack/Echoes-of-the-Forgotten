@@ -11,7 +11,7 @@
         :root {
             --bg-color: #050505;
             --text-color: #e0e0e0;
-            --accent-color: #d4af37; /* Dune Sand/Gold */
+            --accent-color: #d4af37;
             --accent-glow: 0 0 30px rgba(212, 175, 55, 0.8);
             --panel-bg: rgba(15, 15, 20, 0.85);
             --border-color: rgba(212, 175, 55, 0.5);
@@ -23,7 +23,7 @@
         body.alternate-universe {
             --bg-color: #0b001a;
             --text-color: #e2e8f0;
-            --accent-color: #9d4edd; /* Sci-fi Purple */
+            --accent-color: #9d4edd;
             --accent-glow: 0 0 30px rgba(157, 78, 221, 0.8);
             --panel-bg: rgba(20, 5, 35, 0.85);
             --border-color: rgba(157, 78, 221, 0.5);
@@ -61,8 +61,8 @@
         h1, h2 { color: var(--accent-color); text-shadow: var(--accent-glow); margin-bottom: 20px; letter-spacing: 2px; }
         p { margin-bottom: 20px; line-height: 1.6; font-size: 1.1em; }
         
-        .system-text { color: var(--system-green); font-size: 1.1em; margin-top: 15px; font-weight: bold; }
-        .error-text { color: var(--system-red); font-size: 1.1em; margin-top: 15px; }
+        .system-text { color: var(--system-green); font-size: 1.1em; margin-top: 15px; font-weight: bold; min-height: 25px; }
+        .error-text { color: var(--system-red); font-size: 1.1em; margin-top: 15px; min-height: 25px; }
         .quote { font-style: italic; border-left: 3px solid var(--accent-color); padding-left: 20px; margin: 30px 0; text-align: left; opacity: 0.9; }
         .terminal-box { background: #000; border: 1px solid #444; padding: 20px; margin: 20px 0; border-radius: 6px; text-align: left; min-height: 80px; }
 
@@ -87,7 +87,7 @@
 
         #universe-toggle { position: fixed; top: 15px; right: 15px; width: auto; z-index: 100; padding: 12px 20px; font-size: 0.9em; background: rgba(0,0,0,0.8); }
 
-        /* --- NEW: Highly Visible Map --- */
+        /* --- Map --- */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         
         #map-container {
@@ -97,7 +97,7 @@
         }
 
         .planet {
-            position: absolute; width: 70px; height: 70px; /* Massive size */
+            position: absolute; width: 70px; height: 70px;
             background: radial-gradient(circle at 30% 30%, #fff, var(--accent-color), #000);
             border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%);
             box-shadow: var(--accent-glow), inset -10px -10px 20px rgba(0,0,0,0.8);
@@ -122,13 +122,49 @@
         .planet:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 50px var(--accent-color); }
         .planet.visited { filter: grayscale(50%); border: 2px solid var(--system-green); }
 
-        /* Arrakis Sand Effect */
         .arrakis-text { margin-top: 40px; font-size: 1em; opacity: 0; transition: opacity 2s; color: var(--accent-color); }
-        
-        /* Secret Unlock Area */
         #secret-trigger-area { height: 100px; width: 100%; margin-top: 50px; display: none; align-items: center; justify-content: center; }
 
-        /* Cinematic */
+        /* --- Tic-Tac-Toe --- */
+        .tictactoe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        .cell {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent-color);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .cell:hover { background: rgba(255, 255, 255, 0.1); }
+
+        /* --- Floating Aesthetics --- */
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatUp 12s linear forwards;
+            font-size: 28px;
+            opacity: 0.7;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Cinematic --- */
         .movie-fade { opacity: 0; animation: movieFadeIn 5s forwards; font-size: 1.5em; line-height: 2; margin: 40px 0; text-shadow: 0 0 15px rgba(255,255,255,0.4); text-align: center; }
         @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.05); } }
     </style>
@@ -168,7 +204,7 @@
             
             <div id="map-container">
                 <div class="planet" data-label="Music" data-tooltip="> Unknown planet detected" style="top: 15%; left: 50%; background: radial-gradient(circle, #ff9a9e, #fecfef);" onclick="openSection('music-section', this)"></div>
-                <div class="planet" data-label="Memories" data-tooltip="> Unknown planet detected" style="top: 40%; left: 15%; background: radial-gradient(circle, #a18cd1, #fbc2eb);" onclick="openSection('memory-section', this)"></div>
+                <div class="planet" data-label="Mini-Game" data-tooltip="> Unknown planet detected" style="top: 40%; left: 15%; background: radial-gradient(circle, #4facfe, #00f2fe);" onclick="openSection('game-section', this)"></div>
                 <div class="planet" data-label="Quiz" data-tooltip="> Unknown planet detected" style="top: 40%; left: 85%; background: radial-gradient(circle, #84fab0, #8fd3f4);" onclick="openSection('quiz-section', this)"></div>
                 <div class="planet" data-label="Terminal" data-tooltip="> Unknown planet detected" style="top: 75%; left: 30%; background: radial-gradient(circle, #fccb90, #d57eeb);" onclick="openSection('compliment-section', this)"></div>
                 <div class="planet" data-label="Transmission" data-tooltip="> Unknown planet detected" style="top: 75%; left: 70%; background: radial-gradient(circle, #e0c3fc, #8ec5fc);" onclick="openSection('cinema-section', this)"></div>
@@ -193,15 +229,23 @@
         <div style="height: 150vh; width: 10px;"></div> 
     </div>
 
-    <div id="memory-section" class="screen hidden">
+    <div id="game-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>Data Archives</h2>
-            <div class="terminal-box">
-                <p>> Loading core memories...</p>
-                <p>> Error 404: Too many good moments to compute.</p>
-                <p>> Displaying manual override.</p>
+            <h2>Combat Simulator</h2>
+            <p>Beat the system. You are 'X'.</p>
+            <div class="tictactoe-board" id="board">
+                <div class="cell" onclick="makeMove(this, 0)"></div>
+                <div class="cell" onclick="makeMove(this, 1)"></div>
+                <div class="cell" onclick="makeMove(this, 2)"></div>
+                <div class="cell" onclick="makeMove(this, 3)"></div>
+                <div class="cell" onclick="makeMove(this, 4)"></div>
+                <div class="cell" onclick="makeMove(this, 5)"></div>
+                <div class="cell" onclick="makeMove(this, 6)"></div>
+                <div class="cell" onclick="makeMove(this, 7)"></div>
+                <div class="cell" onclick="makeMove(this, 8)"></div>
             </div>
-            <p>[Insert your favorite photo or memory text here]</p>
+            <div id="game-msg" class="system-text"></div>
+            <button onclick="resetGame()" style="margin-top: 10px;">Reset Board</button>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
     </div>
@@ -209,9 +253,28 @@
     <div id="quiz-section" class="screen hidden">
         <div class="glass-panel">
             <h2>Personality Protocol</h2>
-            <p>Who is the best character in Star Wars?</p>
-            <button onclick="alert('Logical. The correct answer is always R2-D2 or Anakin.')">Anakin Skywalker</button>
-            <button onclick="alert('Logical. The correct answer is always R2-D2 or Anakin.')">R2-D2</button>
+            
+            <div id="quiz-q1">
+                <p>Who is the best character in Star Wars?</p>
+                <button onclick="checkQuiz(1, 'correct')">Anakin Skywalker</button>
+                <button onclick="checkQuiz(1, 'correct')">R2-D2</button>
+                <button onclick="checkQuiz(1, 'wrong')">Jar Jar Binks</button>
+            </div>
+
+            <div id="quiz-q2" class="hidden">
+                <p>Physics Protocol: What is the universal force of attraction acting between all matter?</p>
+                <button onclick="checkQuiz(2, 'wrong')">Magnetism</button>
+                <button onclick="checkQuiz(2, 'correct')">Gravity</button>
+                <button onclick="checkQuiz(2, 'wrong')">Friction</button>
+            </div>
+
+            <div id="quiz-complete" class="hidden">
+                <h2 style="color: var(--system-green);">Analysis Complete</h2>
+                <p>You have passed all logical assessments.</p>
+            </div>
+
+            <div id="quiz-feedback" class="system-text"></div>
+            <div id="quiz-error" class="error-text"></div>
             <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
     </div>
@@ -259,10 +322,12 @@
     <audio id="audio-frank" src="frank.mp3"></audio>
     <audio id="audio-tvgirl" src="tvgirl.mp3"></audio>
     <audio id="audio-daniel" src="daniel.mp3"></audio>
-    <audio id="audio-universe" src="cornershop.mp3" loop></audio>
+    <audio id="audio-ladygaga" src="ladygaga.mp3"></audio>
+    <audio id="audio-kinggnu" src="kinggnu.mp3"></audio>
+    <audio id="audio-birthday" src="cornershop.mp3"></audio>
 
     <script>
-        // --- Setup Variables ---
+        // --- Core Setup ---
         let isAlternate = false;
         let planetsVisited = 0;
         let mouseDistance = 0;
@@ -299,7 +364,7 @@
             }
         }
 
-        // --- Map Navigation & Tracking ---
+        // --- Map Navigation ---
         function openSection(id, planetElement) {
             document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
@@ -322,7 +387,6 @@
             window.scrollTo(0, 0);
         }
 
-        // Track mouse to reveal hidden Droid star
         document.addEventListener('mousemove', (e) => {
             if (!document.getElementById('main-site').classList.contains('hidden')) {
                 if (lastX !== null) {
@@ -333,7 +397,7 @@
             }
         });
 
-        // --- Arrakis Sand Effect (Scroll) ---
+        // --- Arrakis ---
         document.getElementById('music-section').addEventListener('scroll', () => {
             if(document.getElementById('music-section').scrollTop > 100) {
                 document.getElementById('arrakis-quote').style.opacity = 1;
@@ -344,7 +408,9 @@
         const moods = [
             { text: "Frank Ocean midnight sadness", audio: "audio-frank" },
             { text: "TV Girl chaotic nostalgia", audio: "audio-tvgirl" },
-            { text: "Daniel Caesar soft romance", audio: "audio-daniel" }
+            { text: "Daniel Caesar soft romance", audio: "audio-daniel" },
+            { text: "Lady Gaga pop energy", audio: "audio-ladygaga" },
+            { text: "King Gnu rock vibe", audio: "audio-kinggnu" }
         ];
         function generateMood() {
             document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
@@ -355,7 +421,78 @@
             if(sound) sound.play().catch(e => console.log("Audio play blocked."));
         }
 
-        // --- Droid Translator ---
+        // --- Quiz Logic ---
+        function checkQuiz(questionNumber, status) {
+            const feedback = document.getElementById('quiz-feedback');
+            const error = document.getElementById('quiz-error');
+            feedback.innerText = "";
+            error.innerText = "";
+
+            if(status === 'correct') {
+                feedback.innerText = "> Logical. Proceeding to next phase.";
+                setTimeout(() => {
+                    document.getElementById(`quiz-q${questionNumber}`).classList.add('hidden');
+                    feedback.innerText = "";
+                    if(document.getElementById(`quiz-q${questionNumber + 1}`)) {
+                        document.getElementById(`quiz-q${questionNumber + 1}`).classList.remove('hidden');
+                    } else {
+                        document.getElementById('quiz-complete').classList.remove('hidden');
+                    }
+                }, 1500);
+            } else {
+                error.innerText = "> Error: Suboptimal response detected. Try again.";
+            }
+        }
+
+        // --- Tic-Tac-Toe ---
+        let boardState = ["", "", "", "", "", "", "", "", ""];
+        let gameActive = true;
+
+        function makeMove(cell, index) {
+            if (boardState[index] !== "" || !gameActive) return;
+            
+            boardState[index] = "X";
+            cell.innerText = "X";
+            cell.style.color = "var(--system-green)";
+            
+            if (checkWin("X")) { endGame("> User victory registered."); return; }
+            if (!boardState.includes("")) { endGame("> Draw sequence registered."); return; }
+            
+            // Basic Bot Logic
+            setTimeout(() => {
+                let available = boardState.map((val, i) => val === "" ? i : null).filter(val => val !== null);
+                if(available.length > 0) {
+                    let move = available[Math.floor(Math.random() * available.length)];
+                    boardState[move] = "O";
+                    let botCell = document.querySelectorAll('.cell')[move];
+                    botCell.innerText = "O";
+                    botCell.style.color = "var(--system-red)";
+                    
+                    if (checkWin("O")) { endGame("> System victory. You lose."); return; }
+                }
+            }, 400);
+        }
+
+        function checkWin(player) {
+            const winPaths = [
+                [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
+            ];
+            return winPaths.some(path => path.every(i => boardState[i] === player));
+        }
+
+        function endGame(msg) {
+            gameActive = false;
+            document.getElementById('game-msg').innerText = msg;
+        }
+
+        function resetGame() {
+            boardState = ["", "", "", "", "", "", "", "", ""];
+            gameActive = true;
+            document.getElementById('game-msg').innerText = "";
+            document.querySelectorAll('.cell').forEach(c => { c.innerText = ""; c.style.color = "var(--text-color)"; });
+        }
+
+        // --- Droid & Compliments ---
         let isTranslating = false;
         function translateDroid() {
             if(isTranslating) return;
@@ -370,45 +507,57 @@
             }, 50);
         }
 
-        // --- Compliments ---
         const comps = ["Certified main character energy.", "Performative divaa", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() {
             document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
         }
 
-        // --- Parallel Universe ---
+        // --- Aesthetics Spawner ---
+        const aesthetics = ['🌸', '✨', '🐈', '🐕'];
+        function spawnAesthetic() {
+            const el = document.createElement('div');
+            el.className = 'floating-element';
+            el.innerText = aesthetics[Math.floor(Math.random() * aesthetics.length)];
+            el.style.left = Math.random() * 90 + 'vw';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 12000); // Clean up DOM
+        }
+        setInterval(spawnAesthetic, 2000); // Spawns an element every 2 seconds
+
+        // --- Universe & Keys ---
         function toggleUniverse() {
             isAlternate = !isAlternate;
             let btn = document.getElementById('universe-toggle');
-            let uniAudio = document.getElementById('audio-universe');
-            
             if (isAlternate) {
                 document.body.classList.add('alternate-universe');
                 btn.innerText = "Alternate Timeline";
-                if(uniAudio) uniAudio.play().catch(e=>console.log(e));
             } else {
                 document.body.classList.remove('alternate-universe');
                 btn.innerText = "Normal Universe";
-                if(uniAudio) uniAudio.pause();
             }
         }
 
-        // --- Easter Eggs ---
         let r2Seq = '';
         document.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === "INPUT") return;
             let k = e.key.toLowerCase();
-            if (k === 'a') alert("> Anakin Protocol: I don't like sand. It's coarse and rough and irritating.");
             if (k === 'f') openSection('music-section', null);
             
             r2Seq += k;
             if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
-            if (r2Seq === 'r2') { alert("> 🤖 BEEP BOOP. *Happy droid noises*"); r2Seq = ''; }
         });
 
         // --- Cinema Ending ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
+            
+            // Trigger Birthday Audio
+            const bdAudio = document.getElementById('audio-birthday');
+            if(bdAudio) {
+                bdAudio.currentTime = 0;
+                bdAudio.play().catch(e => console.log("Audio blocked."));
+            }
+
             let box = document.getElementById('cinema-text-container');
             box.innerHTML = "";
             
@@ -430,7 +579,7 @@
             setTimeout(() => { document.getElementById('cinema-panel').classList.remove('hidden'); box.innerHTML=""; }, d + 2000);
         }
 
-        // --- Background Canvas ---
+        // --- Canvas ---
         const cvs = document.getElementById('bg-canvas');
         const ctx = cvs.getContext('2d');
         let parts = [];
