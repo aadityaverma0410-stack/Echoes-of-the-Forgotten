@@ -3,238 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification Required</title>
+    <title>For You</title>
     <style>
-        /* Base Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        /* --- Global Variables & Theme --- */
         :root {
-            --bg-color: #050505;
-            --text-color: #00ff00;
-            --font-main: 'Courier New', Courier, monospace;
-            --alt-bg: #1a0505;
-            --alt-text: #ff3333;
+            --bg-color: #030305;
+            --text-color: #e0e0e0;
+            --accent-color: #ffb703; /* Dune Sand / Gold */
+            --accent-glow: 0 0 15px rgba(255, 183, 3, 0.6);
+            --panel-bg: rgba(20, 20, 30, 0.7);
+            --border-color: rgba(255, 183, 3, 0.3);
+            --font-main: 'Space Mono', monospace;
+            --star-color: #ffffff;
+        }
+
+        body.alternate-universe {
+            --bg-color: #050014;
+            --text-color: #d8f3dc;
+            --accent-color: #7400b8; /* Deep Purple/Sci-fi */
+            --accent-glow: 0 0 20px rgba(116, 0, 184, 0.8);
+            --panel-bg: rgba(15, 5, 25, 0.7);
+            --border-color: rgba(116, 0, 184, 0.4);
+            --star-color: #e0aaff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-main);
             overflow-x: hidden;
-            transition: background-color 0.5s, color 0.5s;
+            transition: background-color 1s ease, color 1s ease;
+            min-height: 100vh;
         }
 
-        body.alternate-universe {
-            --bg-color: var(--alt-bg);
-            --text-color: var(--alt-text);
+        /* --- Background Canvas --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0; /* Keep strictly in background */
+            pointer-events: none;
         }
 
-        .hidden { display: none !important; }
-        
-        /* Container Styles */
-        .container {
+        /* --- Layout & Panels --- */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            text-align: center;
+            padding: 20px;
             z-index: 10;
-            position: relative;
+            transition: opacity 0.5s ease;
         }
 
-        /* Inputs and Buttons */
-        input[type="text"] {
-            background: #000;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 10px;
-            margin-top: 10px;
-            font-family: inherit;
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
             text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Typography --- */
+        h1, h2 {
+            color: var(--accent-color);
+            text-shadow: var(--accent-glow);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .system-text {
+            color: #4ade80;
+            font-size: 0.9em;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+
+        .error-text {
+            color: #ff4d4d;
+            font-size: 0.9em;
+            margin-top: 15px;
+            text-shadow: 0 0 8px rgba(255, 77, 77, 0.6);
+        }
+
+        .quote {
+            font-style: italic;
+            opacity: 0.8;
+            border-left: 2px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        /* --- Inputs & Buttons --- */
+        input[type="text"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 15px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            text-align: center;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: var(--accent-glow);
         }
 
         button {
+            width: 100%;
             background: transparent;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
             font-family: inherit;
-            transition: all 0.3s;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
         }
 
         button:hover {
-            background: var(--text-color);
+            background: var(--accent-color);
             color: var(--bg-color);
+            box-shadow: var(--accent-glow);
         }
 
-        /* Canvas Background */
-        #sand-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.3;
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 20px;
         }
 
-        /* Galactic Map */
-        #galactic-map {
+        /* --- Galactic Map --- */
+        #map-container {
             position: relative;
-            width: 100vw;
-            height: 80vh;
-        }
-
-        .star {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            border: 1px solid var(--border-color);
             border-radius: 50%;
-            box-shadow: 0 0 10px #fff;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%);
+            margin: 40px auto;
+        }
+
+        .star-node {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: var(--star-color);
+            border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.2s;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--star-color), 0 0 20px var(--star-color);
+            animation: pulse 2s infinite alternate;
+            z-index: 20;
         }
 
-        .star:hover {
-            transform: scale(1.5);
-        }
-
-        .star::after {
+        .star-node::after {
             content: "Unknown planet detected";
             position: absolute;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            border: 1px solid var(--text-color);
-            padding: 5px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
-            font-size: 12px;
+            transition: opacity 0.3s ease;
+            color: var(--text-color);
+            backdrop-filter: blur(5px);
         }
 
-        .star:hover::after { opacity: 1; }
-
-        /* Sections */
-        .content-section {
-            padding: 50px;
-            max-width: 800px;
-            margin: auto;
-            min-height: 100vh;
-            z-index: 10;
-            position: relative;
+        .star-node:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            animation: none;
         }
 
-        .arrakis-text {
-            opacity: 0;
-            transition: opacity 2s;
-            font-style: italic;
-            margin: 40px 0;
+        .star-node:hover::after {
+            opacity: 1;
         }
 
-        /* Utilities */
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        /* --- UI Elements --- */
         #universe-toggle {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
+            width: auto;
             z-index: 100;
+            background: var(--panel-bg);
+            backdrop-filter: blur(5px);
+            font-size: 0.8em;
+            padding: 10px 15px;
         }
-        
-        #secret-trigger {
-            height: 50px;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
+
+        .back-btn {
+            width: auto;
+            margin-top: 30px;
+            border-color: #666;
+            color: #ccc;
+        }
+
+        .back-btn:hover {
+            background: #666;
+            color: #fff;
+            box-shadow: none;
+        }
+
+        /* --- Animations --- */
+        .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .movie-fade {
             opacity: 0;
-            animation: fadeInOut 4s forwards;
+            animation: movieFadeIn 4s forwards;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 40px 0;
         }
 
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 1; }
+        @keyframes movieFadeIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.5; transform: scale(1.02); }
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <div id="gate-1" class="container">
-        <p>Verification required: Solve to continue.</p>
-        <p>5 × 5 = ?</p>
-        <input type="text" id="math-input" autocomplete="off">
-        <p id="math-msg" class="hidden">Correct. Logical processing confirmed.</p>
+    <canvas id="bg-canvas"></canvas>
+
+    <button id="universe-toggle" class="hidden" onclick="toggleUniverse()">Normal Universe</button>
+
+    <div id="gate-1" class="screen">
+        <div class="glass-panel fade-in">
+            <h2>SYSTEM LOCK</h2>
+            <p>Verification required: Solve to continue.</p>
+            <p style="font-size: 2em; margin: 20px 0;"></p>
+            <input type="text" id="math-input" placeholder="Answer..." autocomplete="off">
+            <div id="math-msg" class="system-text"></div>
+        </div>
     </div>
 
-    <div id="gate-2" class="container hidden">
-        <p>Which element is known as the "element of love" because it strengthens emotional bonding?</p>
-        <button onclick="checkChem('Oxygen')">Oxygen</button>
-        <button onclick="checkChem('Oxytocin')">Oxytocin</button>
-        <button onclick="checkChem('Nitrogen')">Nitrogen</button>
-        <button onclick="checkChem('Carbon')">Carbon</button>
-        <p id="chem-msg" class="hidden">Bond detected. Access granted twinn.</p>
+    <div id="gate-2" class="screen hidden">
+        <div class="glass-panel fade-in">
+            <h2>CHEMISTRY PROTOCOL</h2>
+            <p>Which element is known as the “element of love” because it strengthens emotional bonding?</p>
+            <div class="btn-grid">
+                <button onclick="checkChem(this, 'Oxygen')">Oxygen</button>
+                <button onclick="checkChem(this, 'Oxytocin')">Oxytocin (technically a hormone, but commonly used in this context)</button>
+                <button onclick="checkChem(this, 'Nitrogen')">Nitrogen</button>
+                <button onclick="checkChem(this, 'Carbon')">Carbon</button>
+            </div>
+            <div id="chem-msg" class="system-text"></div>
+            <div id="chem-error" class="error-text"></div>
+        </div>
     </div>
 
-    <div id="main-site" class="hidden">
-        <canvas id="sand-canvas"></canvas>
-        <button id="universe-toggle" onclick="toggleUniverse()">Normal Universe</button>
-
-        <div id="galactic-map">
-            <div class="star" style="top: 20%; left: 30%;" onclick="openSection('music-section')"></div>
-            <div class="star" style="top: 50%; left: 60%;" onclick="openSection('droid-section')"></div>
-            <div class="star" style="top: 70%; left: 20%;" onclick="openSection('compliment-section')"></div>
-            <div class="star" style="top: 30%; left: 80%;" onclick="openSection('cinema-section')"></div>
-            <div class="star hidden" id="hidden-star" style="top: 85%; left: 50%;" onclick="openSection('secret-section')"></div>
-        </div>
-
-        <div id="music-section" class="content-section hidden">
-            <h2>Vibe Generator</h2>
-            <button onclick="generateMood()">Generate today's vibe</button>
-            <p id="mood-output"></p>
-            <p class="arrakis-text">"Some people are rare like water on Arrakis."</p>
-        </div>
-
-        <div id="droid-section" class="content-section hidden">
-            <h2>Astromech Interface</h2>
-            <p id="droid-text">BEEP BOOP BEEP — 011010</p>
-            <button onclick="translateDroid()">Translate</button>
-        </div>
-
-        <div id="compliment-section" class="content-section hidden">
-            <h2>Terminal Interface</h2>
-            <button onclick="generateCompliment()">Press when you need a random compliment.</button>
-            <p id="compliment-output"></p>
-        </div>
-
-        <div id="cinema-section" class="content-section hidden">
-            <div id="cinema-container">
-                <button onclick="startEnding()">Initialize Sequence</button>
+    <div id="main-site" class="screen hidden">
+        <div style="width: 100%; max-width: 1000px; text-align: center; z-index: 10;">
+            <h1 class="fade-in">GALACTIC NAVIGATION</h1>
+            <p class="fade-in">Select a destination.</p>
+            
+            <div id="map-container" class="fade-in">
+                <div class="star-node" style="top: 20%; left: 30%;" onclick="openSection('music-section')"></div>
+                <div class="star-node" style="top: 50%; left: 75%;" onclick="openSection('droid-section')"></div>
+                <div class="star-node" style="top: 75%; left: 25%;" onclick="openSection('compliment-section')"></div>
+                <div class="star-node" style="top: 35%; left: 85%;" onclick="openSection('cinema-section')"></div>
+                
+                <div id="hidden-star" class="star-node hidden" style="top: 85%; left: 50%; background-color: red; box-shadow: 0 0 15px red;" onclick="openSection('secret-section')"></div>
             </div>
         </div>
+    </div>
 
-        <div id="secret-section" class="content-section hidden">
-            <h2 style="color: red;">CLASSIFIED</h2>
-            <p>If you found this, you’re officially too smart to cr*ck JEE 💔💔💔</p>
+    <div id="music-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2>Vibe Generator</h2>
+            <p>Initialize audio mood sequence.</p>
+            <button onclick="generateMood()">Generate today's vibe</button>
+            
+            <div id="mood-display" class="quote hidden"></div>
+            
+            <div style="margin-top: 30px; font-size: 0.8em; opacity: 0.6;" class="arrakis-text">
+                "Some people are rare like water on Arrakis."
+            </div>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
         </div>
+    </div>
 
-        <div id="secret-trigger"></div>
+    <div id="droid-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2>Astromech Interface</h2>
+            <p id="droid-raw" style="font-family: monospace; letter-spacing: 2px; margin: 20px 0;">BEEP BOOP BEEP — 011010</p>
+            <button onclick="translateDroid()">Translate</button>
+            <div id="droid-translated" class="quote system-text"></div>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
+    </div>
+
+    <div id="compliment-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2>Terminal Uplink</h2>
+            <button onclick="generateCompliment()">Press when you need a random compliment.</button>
+            <div id="compliment-output" class="system-text" style="font-size: 1.1em; margin-top: 20px; text-align: left;"></div>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
+    </div>
+
+    <div id="cinema-section" class="screen hidden">
+        <div class="glass-panel" id="cinema-panel">
+            <h2>Transmission Sequence</h2>
+            <p>Ready to initialize final sequence.</p>
+            <button onclick="startEnding()">Initialize</button>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
+        <div id="cinema-text-container" style="max-width: 800px; text-align: center; z-index: 20;"></div>
+    </div>
+
+    <div id="secret-section" class="screen hidden">
+        <div class="glass-panel" style="border-color: red; box-shadow: 0 0 30px rgba(255,0,0,0.2);">
+            <h2 style="color: #ff4d4d; text-shadow: 0 0 10px red;">CLASSIFIED</h2>
+            <p class="quote">“If you found this, you’re officially too smart to cr*ck JEE 💔💔💔”</p>
+            <button class="back-btn" onclick="returnToMap()">Return to Map</button>
+        </div>
     </div>
 
     <script>
-        // --- Gate Logic ---
+        // --- Canvas Animation (Sand / Stars) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                // Drift horizontally (wind effect for Arrakis)
+                this.speedX = Math.random() * 1.5 - 0.2; 
+                this.speedY = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.y > canvas.height) {
+                    this.y = 0;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x > canvas.width) {
+                    this.x = 0;
+                } else if (this.x < 0) {
+                    this.x = canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = document.body.classList.contains('alternate-universe') 
+                    ? 'rgba(189, 178, 255, 0.6)' // Purple stars
+                    : 'rgba(210, 180, 140, 0.6)'; // Dune Sand
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 8000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+
+
+        // --- Logic: Math Gate ---
         const mathInput = document.getElementById('math-input');
+        const mathMsg = document.getElementById('math-msg');
+        
         mathInput.addEventListener('input', (e) => {
-            if(e.target.value === '25') {
-                document.getElementById('math-msg').classList.remove('hidden');
+            if(e.target.value.trim() === '25') {
+                mathInput.disabled = true;
+                mathMsg.innerText = "Correct. Logical processing confirmed.";
                 setTimeout(() => {
                     document.getElementById('gate-1').classList.add('hidden');
                     document.getElementById('gate-2').classList.remove('hidden');
@@ -242,117 +469,117 @@
             }
         });
 
-        function checkChem(answer) {
+        // --- Logic: Chemistry Gate ---
+        function checkChem(btnElement, answer) {
+            const errorMsg = document.getElementById('chem-error');
+            const successMsg = document.getElementById('chem-msg');
+            
+            // Reset previous errors
+            errorMsg.innerText = "";
+            successMsg.innerText = "";
+
             if(answer === 'Oxytocin') {
-                document.getElementById('chem-msg').classList.remove('hidden');
+                successMsg.innerText = "Bond detected. Access granted twinn.";
+                successMsg.style.color = "#4ade80"; // Ensure green
+                
+                // Disable all buttons to prevent spamming
+                const buttons = btnElement.parentElement.querySelectorAll('button');
+                buttons.forEach(b => b.disabled = true);
+
                 setTimeout(() => {
                     document.getElementById('gate-2').classList.add('hidden');
                     document.getElementById('main-site').classList.remove('hidden');
-                    initCanvas();
-                    document.title = "Galactic Map";
+                    document.getElementById('universe-toggle').classList.remove('hidden');
                 }, 1500);
             } else {
-                alert("Incorrect compound detected.");
+                errorMsg.innerText = "Incorrect compound detected.";
+                // Simple shake animation effect on button
+                btnElement.style.transform = "translateX(-5px)";
+                setTimeout(() => btnElement.style.transform = "translateX(5px)", 100);
+                setTimeout(() => btnElement.style.transform = "translateX(0)", 200);
             }
         }
 
-        // --- Navigation Logic ---
-        let starClicks = 0;
-        let mouseMoves = 0;
+        // --- Logic: Navigation & Mouse Tracking for Secret ---
+        let mouseDistance = 0;
+        let lastX = null;
+        let lastY = null;
 
-        document.addEventListener('mousemove', () => {
+        document.addEventListener('mousemove', (e) => {
             if (!document.getElementById('main-site').classList.contains('hidden')) {
-                mouseMoves++;
-                if (mouseMoves > 200) {
-                    document.getElementById('hidden-star').classList.remove('hidden');
+                if (lastX !== null && lastY !== null) {
+                    let dx = e.clientX - lastX;
+                    let dy = e.clientY - lastY;
+                    mouseDistance += Math.sqrt(dx*dx + dy*dy);
+                    
+                    // If they move the mouse enough (~5000 pixels distance)
+                    if (mouseDistance > 5000) {
+                        document.getElementById('hidden-star').classList.remove('hidden');
+                    }
                 }
+                lastX = e.clientX;
+                lastY = e.clientY;
             }
         });
 
         function openSection(id) {
-            starClicks++;
-            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-            window.scrollTo({ top: document.getElementById(id).offsetTop, behavior: 'smooth' });
+            document.getElementById('universe-toggle').classList.add('hidden'); // Hide toggle in sections
         }
 
-        // --- Sand Canvas Animation ---
-        function initCanvas() {
-            const canvas = document.getElementById('sand-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            let particles = [];
-            for(let i=0; i<100; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2,
-                    speedY: Math.random() * 1 + 0.5,
-                    speedX: (Math.random() - 0.5) * 1
-                });
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = 'rgba(210, 180, 140, 0.8)'; // Sand color
-                
-                particles.forEach(p => {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    p.y += p.speedY;
-                    p.x += p.speedX;
-                    if(p.y > canvas.height) p.y = 0;
-                    if(p.x > canvas.width) p.x = 0;
-                    if(p.x < 0) p.x = canvas.width;
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
+        function returnToMap() {
+            document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
+            document.getElementById('main-site').classList.remove('hidden');
+            document.getElementById('universe-toggle').classList.remove('hidden');
         }
 
-        // Scroll listener for Arrakis text
-        window.addEventListener('scroll', () => {
-            const text = document.querySelector('.arrakis-text');
-            if(text && window.scrollY > 100) {
-                text.style.opacity = 1;
-            }
-        });
-
-        // --- Mood Generator ---
+        // --- Logic: Mood Generator ---
         const moods = [
-            { text: "Frank Ocean midnight sadness", audio: "song1.mp3" },
-            { text: "TV Girl chaotic nostalgia", audio: "song2.mp3" },
-            { text: "Daniel Caesar soft romance", audio: "song3.mp3" }
+            "Frank Ocean midnight sadness",
+            "TV Girl chaotic nostalgia",
+            "Daniel Caesar soft romance"
         ];
-        let currentAudio = null;
-
+        
         function generateMood() {
-            const mood = moods[Math.floor(Math.random() * moods.length)];
-            document.getElementById('mood-output').innerText = mood.text;
+            const display = document.getElementById('mood-display');
+            const randomMood = moods[Math.floor(Math.random() * moods.length)];
+            display.innerText = randomMood;
+            display.classList.remove('hidden');
             
-            if(currentAudio) currentAudio.pause();
-            // Uncomment the lines below when you have the audio files in the directory
-            // currentAudio = new Audio(mood.audio);
-            // currentAudio.play();
+            // Audio implementation (requires actual files in directory)
+            // let audioFile = "";
+            // if(randomMood.includes("Frank Ocean")) audioFile = "song1.mp3";
+            // if(randomMood.includes("TV Girl")) audioFile = "song2.mp3";
+            // if(randomMood.includes("Daniel Caesar")) audioFile = "song3.mp3";
+            // let audio = new Audio(audioFile);
+            // audio.play();
         }
 
-        // --- Droid Translator ---
+        // --- Logic: Droid Translator ---
+        let isTranslating = false;
         function translateDroid() {
-            const textElement = document.getElementById('droid-text');
+            if(isTranslating) return;
+            isTranslating = true;
+            
+            const rawElement = document.getElementById('droid-raw');
+            const translatedElement = document.getElementById('droid-translated');
             const message = "Translation: someone here thinks you’re incredibly cool.";
-            textElement.innerText = "";
+            
+            translatedElement.innerText = "> ";
             let i = 0;
+            
             const typeInterval = setInterval(() => {
-                textElement.innerText += message.charAt(i);
+                translatedElement.innerText += message.charAt(i);
                 i++;
-                if (i >= message.length) clearInterval(typeInterval);
+                if (i >= message.length) {
+                    clearInterval(typeInterval);
+                    isTranslating = false;
+                }
             }, 50);
         }
 
-        // --- Compliment Machine ---
+        // --- Logic: Compliment Machine ---
         const compliments = [
             "Certified main character energy.",
             "Performative divaa",
@@ -361,10 +588,11 @@
         ];
         function generateCompliment() {
             const comp = compliments[Math.floor(Math.random() * compliments.length)];
-            document.getElementById('compliment-output').innerText = `> ${comp}`;
+            const output = document.getElementById('compliment-output');
+            output.innerHTML = `> Executing analysis...<br>> Result: ${comp}`;
         }
 
-        // --- Parallel Universe Toggle ---
+        // --- Logic: Parallel Universe ---
         let isAlternate = false;
         function toggleUniverse() {
             isAlternate = !isAlternate;
@@ -372,28 +600,79 @@
             if (isAlternate) {
                 document.body.classList.add('alternate-universe');
                 btn.innerText = "Alternate Timeline";
-                // Change greeting logic dynamically if needed
             } else {
                 document.body.classList.remove('alternate-universe');
                 btn.innerText = "Normal Universe";
             }
         }
 
-        // --- Keyboard Easter Eggs ---
+        // --- Logic: Keyboard Easter Eggs ---
         let r2Sequence = '';
         document.addEventListener('keydown', (e) => {
+            // Only trigger if an input is not focused
+            if (document.activeElement.tagName === "INPUT") return;
+
             const key = e.key.toLowerCase();
-            if (key === 'a') alert("The Force is strong with this one.");
-            if (key === 'f') openSection('music-section');
+            
+            if (key === 'a') {
+                createCustomAlert("The Force is strong with this one. (Anakin Protocol)");
+            }
+            if (key === 'f') {
+                openSection('music-section');
+            }
             
             r2Sequence += key;
-            if (r2Sequence.length > 2) r2Sequence = r2Sequence.substring(1);
-            if (r2Sequence === 'r2') alert("*Happy Astromech noises*");
+            if (r2Sequence.length > 2) {
+                r2Sequence = r2Sequence.substring(1);
+            }
+            if (r2Sequence === 'r2') {
+                createCustomAlert("*Astromech whistles and beeps* 🤖");
+                r2Sequence = ''; // reset
+            }
         });
 
-        // --- Cinematic Ending ---
+        // Custom UI Alert replacement
+        function createCustomAlert(msg) {
+            const alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--accent-color);
+                color: var(--bg-color);
+                padding: 15px 30px;
+                border-radius: 8px;
+                font-weight: bold;
+                z-index: 9999;
+                box-shadow: var(--accent-glow);
+                animation: fadeInOutAlert 3s forwards;
+            `;
+            alertBox.innerText = msg;
+            document.body.appendChild(alertBox);
+
+            // Add keyframe dynamic style if not exists
+            if (!document.getElementById('alert-style')) {
+                const style = document.createElement('style');
+                style.id = 'alert-style';
+                style.innerHTML = `
+                    @keyframes fadeInOutAlert {
+                        0% { opacity: 0; top: -20px; }
+                        10% { opacity: 1; top: 20px; }
+                        90% { opacity: 1; top: 20px; }
+                        100% { opacity: 0; top: -20px; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            setTimeout(() => alertBox.remove(), 3000);
+        }
+
+        // --- Logic: Cinematic Ending ---
         function startEnding() {
-            const container = document.getElementById('cinema-container');
+            document.getElementById('cinema-panel').classList.add('hidden');
+            const container = document.getElementById('cinema-text-container');
             container.innerHTML = "";
             
             const lines = isAlternate ? 
@@ -404,7 +683,7 @@
                 ];
 
             let delay = 0;
-            lines.forEach((line, index) => {
+            lines.forEach((line) => {
                 setTimeout(() => {
                     const p = document.createElement('p');
                     p.innerText = line;
@@ -413,6 +692,12 @@
                 }, delay);
                 delay += 4000; 
             });
+
+            // Re-show panel after sequence finishes
+            setTimeout(() => {
+                document.getElementById('cinema-panel').classList.remove('hidden');
+                container.innerHTML = "";
+            }, delay + 4000);
         }
     </script>
 </body>
