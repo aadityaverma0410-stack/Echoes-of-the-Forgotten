@@ -61,44 +61,24 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 1; transition: opacity 1.5s ease;
         }
-        .italian-script {
-            font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold);
-            text-shadow: var(--glow-gold); margin-bottom: 10px;
-            opacity: 0; animation: fadeInScript 1s forwards 0.5s;
-        }
+        .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
         .name-word { display: flex; justify-content: center; width: 100%; text-align: center; }
         .meme-letter {
             font-family: var(--font-tech); font-weight: bold; text-transform: uppercase;
-            background-size: cover; background-position: center;
-            -webkit-background-clip: text; color: transparent;
-            opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
+            background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent;
+            opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
         }
         .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
         
-        .m6 { background-image: url('meme6.jpg'); }
-        .m7 { background-image: url('meme7.jpg'); }
-        .m8 { background-image: url('meme8.jpg'); }
-        .m9 { background-image: url('meme9.jpg'); }
-        .m10 { background-image: url('meme10.jpg'); }
-        .m11 { background-image: url('meme11.jpg'); }
-        .m12 { background-image: url('meme12.jpg'); }
+        .m6 { background-image: url('meme6.jpg'); } .m7 { background-image: url('meme7.jpg'); } .m8 { background-image: url('meme8.jpg'); } .m9 { background-image: url('meme9.jpg'); } .m10 { background-image: url('meme10.jpg'); } .m11 { background-image: url('meme11.jpg'); } .m12 { background-image: url('meme12.jpg'); }
 
         @keyframes fadeInScript { to { opacity: 1; } }
         @keyframes popInLetter { 0% { opacity: 0; transform: scale(0.5) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
         /* --- R2-D2 PET WIDGET --- */
-        #r2d2-widget {
-            position: fixed; bottom: 85px; right: 20px; z-index: 150;
-            display: flex; flex-direction: column; align-items: flex-end; transition: opacity 0.5s ease;
-        }
-        #r2d2-bubble {
-            background: rgba(255,255,255,0.9); color: #000; font-family: var(--font-tech);
-            font-size: 0.8em; padding: 10px; border-radius: 8px; margin-bottom: 10px;
-            max-width: 150px; text-align: right; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-            opacity: 0; transform: translateY(10px); transition: all 0.3s; position: relative; font-weight: bold;
-        }
+        #r2d2-widget { position: fixed; bottom: 85px; right: 20px; z-index: 150; display: flex; flex-direction: column; align-items: flex-end; transition: opacity 0.5s ease; }
+        #r2d2-bubble { background: rgba(255,255,255,0.9); color: #000; font-family: var(--font-tech); font-size: 0.8em; padding: 10px; border-radius: 8px; margin-bottom: 10px; max-width: 150px; text-align: right; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); opacity: 0; transform: translateY(10px); transition: all 0.3s; position: relative; font-weight: bold; }
         #r2d2-bubble::after { content: ''; position: absolute; bottom: -8px; right: 20px; border-width: 8px 8px 0; border-style: solid; border-color: rgba(255,255,255,0.9) transparent transparent transparent; }
         #r2d2-bubble.show { opacity: 1; transform: translateY(0); }
         #r2d2-img { width: 70px; height: auto; cursor: pointer; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3)); transition: transform 0.2s; }
@@ -175,18 +155,30 @@
         @keyframes shootAcross { 0% { transform: translate(-100px, 80vh) rotate(-15deg); } 100% { transform: translate(110vw, -20vh) rotate(15deg); } }
 
         /* Cinematic Finale */
-        .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
-        .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); }
-        
+        .movie-fade { opacity: 0; animation: fadeHold 1s forwards; margin: 15px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
+        .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); opacity: 0; animation: fadeHold 1s forwards; }
+        @keyframes fadeHold { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+
         /* Elegant R2-D2 Finale */
-        #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2.5s ease-out forwards; }
-        @keyframes r2Enter { 0% { transform: translateY(150px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
+        #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2s ease-out forwards; }
+        @keyframes r2Enter { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
         
+        /* CLEAN ELEGANT R2 TEXT */
         .r2-elegant-text {
-            font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.5em; 
+            font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; 
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; 
-            animation: popInBubble 0.8s forwards; margin-bottom: 20px; text-align: center; font-weight: bold;
+            animation: fadeHold 1s forwards; margin-bottom: 20px; text-align: center; font-weight: bold;
+            background: transparent; border: none; box-shadow: none; /* Forced minimal */
         }
+        
+        /* Exit Button */
+        .exit-btn {
+            background: transparent; border: 1px solid var(--royal-gold); color: var(--royal-gold);
+            font-family: var(--font-tech); padding: 12px 25px; border-radius: 4px; cursor: pointer;
+            opacity: 0; animation: fadeHold 1s forwards; margin-top: 15px; font-size: 1em; text-transform: lowercase;
+            transition: all 0.3s;
+        }
+        .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
         /* --- SNAKE RINGS ANIMATION --- */
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
@@ -211,11 +203,6 @@
             -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
             display: inline-block; white-space: normal; line-height: 1.2;
         }
-
-        @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes popInBubble { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-        .permanent-fade { animation: fadeHold 3s forwards; }
-        @keyframes fadeHold { 0% { opacity: 0; } 100% { opacity: 1; } }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -284,7 +271,6 @@
                 “Curiosity is rare.<br>But the rarest thing is a mind that enjoys both chaos and equations.”
             </p>
             <h1 class="highlight-gold" style="font-family: var(--font-tech); font-size: 1.5em;">THE ARCHIVE</h1>
-            
             <div id="map-container">
                 <div class="planet" data-label="Audio" style="top: 20%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
                 <div class="planet" data-label="Simulations" style="top: 45%; left: 20%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
@@ -535,7 +521,7 @@
             if(audio) { 
                 audio.currentTime = 0; 
                 audio.play().catch(e=>console.log(e)); 
-                setTimeout(() => { audio.pause(); }, 2000); // 2 second cap
+                setTimeout(() => { audio.pause(); }, 1500); // Strict 1.5s cap
             }
             
             bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
@@ -552,14 +538,12 @@
         function drawConstellation() {
             cCtx.clearRect(0, 0, constCvs.width, constCvs.height);
             cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)'; cCtx.lineWidth = 3;
-            
             cCtx.beginPath();
             for(let i=0; i<connectedStars; i++) {
                 if(i===0) cCtx.moveTo(starPoints[i].x, starPoints[i].y);
                 else cCtx.lineTo(starPoints[i].x, starPoints[i].y);
             }
             cCtx.stroke();
-
             starPoints.forEach((p, idx) => {
                 cCtx.beginPath(); cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
                 cCtx.fillStyle = (idx < connectedStars) ? '#00f0ff' : '#444'; cCtx.fill();
@@ -746,47 +730,42 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
-                let img = document.createElement('img');
-                img.src = "goat.jpg"; img.className = "goat-img permanent-fade";
-                box.appendChild(img);
-
-                let lines = ["This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya.", "Happyyyy birthdayy twinnn 🎀🦄🍎"];
-                let d = 1500;
-                lines.forEach((l) => {
-                    setTimeout(() => { let p = document.createElement('p'); p.innerText = l; p.className = 'movie-fade'; box.appendChild(p); }, d);
-                    d += 3500; 
-                });
-
-                // Spawn Cinematic R2-D2 & Exit Button
+                // Delay Timings (Perfect Sequence)
                 setTimeout(() => {
-                    let r2Finale = document.createElement('img');
-                    r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale";
-                    box.appendChild(r2Finale);
-                    
-                    let r2Msg = document.createElement('div');
-                    r2Msg.className = "r2-elegant-text";
-                    r2Msg.innerText = "Happyyyy birthdayy master";
-                    box.appendChild(r2Msg);
-                    
+                    let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
+                }, 0);
+
+                setTimeout(() => {
+                    let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1);
+                }, 1500);
+
+                setTimeout(() => {
+                    let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2);
+                }, 5000);
+
+                // Elegant R2-D2
+                setTimeout(() => {
+                    let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale);
+                }, 8500);
+
+                // Elegant Gold Text + 1.5s Sound
+                setTimeout(() => {
+                    let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
                     let r2sound = document.getElementById('r2d2-audio');
                     if(r2sound) { 
                         r2sound.currentTime = 0; r2sound.play(); 
-                        setTimeout(() => r2sound.pause(), 2000); // Caps audio at 2 seconds
+                        setTimeout(() => r2sound.pause(), 1500); // 1.5s Strict Cap
                     }
+                }, 10000);
 
-                    setTimeout(() => {
-                        let btn = document.createElement('button');
-                        btn.innerText = "exit tss 🍎";
-                        btn.onclick = startSnakeSequence;
-                        btn.style.borderColor = "var(--royal-gold)";
-                        btn.style.color = "var(--royal-gold)";
-                        btn.style.marginTop = "20px";
-                        btn.style.opacity = 0;
-                        btn.style.animation = "fadeHold 1s forwards";
-                        box.appendChild(btn);
-                    }, 2500);
-
-                }, d + 1000);
+                // Exit Button
+                setTimeout(() => {
+                    let btn = document.createElement('button');
+                    btn.innerText = "exit tss 🍎";
+                    btn.className = "exit-btn";
+                    btn.onclick = startSnakeSequence;
+                    box.appendChild(btn);
+                }, 12000);
 
             }, 2500); 
         }
@@ -803,19 +782,13 @@
             
             let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
             
-            // Generate sweeping meme rings
             for(let i=0; i<30; i++) {
-                let m = document.createElement('img');
-                m.src = memes[i % memes.length];
-                m.className = "snake-meme";
-                m.style.animationDelay = (i * 0.08) + 's';
+                let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; m.style.animationDelay = (i * 0.08) + 's';
                 snakeContainer.appendChild(m);
             }
             
-            // Reveal final text made of memes
             setTimeout(() => {
-                let finalTxt = document.createElement('div');
-                finalTxt.className = 'final-snake-text';
+                let finalTxt = document.createElement('div'); finalTxt.className = 'final-snake-text';
                 finalTxt.innerHTML = '<span class="meme-text-snake">पाकgya prayagi 🦄</span>';
                 snakeContainer.appendChild(finalTxt);
             }, 3500);
@@ -825,7 +798,6 @@
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
-        
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         
         function draw() {
