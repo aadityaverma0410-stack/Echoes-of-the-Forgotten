@@ -54,7 +54,7 @@
         .hex-symbol.unlocked { color: var(--neon-pink); text-shadow: var(--glow-pink); transform: translateX(-50%) scale(1.5); }
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
 
-        /* --- ENTRY NAME OVERLAY (Responsive & Staggered) --- */
+        /* --- ENTRY NAME OVERLAY --- */
         #entry-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(5, 5, 8, 0.98); z-index: 1000;
@@ -66,9 +66,7 @@
             text-shadow: var(--glow-gold); margin-bottom: 10px;
             opacity: 0; animation: fadeInScript 1s forwards 0.5s;
         }
-        .name-word {
-            display: flex; justify-content: center; width: 100%; text-align: center;
-        }
+        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; }
         .meme-letter {
             font-family: var(--font-tech); font-weight: bold; text-transform: uppercase;
             background-size: cover; background-position: center;
@@ -76,10 +74,9 @@
             opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
         }
-        .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } /* Scales perfectly to width */
+        .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
         
-        /* Meme Background Mappings */
         .m6 { background-image: url('meme6.jpg'); }
         .m7 { background-image: url('meme7.jpg'); }
         .m8 { background-image: url('meme8.jpg'); }
@@ -94,41 +91,24 @@
         /* --- R2-D2 PET WIDGET --- */
         #r2d2-widget {
             position: fixed; bottom: 85px; right: 20px; z-index: 150;
-            display: flex; flex-direction: column; align-items: flex-end;
-            transition: opacity 0.5s ease;
+            display: flex; flex-direction: column; align-items: flex-end; transition: opacity 0.5s ease;
         }
         #r2d2-bubble {
             background: rgba(255,255,255,0.9); color: #000; font-family: var(--font-tech);
             font-size: 0.8em; padding: 10px; border-radius: 8px; margin-bottom: 10px;
             max-width: 150px; text-align: right; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-            opacity: 0; transform: translateY(10px); transition: all 0.3s;
-            position: relative; font-weight: bold;
+            opacity: 0; transform: translateY(10px); transition: all 0.3s; position: relative; font-weight: bold;
         }
-        #r2d2-bubble::after {
-            content: ''; position: absolute; bottom: -8px; right: 20px;
-            border-width: 8px 8px 0; border-style: solid; border-color: rgba(255,255,255,0.9) transparent transparent transparent;
-        }
+        #r2d2-bubble::after { content: ''; position: absolute; bottom: -8px; right: 20px; border-width: 8px 8px 0; border-style: solid; border-color: rgba(255,255,255,0.9) transparent transparent transparent; }
         #r2d2-bubble.show { opacity: 1; transform: translateY(0); }
-        #r2d2-img {
-            width: 70px; height: auto; cursor: pointer; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3));
-            transition: transform 0.2s;
-        }
+        #r2d2-img { width: 70px; height: auto; cursor: pointer; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3)); transition: transform 0.2s; }
         .r2-wiggle { animation: wiggleBot 0.5s ease-in-out; }
         @keyframes wiggleBot { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
 
         /* Screens & Panels */
-        .screen {
-            position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 80px 20px 80px 20px; z-index: 20; transition: opacity 0.5s ease;
-        }
+        .screen { position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px 80px 20px; z-index: 20; transition: opacity 0.5s ease; }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
-
-        .glass-panel {
-            background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px;
-            padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15);
-            max-height: 80vh; overflow-y: auto; position: relative;
-        }
+        .glass-panel { background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px; padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15); max-height: 80vh; overflow-y: auto; position: relative; }
 
         h1, h2, h3 { font-family: var(--font-tech); color: var(--text-color); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
         .highlight-cyan { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
@@ -147,7 +127,6 @@
         .btn-pink:hover { background: var(--neon-pink); border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
         .back-btn { border-color: #555; color: #aaa; margin-top: 30px; }
         .back-btn:hover { background: #555; border-color: #555; color: #fff; box-shadow: none; }
-
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
@@ -169,12 +148,7 @@
         @keyframes spinRecord { 100% { transform: rotate(360deg); } }
 
         /* Global Media Player */
-        #global-player {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(5, 8, 15, 0.95);
-            border-top: 1px solid var(--neon-cyan); z-index: 200; display: flex; align-items: center; padding: 0 20px;
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 -5px 20px rgba(0, 240, 255, 0.2); backdrop-filter: blur(10px);
-        }
+        #global-player { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(5, 8, 15, 0.95); border-top: 1px solid var(--neon-cyan); z-index: 200; display: flex; align-items: center; padding: 0 20px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 -5px 20px rgba(0, 240, 255, 0.2); backdrop-filter: blur(10px); }
         #global-player.active { transform: translateY(0); }
         .gp-art { width: 45px; height: 45px; border-radius: 4px; background-size: cover; background-position: center; border: 1px solid var(--neon-pink); margin-right: 15px; }
         .gp-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
@@ -204,24 +178,38 @@
         .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
         .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); }
         
-        /* R2-D2 Finale Animation */
-        #r2d2-finale {
-            width: 120px; margin: 30px auto 10px; filter: drop-shadow(0 0 15px rgba(0,240,255,0.6));
-            opacity: 0; animation: r2Enter 3s ease-out forwards;
-        }
-        @keyframes r2Enter {
-            0% { transform: translateY(150px) scale(0.5); opacity: 0; }
-            40% { transform: translateY(0) scale(1); opacity: 1; }
-            60% { transform: translateY(0) rotate(-15deg) scale(1); } /* Look up */
-            80% { transform: translateY(0) rotate(10deg) scale(1.3); } /* Look at camera */
-            100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; }
+        /* Elegant R2-D2 Finale */
+        #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2.5s ease-out forwards; }
+        @keyframes r2Enter { 0% { transform: translateY(150px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
+        
+        .r2-elegant-text {
+            font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.5em; 
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; 
+            animation: popInBubble 0.8s forwards; margin-bottom: 20px; text-align: center; font-weight: bold;
         }
 
-        .r2-message-finale {
-            font-family: var(--font-tech); color: var(--neon-cyan); font-size: 1.2em; font-weight: bold;
-            text-transform: uppercase; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 8px;
-            border: 1px solid var(--neon-cyan); box-shadow: var(--glow-cyan);
-            opacity: 0; animation: popInBubble 0.5s forwards 3.5s; margin-bottom: 30px;
+        /* --- SNAKE RINGS ANIMATION --- */
+        #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+        .snake-meme {
+            position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
+            top: 50%; left: 50%; animation: ringSwirl 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            box-shadow: 0 0 20px var(--royal-gold); border: 2px solid var(--royal-gold); margin-top: -25px; margin-left: -25px;
+        }
+        @keyframes ringSwirl {
+            0% { transform: translate(-50vw, -50vh) rotate(0deg) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translate(30vw, -30vh) rotate(90deg) scale(1.2); }
+            40% { transform: translate(40vw, 20vh) rotate(180deg) scale(1); }
+            60% { transform: translate(-30vw, 30vh) rotate(270deg) scale(1.5); }
+            80% { transform: translate(-20vw, -10vh) rotate(360deg) scale(1); opacity: 1; }
+            100% { transform: translate(0, 0) rotate(720deg) scale(0); opacity: 0; }
+        }
+        
+        .final-snake-text { opacity: 0; animation: fadeHold 4s forwards; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90vw; text-align: center; }
+        .meme-text-snake {
+            font-family: var(--font-elegant); font-size: 10vw; font-weight: bold;
+            background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'); background-size: cover;
+            -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
+            display: inline-block; white-space: normal; line-height: 1.2;
         }
 
         @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
@@ -433,9 +421,7 @@
         <div class="glass-panel">
             <h2 class="highlight-cyan">STAR MAP ANOMALY</h2>
             <p style="font-family: var(--font-tech); font-size: 0.85em; color: #888;">Connect the coordinates in order.</p>
-            
             <canvas id="constellation-canvas" width="300" height="300"></canvas>
-            
             <div id="constellation-msg" class="hidden">
                 <h2 style="color: var(--neon-pink); margin-top: 20px; text-shadow: var(--glow-pink);">पाकgya type shii yayyyy.</h2>
             </div>
@@ -500,28 +486,25 @@
                         document.getElementById('door-left').classList.add('open-left');
                         document.getElementById('door-right').classList.add('open-right');
                         
-                        // Show Name Overlay After Doors Open
                         setTimeout(() => { 
                             let overlay = document.getElementById('entry-overlay');
                             overlay.classList.remove('hidden');
                             
-                            // Wait exactly 8 seconds before fading out and revealing map
                             setTimeout(() => {
                                 overlay.style.opacity = '0';
                                 setTimeout(() => {
                                     overlay.classList.add('hidden');
                                     document.getElementById('main-site').classList.remove('hidden'); 
                                     document.getElementById('hex-symbol').classList.add('hidden'); 
-                                    document.getElementById('r2d2-widget').classList.remove('hidden'); // Reveal Bot
-                                }, 1500); // fade transition
-                            }, 8000); // 8 second hold
+                                    document.getElementById('r2d2-widget').classList.remove('hidden');
+                                }, 1500); 
+                            }, 8000); 
                         }, 500);
                     }, 1200);
                 }, 800);
             }
         });
 
-        // --- Navigation ---
         function openSection(id, planetElement) {
             document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
@@ -545,15 +528,16 @@
             let bubble = document.getElementById('r2d2-bubble');
             let audio = document.getElementById('r2d2-audio');
             
-            // Animation
             img.classList.remove('r2-wiggle');
-            void img.offsetWidth; // trigger reflow
+            void img.offsetWidth; 
             img.classList.add('r2-wiggle');
             
-            // Sound
-            if(audio) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); }
+            if(audio) { 
+                audio.currentTime = 0; 
+                audio.play().catch(e=>console.log(e)); 
+                setTimeout(() => { audio.pause(); }, 2000); // 2 second cap
+            }
             
-            // Message
             bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
             bubble.classList.add('show');
             setTimeout(() => { bubble.classList.remove('show'); }, 3000);
@@ -567,8 +551,7 @@
 
         function drawConstellation() {
             cCtx.clearRect(0, 0, constCvs.width, constCvs.height);
-            cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)';
-            cCtx.lineWidth = 3;
+            cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)'; cCtx.lineWidth = 3;
             
             cCtx.beginPath();
             for(let i=0; i<connectedStars; i++) {
@@ -578,12 +561,9 @@
             cCtx.stroke();
 
             starPoints.forEach((p, idx) => {
-                cCtx.beginPath();
-                cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
-                cCtx.fillStyle = (idx < connectedStars) ? '#00f0ff' : '#444';
-                cCtx.fill();
-                cCtx.shadowBlur = (idx < connectedStars) ? 10 : 0;
-                cCtx.shadowColor = '#00f0ff';
+                cCtx.beginPath(); cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
+                cCtx.fillStyle = (idx < connectedStars) ? '#00f0ff' : '#444'; cCtx.fill();
+                cCtx.shadowBlur = (idx < connectedStars) ? 10 : 0; cCtx.shadowColor = '#00f0ff';
             });
         }
         drawConstellation();
@@ -591,21 +571,17 @@
         constCvs.addEventListener('click', (e) => {
             if(connectedStars >= starPoints.length) return;
             const rect = constCvs.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            
+            const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
             const targetStar = starPoints[connectedStars];
             const dist = Math.hypot(mouseX - targetStar.x, mouseY - targetStar.y);
             
             if(dist < 20) {
                 connectedStars++; drawConstellation();
-                if(connectedStars === starPoints.length) {
-                    setTimeout(() => { document.getElementById('constellation-msg').classList.remove('hidden'); }, 500);
-                }
+                if(connectedStars === starPoints.length) setTimeout(() => { document.getElementById('constellation-msg').classList.remove('hidden'); }, 500);
             }
         });
 
-        // --- Easter Eggs (Including Secret Map Unlock) ---
+        // --- Easter Eggs & Secret Unlock ---
         let r2Seq = '';
         document.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === "INPUT") return;
@@ -647,10 +623,8 @@
         }
 
         function stopAudio() {
-            document.getElementById('vinyl-disk').classList.remove('spin');
-            document.getElementById('tone-arm').classList.remove('playing');
-            document.getElementById('mood-display').innerText = "> Playback Stopped";
-            document.getElementById('global-player').classList.remove('active');
+            document.getElementById('vinyl-disk').classList.remove('spin'); document.getElementById('tone-arm').classList.remove('playing');
+            document.getElementById('mood-display').innerText = "> Playback Stopped"; document.getElementById('global-player').classList.remove('active');
             document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
             currentAudioEl = null; isGlobalPlaying = false;
         }
@@ -658,14 +632,10 @@
         function togglePlayPause() {
             if(!currentAudioEl) return;
             if(isGlobalPlaying) {
-                currentAudioEl.pause();
-                document.getElementById('gp-playbtn').innerText = "▶";
-                document.getElementById('gp-status').innerText = "PAUSED";
+                currentAudioEl.pause(); document.getElementById('gp-playbtn').innerText = "▶"; document.getElementById('gp-status').innerText = "PAUSED";
                 document.getElementById('vinyl-disk').classList.remove('spin');
             } else {
-                currentAudioEl.play();
-                document.getElementById('gp-playbtn').innerText = "⏸";
-                document.getElementById('gp-status').innerText = "PLAYING";
+                currentAudioEl.play(); document.getElementById('gp-playbtn').innerText = "⏸"; document.getElementById('gp-status').innerText = "PLAYING";
                 document.getElementById('vinyl-disk').classList.add('spin');
             }
             isGlobalPlaying = !isGlobalPlaying;
@@ -746,7 +716,7 @@
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
         // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '✨', '🎀', '🍭'];
+        const aestheticIcons = ['🌸', '✨', '🍭', '🎀'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
             el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
@@ -764,7 +734,7 @@
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
             document.getElementById('global-player').classList.remove('active'); 
-            document.getElementById('r2d2-widget').classList.add('hidden'); // Hide small bot
+            document.getElementById('r2d2-widget').classList.add('hidden'); 
             stopAudio(); 
 
             let bdAudio = document.getElementById('audio-cornershop');
@@ -774,7 +744,6 @@
             
             setTimeout(() => {
                 isLightspeed = false; 
-                
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
                 let img = document.createElement('img');
@@ -788,24 +757,68 @@
                     d += 3500; 
                 });
 
-                // Spawn Cinematic R2-D2 Sequence
+                // Spawn Cinematic R2-D2 & Exit Button
                 setTimeout(() => {
                     let r2Finale = document.createElement('img');
-                    r2Finale.src = "r2d2.png";
-                    r2Finale.id = "r2d2-finale";
+                    r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale";
                     box.appendChild(r2Finale);
                     
                     let r2Msg = document.createElement('div');
-                    r2Msg.className = "r2-message-finale";
+                    r2Msg.className = "r2-elegant-text";
                     r2Msg.innerText = "Happyyyy birthdayy master";
                     box.appendChild(r2Msg);
                     
                     let r2sound = document.getElementById('r2d2-audio');
-                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); }
+                    if(r2sound) { 
+                        r2sound.currentTime = 0; r2sound.play(); 
+                        setTimeout(() => r2sound.pause(), 2000); // Caps audio at 2 seconds
+                    }
+
+                    setTimeout(() => {
+                        let btn = document.createElement('button');
+                        btn.innerText = "exit tss 🍎";
+                        btn.onclick = startSnakeSequence;
+                        btn.style.borderColor = "var(--royal-gold)";
+                        btn.style.color = "var(--royal-gold)";
+                        btn.style.marginTop = "20px";
+                        btn.style.opacity = 0;
+                        btn.style.animation = "fadeHold 1s forwards";
+                        box.appendChild(btn);
+                    }, 2500);
 
                 }, d + 1000);
 
             }, 2500); 
+        }
+
+        // --- Shang-Chi Style Snake Sequence ---
+        function startSnakeSequence() {
+            let box = document.getElementById('cinema-text-container');
+            box.style.transition = "opacity 1s"; box.style.opacity = 0;
+            setTimeout(() => box.innerHTML = "", 1000);
+
+            let snakeContainer = document.createElement('div');
+            snakeContainer.id = "snake-container";
+            document.body.appendChild(snakeContainer);
+            
+            let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
+            
+            // Generate sweeping meme rings
+            for(let i=0; i<30; i++) {
+                let m = document.createElement('img');
+                m.src = memes[i % memes.length];
+                m.className = "snake-meme";
+                m.style.animationDelay = (i * 0.08) + 's';
+                snakeContainer.appendChild(m);
+            }
+            
+            // Reveal final text made of memes
+            setTimeout(() => {
+                let finalTxt = document.createElement('div');
+                finalTxt.className = 'final-snake-text';
+                finalTxt.innerHTML = '<span class="meme-text-snake">पाकgya prayagi 🦄</span>';
+                snakeContainer.appendChild(finalTxt);
+            }, 3500);
         }
 
         // --- Dynamic Canvas ---
