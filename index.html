@@ -9,11 +9,11 @@
 
         /* --- Arcane Baddie + Insta Aesthetic Variables --- */
         :root {
-            --bg-dark: #0a0a0c; /* Matte Charcoal/Black */
+            --bg-dark: #0a0a0c; 
             --text-color: #f0f0f0;
-            --neon-pink: #ff007a; /* Jinx Chaotic Pink */
-            --neon-cyan: #00f0ff; /* Hextech Electric Blue */
-            --royal-gold: #d4af37; /* Mel Medarda Gold */
+            --neon-pink: #ff007a; 
+            --neon-cyan: #00f0ff; 
+            --royal-gold: #d4af37; 
             --font-tech: 'Orbitron', sans-serif;
             --font-elegant: 'Cinzel', serif;
             --font-quote: 'Playfair Display', serif;
@@ -21,14 +21,14 @@
             --glow-pink: 0 0 20px rgba(255, 0, 122, 0.6);
             --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.6);
             --glow-gold: 0 0 20px rgba(212, 175, 55, 0.6);
-            --panel-bg: rgba(10, 10, 15, 0.75);
+            --panel-bg: rgba(5, 8, 15, 0.92); /* Darkened for better text visibility */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-dark);
-            background-image: linear-gradient(rgba(10, 10, 15, 0.8), rgba(10, 10, 15, 0.9)), url('arcane-bg.jpg');
+            background-image: linear-gradient(rgba(10, 10, 15, 0.7), rgba(10, 10, 15, 0.9)), url('arcane-bg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -50,7 +50,7 @@
         /* --- Secret Door Animation --- */
         .door {
             position: fixed; top: 0; width: 50vw; height: 100vh; 
-            background: #050508; z-index: 100;
+            background: #050508; z-index: 5; /* Lowered Z-index to sit behind the gates */
             transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
             display: flex; align-items: center; justify-content: center;
         }
@@ -62,7 +62,7 @@
         /* Hex Symbol */
         .hex-symbol {
             font-size: 5rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan);
-            animation: rotateHex 10s linear infinite; position: absolute; z-index: 105;
+            animation: rotateHex 10s linear infinite; position: absolute; z-index: 6; /* Lowered to sit behind gates */
             left: 50%; top: 20%; transform: translateX(-50%); pointer-events: none;
             transition: color 0.5s, text-shadow 0.5s, transform 0.5s;
         }
@@ -75,7 +75,8 @@
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 80px 20px 40px 20px; z-index: 10; transition: opacity 0.5s ease;
+            padding: 80px 20px 40px 20px; z-index: 20; /* Raised to render above doors */
+            transition: opacity 0.5s ease;
         }
 
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
@@ -84,7 +85,7 @@
             background: var(--panel-bg); backdrop-filter: blur(15px);
             border: 1px solid var(--neon-cyan); border-radius: 8px;
             padding: 40px 30px; max-width: 500px; width: 100%;
-            text-align: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0,240,255,0.1);
+            text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15);
             max-height: 90vh; overflow-y: auto;
             position: relative;
         }
@@ -107,7 +108,7 @@
         
         /* Terminal */
         .terminal-box { 
-            background: rgba(0,0,0,0.8); border: 1px solid var(--neon-cyan); padding: 20px; 
+            background: rgba(0,0,0,0.85); border: 1px solid var(--neon-cyan); padding: 20px; 
             margin: 20px 0; border-radius: 4px; text-align: left; min-height: 80px; 
             font-family: var(--font-matrix); font-size: 1.2em; color: var(--neon-cyan);
             width: 100%; white-space: pre-wrap; word-wrap: break-word; 
@@ -115,13 +116,13 @@
 
         /* Inputs & Buttons */
         input[type="text"] {
-            width: 100%; background: transparent; border: none; border-bottom: 2px solid var(--neon-cyan);
+            width: 100%; background: rgba(0, 0, 0, 0.6); border: none; border-bottom: 2px solid var(--neon-cyan);
             color: #fff; padding: 15px; font-family: var(--font-tech); font-size: 1.2em; text-align: center; outline: none; transition: all 0.3s;
         }
-        input[type="text"]:focus { border-color: var(--neon-pink); box-shadow: 0 10px 10px -10px var(--neon-pink); }
+        input[type="text"]:focus { border-color: var(--neon-pink); box-shadow: 0 10px 10px -10px var(--neon-pink); background: rgba(0, 0, 0, 0.8); }
 
         button {
-            width: 100%; background: transparent; border: 1px solid var(--neon-cyan);
+            width: 100%; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--neon-cyan);
             color: var(--text-color); padding: 15px; margin-top: 15px; border-radius: 4px;
             font-family: var(--font-tech); font-size: 0.9em; cursor: pointer; transition: all 0.3s;
             text-transform: uppercase; letter-spacing: 2px; position: relative; overflow: hidden;
@@ -129,7 +130,7 @@
         button:hover { background: var(--neon-cyan); color: #000; box-shadow: var(--glow-cyan); transform: translateY(-2px); }
         .btn-pink:hover { background: var(--neon-pink); border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
 
-        .back-btn { border-color: #555; color: #999; margin-top: 30px; }
+        .back-btn { border-color: #555; color: #aaa; margin-top: 30px; }
         .back-btn:hover { background: #555; border-color: #555; color: #fff; box-shadow: none; }
 
         /* Glitch Animation */
@@ -147,8 +148,8 @@
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container {
             position: relative; width: 100%; height: 70vh; min-height: 450px;
-            border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 50%;
-            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 70%);
+            border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%;
+            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%);
         }
 
         .planet {
@@ -182,12 +183,17 @@
         @keyframes spinRecord { 100% { transform: rotate(360deg); } }
 
         /* Games Container */
-        .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
-        .cell { background-color: #050505; background-image: radial-gradient(circle, #333 2px, transparent 2px); background-size: 15px 15px; border: 1px solid #222; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); }
-        .cell:hover { background-color: #1a1a1a; box-shadow: inset 0 0 10px var(--neon-cyan); }
+        .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
+        .cell { 
+            background-color: #1a1a1a; 
+            background-image: radial-gradient(circle, #000 3px, transparent 3px); 
+            background-size: 15px 15px; 
+            border: 1px solid #333; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); 
+        }
+        .cell:hover { background-color: #2a2a2a; box-shadow: inset 0 0 10px var(--neon-cyan); }
         
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
-        .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.3; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
         /* Cinematic */
@@ -212,7 +218,7 @@
     <div id="hex-symbol" class="hex-symbol">⬡</div>
 
     <div id="gate-1" class="screen">
-        <p style="font-family: var(--font-tech); font-size: 0.9em; letter-spacing: 3px; color: #aaa; margin-bottom: 40px;">Only the curious get in.</p>
+        <p style="font-family: var(--font-tech); font-size: 0.9em; letter-spacing: 3px; color: #aaa; margin-bottom: 40px; text-shadow: 0 0 10px #000;">Only the curious get in.</p>
         <div class="glass-panel">
             <h2 class="highlight-cyan">HEXTECH ACCESS REQUIRED</h2>
             <p style="color: #bbb; font-family: var(--font-tech); font-size: 0.85em;">TRIAL 1 — LOGIC</p>
