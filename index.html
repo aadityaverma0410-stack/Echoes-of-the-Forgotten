@@ -5,52 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&family=VT323&display=swap');
 
-        /* --- Arcane Theme Variables --- */
+        /* --- Arcane Baddie + Insta Aesthetic Variables --- */
         :root {
-            --bg-color: #050a15; /* Deep Piltover Night */
-            --text-color: #e0f2fe;
-            --accent-color: #00f0ff; /* Hextech Cyan */
-            --accent-glow: 0 0 25px rgba(0, 240, 255, 0.6);
-            --panel-bg: rgba(5, 10, 20, 0.85);
-            --border-color: rgba(0, 240, 255, 0.4);
-            --font-main: 'Courier Prime', monospace;
+            --bg-dark: #0a0a0c; /* Matte Charcoal/Black */
+            --text-color: #f0f0f0;
+            --neon-pink: #ff007a; /* Jinx Chaotic Pink */
+            --neon-cyan: #00f0ff; /* Hextech Electric Blue */
+            --royal-gold: #d4af37; /* Mel Medarda Gold */
+            --font-tech: 'Orbitron', sans-serif;
+            --font-elegant: 'Cinzel', serif;
+            --font-quote: 'Playfair Display', serif;
             --font-matrix: 'VT323', monospace;
-            --system-green: #39ff14; /* Neon Green */
-            --system-red: #ff003c; /* Neon Red */
-        }
-
-        /* Alternate Universe: Zaun / Shimmer Theme */
-        body.alternate-universe {
-            --accent-color: #ff00ff; /* Shimmer Pink/Purple */
-            --accent-glow: 0 0 25px rgba(255, 0, 255, 0.6);
-            --border-color: rgba(255, 0, 255, 0.4);
+            --glow-pink: 0 0 20px rgba(255, 0, 122, 0.6);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.6);
+            --glow-gold: 0 0 20px rgba(212, 175, 55, 0.6);
+            --panel-bg: rgba(10, 10, 15, 0.75);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            /* Background Image Integration */
-            background-image: linear-gradient(rgba(5, 10, 20, 0.85), rgba(5, 10, 20, 0.85)), url('arcane-bg.jpg');
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(rgba(10, 10, 15, 0.8), rgba(10, 10, 15, 0.9)), url('arcane-bg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: var(--bg-color); 
             color: var(--text-color);
-            font-family: var(--font-main); overflow-x: hidden;
-            transition: all 1s ease; min-height: 100vh;
+            font-family: var(--font-elegant);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Insta-Aesthetic Grain Overlay --- */
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
         }
 
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-        /* Background Aesthetics */
-        .floating-element { position: fixed; z-index: 2; animation: floatUp 10s linear forwards; font-size: 24px; opacity: 0.6; pointer-events: none; }
-        .meme-comet { position: fixed; z-index: 1; opacity: 0.3; animation: shootAcross 6s linear forwards; border-radius: 8px; width: 120px; pointer-events: none; box-shadow: 0 0 15px rgba(255,255,255,0.2); }
-        
-        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-        @keyframes shootAcross { 0% { transform: translate(-150px, 80vh) rotate(-15deg); } 100% { transform: translate(120vw, -20vh) rotate(15deg); } }
+        /* --- Secret Door Animation --- */
+        .door {
+            position: fixed; top: 0; width: 50vw; height: 100vh; 
+            background: #050508; z-index: 100;
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        #door-left { left: 0; border-right: 2px solid var(--royal-gold); box-shadow: inset -10px 0 30px rgba(212,175,55,0.2); }
+        #door-right { right: 0; border-left: 2px solid var(--royal-gold); box-shadow: inset 10px 0 30px rgba(212,175,55,0.2); }
+        .door.open-left { transform: translateX(-100%); }
+        .door.open-right { transform: translateX(100%); }
 
+        /* Hex Symbol */
+        .hex-symbol {
+            font-size: 5rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan);
+            animation: rotateHex 10s linear infinite; position: absolute; z-index: 105;
+            left: 50%; top: 20%; transform: translateX(-50%); pointer-events: none;
+            transition: color 0.5s, text-shadow 0.5s, transform 0.5s;
+        }
+        .hex-symbol.unlocked {
+            color: var(--neon-pink); text-shadow: var(--glow-pink); transform: translateX(-50%) scale(1.5);
+        }
+        @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
+
+        /* --- Screens & Panels --- */
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -59,146 +80,163 @@
 
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
 
-        /* UI Panels */
         .glass-panel {
-            background: var(--panel-bg); backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color); border-radius: 8px;
+            background: var(--panel-bg); backdrop-filter: blur(15px);
+            border: 1px solid var(--neon-cyan); border-radius: 8px;
             padding: 40px 30px; max-width: 500px; width: 100%;
-            text-align: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            text-align: center; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0,240,255,0.1);
             max-height: 90vh; overflow-y: auto;
+            position: relative;
+        }
+        .glass-panel::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--royal-gold));
+            z-index: -1; filter: blur(10px); opacity: 0.3; border-radius: 10px;
         }
 
-        h1, h2, h3 { color: var(--accent-color); text-shadow: var(--accent-glow); margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
-        p { margin-bottom: 15px; line-height: 1.6; font-size: 1.05em; }
+        /* Typography */
+        h1, h2, h3 { font-family: var(--font-tech); color: var(--text-color); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .highlight-cyan { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
+        .highlight-pink { color: var(--neon-pink); text-shadow: var(--glow-pink); }
+        .highlight-gold { color: var(--royal-gold); text-shadow: var(--glow-gold); font-family: var(--font-elegant); }
         
-        .system-text { color: var(--system-green); font-size: 1em; margin-top: 15px; font-weight: bold; min-height: 24px; text-shadow: 0 0 10px rgba(57, 255, 20, 0.4); }
-        .error-text { color: var(--system-red); font-size: 1em; margin-top: 15px; min-height: 24px; text-shadow: 0 0 10px rgba(255, 0, 60, 0.4); }
+        .playfair-quote { font-family: var(--font-quote); font-size: 1.4em; color: #fff; font-style: italic; letter-spacing: 1px; line-height: 1.6; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+
+        .system-text { font-family: var(--font-tech); color: var(--neon-cyan); font-size: 0.9em; margin-top: 15px; min-height: 24px; text-shadow: var(--glow-cyan); text-transform: uppercase; }
+        .error-text { font-family: var(--font-tech); color: var(--neon-pink); font-size: 0.9em; margin-top: 15px; min-height: 24px; text-shadow: var(--glow-pink); text-transform: uppercase; }
         
-        /* Terminal Text Wrapping */
+        /* Terminal */
         .terminal-box { 
-            background: rgba(0,0,0,0.7); border: 1px solid var(--border-color); padding: 20px; 
+            background: rgba(0,0,0,0.8); border: 1px solid var(--neon-cyan); padding: 20px; 
             margin: 20px 0; border-radius: 4px; text-align: left; min-height: 80px; 
-            width: 100%; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
-        }
-        .terminal-box p, .terminal-box div {
-            white-space: pre-wrap; 
-            word-wrap: break-word; 
-            overflow-wrap: break-word;
+            font-family: var(--font-matrix); font-size: 1.2em; color: var(--neon-cyan);
+            width: 100%; white-space: pre-wrap; word-wrap: break-word; 
         }
 
+        /* Inputs & Buttons */
         input[type="text"] {
-            width: 100%; background: #000; border: 1px solid var(--accent-color);
-            color: var(--text-color); padding: 15px; border-radius: 4px; font-family: inherit;
-            font-size: 1.2em; text-align: center; outline: none; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            width: 100%; background: transparent; border: none; border-bottom: 2px solid var(--neon-cyan);
+            color: #fff; padding: 15px; font-family: var(--font-tech); font-size: 1.2em; text-align: center; outline: none; transition: all 0.3s;
         }
-        input[type="text"]:focus { box-shadow: var(--accent-glow); }
+        input[type="text"]:focus { border-color: var(--neon-pink); box-shadow: 0 10px 10px -10px var(--neon-pink); }
 
         button {
-            width: 100%; background: #000; border: 1px solid var(--accent-color);
-            color: var(--accent-color); padding: 15px; margin-top: 10px; border-radius: 4px;
-            font-family: inherit; font-size: 1em; cursor: pointer; transition: all 0.3s;
-            text-transform: uppercase; font-weight: bold; letter-spacing: 1px;
+            width: 100%; background: transparent; border: 1px solid var(--neon-cyan);
+            color: var(--text-color); padding: 15px; margin-top: 15px; border-radius: 4px;
+            font-family: var(--font-tech); font-size: 0.9em; cursor: pointer; transition: all 0.3s;
+            text-transform: uppercase; letter-spacing: 2px; position: relative; overflow: hidden;
         }
-        button:hover { background: var(--accent-color); color: #000; box-shadow: var(--accent-glow); }
-        .back-btn { border-color: #555; color: #999; margin-top: 25px; }
-        .back-btn:hover { background: #555; color: #fff; }
+        button:hover { background: var(--neon-cyan); color: #000; box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+        .btn-pink:hover { background: var(--neon-pink); border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
 
-        #universe-toggle { position: fixed; top: 15px; right: 15px; width: auto; z-index: 100; padding: 10px 15px; font-size: 0.85em; background: rgba(0,0,0,0.8); border: 1px solid var(--accent-color); }
+        .back-btn { border-color: #555; color: #999; margin-top: 30px; }
+        .back-btn:hover { background: #555; border-color: #555; color: #fff; box-shadow: none; }
 
-        /* Map (Hexgate Network) */
+        /* Glitch Animation */
+        .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
+        @keyframes glitchAnim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        /* --- Map Network --- */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container {
             position: relative; width: 100%; height: 70vh; min-height: 450px;
-            border: 1px dashed var(--border-color); border-radius: 50%;
-            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0) 70%);
+            border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 50%;
+            margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 70%);
         }
 
         .planet {
             position: absolute; width: 60px; height: 60px;
-            background: radial-gradient(circle at 30% 30%, #fff, var(--accent-color), #000);
+            background: radial-gradient(circle at 30% 30%, #fff, var(--royal-gold), #000);
             border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%);
-            box-shadow: var(--accent-glow), inset -5px -5px 15px rgba(0,0,0,0.8);
-            transition: transform 0.2s, box-shadow 0.2s; z-index: 20;
+            box-shadow: var(--glow-gold), inset -5px -5px 15px rgba(0,0,0,0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20;
         }
         .planet::after {
-            content: attr(data-label); position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
-            font-size: 14px; color: var(--text-color); background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px;
-            border: 1px solid var(--border-color);
+            content: attr(data-label); position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%);
+            font-size: 12px; font-family: var(--font-tech); color: var(--royal-gold); background: rgba(0,0,0,0.9); 
+            padding: 4px 8px; border-radius: 4px; border: 1px solid var(--royal-gold); white-space: nowrap;
         }
-        .planet:hover { transform: translate(-50%, -50%) scale(1.15); }
-        .planet.visited { filter: grayscale(40%); border: 2px solid var(--system-green); }
+        .planet:hover { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 30px var(--neon-pink); background: radial-gradient(circle at 30% 30%, #fff, var(--neon-pink), #000); }
+        .planet.visited { filter: grayscale(40%); border: 2px solid var(--neon-cyan); }
 
-        /* Music Player (Hextech Gramophone Style) */
-        .record-player { position: relative; width: 180px; height: 180px; margin: 20px auto; background: #0a1128; border-radius: 10px; border: 2px solid var(--accent-color); padding: 10px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 20px #000, var(--accent-glow); }
-        .vinyl { width: 140px; height: 140px; background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; border: 1px solid #444; }
-        .vinyl-label { width: 45px; height: 45px; background: var(--accent-color); border-radius: 50%; border: 2px solid #000; box-shadow: 0 0 10px var(--accent-color); }
+        /* Background Aesthetics */
+        .floating-element { position: fixed; z-index: 2; animation: floatUp 12s linear forwards; font-size: 20px; opacity: 0.8; pointer-events: none; text-shadow: var(--glow-pink); }
+        .meme-comet { position: fixed; z-index: 1; opacity: 0.2; animation: shootAcross 7s linear forwards; border-radius: 8px; width: 120px; pointer-events: none; box-shadow: var(--glow-cyan); }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        @keyframes shootAcross { 0% { transform: translate(-150px, 80vh) rotate(-15deg); } 100% { transform: translate(120vw, -20vh) rotate(15deg); } }
+
+        /* Music Player */
+        .record-player { position: relative; width: 180px; height: 180px; margin: 20px auto; background: #0a0a0c; border-radius: 10px; border: 2px solid var(--royal-gold); padding: 10px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 20px #000, var(--glow-gold); }
+        .vinyl { width: 140px; height: 140px; background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; border: 1px solid var(--royal-gold); }
+        .vinyl-label { width: 45px; height: 45px; background: var(--neon-pink); border-radius: 50%; border: 2px solid #000; box-shadow: var(--glow-pink); }
         .vinyl.spin { animation: spinRecord 2s linear infinite; }
-        .tonearm { position: absolute; top: 15px; right: 15px; width: 10px; height: 80px; background: #cfb53b; /* Brass/Gold for Hextech */ transform-origin: top center; transform: rotate(-30deg); transition: transform 0.5s ease; border-radius: 5px; border-bottom: 10px solid #222; }
+        .tonearm { position: absolute; top: 15px; right: 15px; width: 10px; height: 80px; background: var(--royal-gold); transform-origin: top center; transform: rotate(-30deg); transition: transform 0.5s ease; border-radius: 5px; border-bottom: 10px solid #222; }
         .tonearm.playing { transform: rotate(25deg); }
         @keyframes spinRecord { 100% { transform: rotate(360deg); } }
 
-        /* Games Container & Matrix TTT */
-        .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: #111; padding: 8px; border-radius: 8px; border: 2px solid var(--border-color); }
-        .cell {
-            background-color: #050505;
-            background-image: radial-gradient(circle, #333 2px, transparent 2px);
-            background-size: 15px 15px;
-            border: 1px solid #222; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; cursor: pointer; transition: background-color 0.3s; color: var(--text-color);
-        }
-        .cell:hover { background-color: #1a1a1a; }
+        /* Games Container */
+        .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
+        .cell { background-color: #050505; background-image: radial-gradient(circle, #333 2px, transparent 2px); background-size: 15px 15px; border: 1px solid #222; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); }
+        .cell:hover { background-color: #1a1a1a; box-shadow: inset 0 0 10px var(--neon-cyan); }
         
-        /* Pastel Simon Board */
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
-        .simon-btn { height: 80px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.4); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.3; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
-        /* Cinematic Fixed Visibility */
-        .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; color: #ffffff; font-weight: bold; text-shadow: 0 0 10px var(--accent-color); }
-        .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: 0 0 30px rgba(255,255,255,0.2); border: 2px solid var(--accent-color); }
+        /* Cinematic */
+        .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
+        .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); }
         @keyframes movieFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
         .permanent-fade { animation: fadeHold 3s forwards; }
         @keyframes fadeHold { 0% { opacity: 0; } 100% { opacity: 1; } }
         
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
     </style>
 </head>
 <body>
 
+    <div class="grain"></div>
     <canvas id="bg-canvas"></canvas>
-    <button id="universe-toggle" class="hidden" onclick="toggleUniverse()">Normal Universe</button>
+
+    <div id="door-left" class="door"></div>
+    <div id="door-right" class="door"></div>
+    <div id="hex-symbol" class="hex-symbol">⬡</div>
 
     <div id="gate-1" class="screen">
+        <p style="font-family: var(--font-tech); font-size: 0.9em; letter-spacing: 3px; color: #aaa; margin-bottom: 40px;">Only the curious get in.</p>
         <div class="glass-panel">
-            <h2>HEXTECH LOGIC CALIBRATION</h2>
-            <p>Solve to continue.</p>
-            <h2 style="font-size: 2.5em; margin: 25px 0;">√144 + 2³ = ?</h2>
-            <input type="text" id="math-input" placeholder="Enter integer..." autocomplete="off">
+            <h2 class="highlight-cyan">HEXTECH ACCESS REQUIRED</h2>
+            <p style="color: #bbb; font-family: var(--font-tech); font-size: 0.85em;">TRIAL 1 — LOGIC</p>
+            
+            <div style="margin: 30px 0; font-family: var(--font-elegant); font-size: 1.8em; color: #fff;">
+                Simplify:<br>
+                <span style="color: var(--neon-pink);">(x² − 9) / (x − 3)</span>
+            </div>
+            
+            <input type="text" id="math-input" placeholder="Enter solution..." autocomplete="off">
             <div id="math-msg" class="system-text"></div>
         </div>
     </div>
 
     <div id="gate-2" class="screen hidden">
         <div class="glass-panel">
-            <h2>HEXTECH PHYSICS PROTOCOL</h2>
-            <p>What is the universal force of attraction acting between all matter?</p>
-            <button onclick="checkGate2(this, false)">Magnetism</button>
-            <button onclick="checkGate2(this, true)">Gravity</button>
-            <button onclick="checkGate2(this, false)">Friction</button>
-            <div id="phys-msg" class="system-text"></div>
-            <div id="phys-error" class="error-text"></div>
-        </div>
-    </div>
-
-    <div id="gate-3" class="screen hidden">
-        <div class="glass-panel">
-            <h2>HEXTECH CHEMISTRY PROTOCOL</h2>
-            <p>Which element is known as the "element of love" because it strengthens emotional bonding?</p>
-            <button onclick="checkChem(this, false)">Oxygen</button>
-            <button onclick="checkChem(this, true)">Oxytocin (technically a hormone)</button>
-            <button onclick="checkChem(this, false)">Carbon</button>
+            <h2 class="highlight-cyan">HEXTECH ACCESS REQUIRED</h2>
+            <p style="color: #bbb; font-family: var(--font-tech); font-size: 0.85em;">TRIAL 2 — CHEMISTRY</p>
+            
+            <div style="margin: 30px 0; font-family: var(--font-elegant); font-size: 1.3em; color: #fff; line-height: 1.4;">
+                What particle determines the identity of an element?
+            </div>
+            
+            <input type="text" id="chem-input" placeholder="Enter particle..." autocomplete="off">
             <div id="chem-msg" class="system-text"></div>
             <div id="chem-error" class="error-text"></div>
         </div>
@@ -206,43 +244,46 @@
 
     <div id="main-site" class="screen hidden">
         <div class="map-wrapper">
-            <h1>HEXTECH NAVIGATION NETWORK</h1>
-            <p>Select coordinates to traverse.</p>
+            <p class="playfair-quote" style="margin-top: -40px;">
+                “Curiosity is rare.<br>But the rarest thing is a mind that enjoys both chaos and equations.”
+            </p>
+            <h1 class="highlight-gold" style="font-family: var(--font-tech); font-size: 1.5em;">THE ARCHIVE</h1>
+            
             <div id="map-container">
-                <div class="planet" data-label="Audiophile" style="top: 20%; left: 50%; background: radial-gradient(circle, #ff9a9e, #fecfef);" onclick="openSection('music-section', this)"></div>
-                <div class="planet" data-label="Combat Sims" style="top: 45%; left: 20%; background: radial-gradient(circle, #4facfe, #00f2fe);" onclick="openSection('games-section', this)"></div>
-                <div class="planet" data-label="Logs" style="top: 45%; left: 80%; background: radial-gradient(circle, #fccb90, #d57eeb);" onclick="openSection('compliment-section', this)"></div>
-                <div class="planet" data-label="Interrogation" style="top: 75%; left: 35%; background: radial-gradient(circle, #84fab0, #8fd3f4);" onclick="openSection('quiz-section', this)"></div>
-                <div class="planet" data-label="Hexgate" style="top: 75%; left: 65%; background: radial-gradient(circle, #e0c3fc, #8ec5fc);" onclick="openSection('cinema-section', this)"></div>
+                <div class="planet" data-label="Audio" style="top: 20%; left: 50%;" onclick="openSection('music-section', this)"></div>
+                <div class="planet" data-label="Simulations" style="top: 45%; left: 20%;" onclick="openSection('games-section', this)"></div>
+                <div class="planet" data-label="Terminal" style="top: 45%; left: 80%;" onclick="openSection('compliment-section', this)"></div>
+                <div class="planet" data-label="Interrogation" style="top: 75%; left: 35%;" onclick="openSection('quiz-section', this)"></div>
+                <div class="planet" data-label="Core" style="top: 75%; left: 65%;" onclick="openSection('cinema-section', this)"></div>
             </div>
         </div>
     </div>
 
     <div id="music-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>Audiophile Core</h2>
+            <h2 class="highlight-pink">Vibe Generator</h2>
             <div class="record-player">
                 <div class="vinyl" id="vinyl-disk"><div class="vinyl-label"></div></div>
                 <div class="tonearm" id="tone-arm"></div>
             </div>
-            <div id="mood-display" class="system-text" style="color:var(--accent-color); margin-bottom: 10px; text-shadow: none;">> System Ready</div>
+            <div id="mood-display" class="system-text" style="color:var(--neon-cyan); margin-bottom: 10px;">> System Ready</div>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-                <button onclick="playSong('audio-frank', 'Frank Ocean')">Frank Ocean</button>
-                <button onclick="playSong('audio-tvgirl', 'TV Girl')">TV Girl</button>
-                <button onclick="playSong('audio-daniel', 'Daniel Caesar')">Daniel Caesar</button>
-                <button onclick="playSong('audio-arcane', 'Arcane')">Arcane</button>
-                <button onclick="playSong('audio-flatline', 'Justin Bieber')">J. Bieber</button>
-                <button onclick="playSong('random', 'Random Vibe')" style="color:#0ff; border-color:#0ff;">Random</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button onclick="playSong('audio-frank', 'Frank Ocean')" class="btn-pink">Frank Ocean</button>
+                <button onclick="playSong('audio-tvgirl', 'TV Girl')" class="btn-pink">TV Girl</button>
+                <button onclick="playSong('audio-daniel', 'Daniel Caesar')" class="btn-pink">Daniel Caesar</button>
+                <button onclick="playSong('audio-arcane', 'Arcane')" class="btn-pink">Arcane</button>
+                <button onclick="playSong('audio-flatline', 'Justin Bieber')" class="btn-pink">J. Bieber</button>
+                <button onclick="playSong('random', 'Random Vibe')" style="border-color:var(--royal-gold); color:var(--royal-gold);">Random</button>
             </div>
-            <button onclick="stopAudio()" style="border-color:var(--system-red); color:var(--system-red);">Stop Playback</button>
-            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
+            <button onclick="stopAudio()" style="border-color:var(--system-red); color:var(--system-red); margin-top: 15px;">Stop Playback</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
 
     <div id="games-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>ENFORCER TRAINING SIMS</h2>
+            <h2 class="highlight-cyan">COMBAT SIMULATIONS</h2>
             
             <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
                 <h3 style="font-size: 1.1em; color: #fff; text-shadow: none;">Tic-Tac-Toe (Moderate)</h3>
@@ -251,7 +292,7 @@
                     <div class="cell" onclick="makeMove(3)"></div><div class="cell" onclick="makeMove(4)"></div><div class="cell" onclick="makeMove(5)"></div>
                     <div class="cell" onclick="makeMove(6)"></div><div class="cell" onclick="makeMove(7)"></div><div class="cell" onclick="makeMove(8)"></div>
                 </div>
-                <div id="ttt-msg" style="color:var(--accent-color); min-height:20px; margin-top:5px; font-weight: bold;"></div>
+                <div id="ttt-msg" style="color:var(--neon-pink); min-height:20px; margin-top:5px; font-family: var(--font-tech); font-size: 0.9em; text-transform: uppercase;"></div>
                 <button onclick="resetTTT()">Reboot Board</button>
             </div>
 
@@ -264,33 +305,33 @@
                     <div class="simon-btn" id="simon-3" style="background:#ffffba;" onclick="handleSimonClick(3)"></div>
                 </div>
                 <div id="simon-msg" class="system-text" style="min-height:20px; margin-top:5px;"></div>
-                <button onclick="startSimon()">Initialize Matrix</button>
+                <button onclick="startSimon()" class="btn-pink">Initialize Matrix</button>
             </div>
 
-            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
 
     <div id="quiz-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>DATA INTERROGATION</h2>
+            <h2 class="highlight-gold">INTERROGATION</h2>
             
             <div id="q1">
-                <p>1. Who is the best character in Star Wars?</p>
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">1. Who is the best character in Star Wars?</p>
                 <button onclick="ansQuiz(1, true)">Anakin Skywalker</button>
                 <button onclick="ansQuiz(1, true)">R2-D2</button>
                 <button onclick="ansQuiz(1, false)">Jar Jar Binks</button>
             </div>
 
             <div id="q2" class="hidden">
-                <p>2. What is the most valuable substance in the universe found on Arrakis?</p>
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">2. What is the most valuable substance in the universe found on Arrakis?</p>
                 <button onclick="ansQuiz(2, true)">Spice (Melange)</button>
                 <button onclick="ansQuiz(2, false)">Water</button>
                 <button onclick="ansQuiz(2, false)">Vibranium</button>
             </div>
 
             <div id="q3" class="hidden">
-                <p>3. In which film does Timothée Chalamet portray a cannibal?</p>
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">3. In which film does Timothée Chalamet portray a cannibal?</p>
                 <button onclick="ansQuiz(3, false)">Wonka</button>
                 <button onclick="ansQuiz(3, true)">Bones and All</button>
                 <button onclick="ansQuiz(3, false)">Dune</button>
@@ -298,37 +339,40 @@
 
             <div id="q-end" class="hidden">
                 <h2 style="color: var(--system-green); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);">Verification Complete</h2>
-                <p>Niche knowledge confirmed.</p>
-                <p style="margin-top: 20px; font-weight: bold; color: var(--accent-color);">If you reached this far, you’re officially too smart to cr*ck JEE 💔💔💔</p>
+                <p style="font-family: var(--font-tech);">Niche knowledge confirmed.</p>
+                <p style="margin-top: 20px; font-weight: bold; color: var(--neon-pink); font-family: var(--font-quote); font-style: italic; font-size: 1.2em;">If you reached this far, you’re officially too smart to cr*ck JEE 💔💔💔</p>
             </div>
 
             <div id="quiz-feedback" class="system-text"></div>
-            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
 
     <div id="compliment-section" class="screen hidden">
         <div class="glass-panel">
-            <h2>HEXTECH TERMINAL</h2>
+            <h2 class="highlight-cyan">HEXTECH TERMINAL</h2>
             <div class="terminal-box">
                 <p id="droid-raw" style="letter-spacing: 2px;">BEEP BOOP BEEP — 011010</p>
-                <div id="droid-translated" class="system-text"></div>
+                <div id="droid-translated" style="margin-top: 10px; color: var(--neon-pink);"></div>
             </div>
-            <button onclick="translateDroid()">Decode Astromech Log</button>
-            <div style="margin: 20px 0; border-top: 1px solid var(--border-color); padding-top: 20px;"></div>
+            <button onclick="translateDroid()" class="btn-pink">Decode Astromech Log</button>
+            
+            <div style="margin: 25px 0; border-top: 1px dashed var(--border-color); padding-top: 20px;"></div>
+            
             <div class="terminal-box">
-                <div id="compliment-output" class="system-text">> Awaiting manual input...</div>
+                <div id="compliment-output" style="color: var(--royal-gold);">> Awaiting manual input...</div>
             </div>
             <button onclick="generateCompliment()">Generate Compliment</button>
-            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
 
     <div id="cinema-section" class="screen hidden">
         <div class="glass-panel" id="cinema-panel">
-            <h2>HEXTECH JUMP SEQUENCE</h2>
-            <button onclick="startEnding()">Initialize Transmission</button>
-            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
+            <h2 class="highlight-gold">CORE ARCHIVE</h2>
+            <p style="font-family: var(--font-tech); font-size: 0.8em; color: #888; margin-bottom: 20px;">WARNING: INITIATING HYPER-JUMP PROTOCOL</p>
+            <button onclick="startEnding()" style="border-color: var(--royal-gold); color: var(--royal-gold);">Initialize Transmission</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
         <div id="cinema-text-container" style="position:absolute; width:100%; max-width:800px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; z-index: 50;"></div>
     </div>
@@ -341,34 +385,44 @@
     <audio id="audio-cornershop" src="cornershop.mp3"></audio>
 
     <script>
-        // --- Setup ---
-        let isAlternate = false;
+        // --- System States ---
         let isLightspeed = false;
         
-        // --- Verification Gates ---
+        // --- Verification Gates & Door Logic ---
         document.getElementById('math-input').addEventListener('input', (e) => {
-            if(e.target.value.trim() === '20') {
+            let val = e.target.value.replace(/\s+/g, '').toLowerCase();
+            if(val === 'x+3') {
                 e.target.disabled = true; e.target.style.borderColor = "var(--system-green)";
-                document.getElementById('math-msg').innerText = "Correct. (12 + 8 = 20).";
+                document.getElementById('math-msg').innerText = "Logic accepted.";
                 setTimeout(() => { document.getElementById('gate-1').classList.add('hidden'); document.getElementById('gate-2').classList.remove('hidden'); }, 1200);
             }
         });
 
-        function checkGate2(btn, isCorrect) {
-            if(isCorrect) {
-                btn.style.background = "var(--system-green)"; btn.style.color = "#000";
-                document.getElementById('phys-msg').innerText = "Physics confirmed.";
-                setTimeout(() => { document.getElementById('gate-2').classList.add('hidden'); document.getElementById('gate-3').classList.remove('hidden'); }, 1200);
-            } else { btn.style.borderColor = "var(--system-red)"; document.getElementById('phys-error').innerText = "Incorrect force."; setTimeout(() => document.getElementById('phys-error').innerText="", 1000); }
-        }
-
-        function checkChem(btn, isCorrect) {
-            if(isCorrect) {
-                btn.style.background = "var(--system-green)"; btn.style.color = "#000";
-                document.getElementById('chem-msg').innerText = "Chemistry confirmed.";
-                setTimeout(() => { document.getElementById('gate-3').classList.add('hidden'); document.getElementById('main-site').classList.remove('hidden'); }, 1200);
-            } else { btn.style.borderColor = "var(--system-red)"; document.getElementById('chem-error').innerText = "Incorrect compound."; setTimeout(() => document.getElementById('chem-error').innerText="", 1000); }
-        }
+        document.getElementById('chem-input').addEventListener('input', (e) => {
+            let val = e.target.value.trim().toLowerCase();
+            if(val === 'proton' || val === 'protons') {
+                e.target.disabled = true; e.target.style.borderColor = "var(--system-green)";
+                document.getElementById('chem-msg').innerText = "Knowledge confirmed.";
+                document.getElementById('chem-error').innerText = "";
+                
+                // Execute Unlock Animation Sequence
+                setTimeout(() => {
+                    document.getElementById('gate-2').classList.add('glitch');
+                    document.getElementById('hex-symbol').classList.add('unlocked');
+                    
+                    setTimeout(() => {
+                        document.getElementById('gate-2').classList.add('hidden');
+                        document.getElementById('door-left').classList.add('open-left');
+                        document.getElementById('door-right').classList.add('open-right');
+                        
+                        setTimeout(() => {
+                            document.getElementById('main-site').classList.remove('hidden');
+                            document.getElementById('hex-symbol').classList.add('hidden');
+                        }, 500);
+                    }, 1200);
+                }, 800);
+            }
+        });
 
         // --- Navigation ---
         function openSection(id, planetElement) {
@@ -446,7 +500,7 @@
             let cells = document.querySelectorAll('.tictactoe-board .cell');
             board.forEach((val, i) => {
                 cells[i].innerText = val;
-                if(val !== "") cells[i].style.color = val === 'X' ? '#fff' : 'var(--accent-color)';
+                if(val !== "") cells[i].style.color = val === 'X' ? '#fff' : 'var(--neon-pink)';
             });
         }
 
@@ -540,13 +594,13 @@
             }, 50);
         }
 
-        const comps = ["Certified main character energy.", "Performative divaa", "Scientifically proven kooool.", "Rare niche personality detected."];
+        const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() {
             document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
         }
 
-        // --- Aesthetics ---
-        const aestheticIcons = ['🌸', '✨', '🐈'];
+        // --- Aesthetics (Particles & Memes) ---
+        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element';
             el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
@@ -571,7 +625,6 @@
             let bdAudio = document.getElementById('audio-cornershop');
             if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
 
-            // Trigger Lightspeed/Hexgate Jump
             isLightspeed = true;
             
             setTimeout(() => {
@@ -592,29 +645,7 @@
             }, 2500); 
         }
 
-        // --- Universe Toggle & Keys ---
-        function toggleUniverse() {
-            isAlternate = !isAlternate;
-            let btn = document.getElementById('universe-toggle');
-            if (isAlternate) { document.body.classList.add('alternate-universe'); btn.innerText = "Zaun Timeline"; } 
-            else { document.body.classList.remove('alternate-universe'); btn.innerText = "Piltover Universe"; }
-        }
-
-        let r2Seq = '';
-        document.addEventListener('keydown', (e) => {
-            if (document.activeElement.tagName === "INPUT") return;
-            let k = e.key.toLowerCase();
-            
-            // Easter Eggs
-            if (k === 'a') alert("> Anakin Protocol: I don't like sand. It's coarse and rough and irritating.");
-            if (k === 'f') openSection('music-section', null);
-            
-            r2Seq += k;
-            if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
-            if (r2Seq === 'r2') { alert("> 🤖 BEEP BOOP. Astromech presence acknowledged."); r2Seq = ''; }
-        });
-
-        // --- Dynamic Canvas ---
+        // --- Dynamic Canvas (Particles & Jump) ---
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
@@ -623,16 +654,17 @@
         
         function draw() {
             if(isLightspeed) {
-                ctx.fillStyle = 'rgba(5, 10, 20, 0.2)'; 
+                ctx.fillStyle = 'rgba(10, 10, 15, 0.2)'; 
                 ctx.fillRect(0, 0, cvs.width, cvs.height);
             } else {
                 ctx.clearRect(0,0,cvs.width,cvs.height); 
             }
             
-            ctx.fillStyle = isAlternate ? 'rgba(255, 0, 255, 0.8)' : 'rgba(0, 240, 255, 0.8)';
-            
-            parts.forEach(p => {
+            // Neon cyan / pink particle mix
+            parts.forEach((p, index) => {
+                ctx.fillStyle = (index % 2 === 0) ? 'rgba(0, 240, 255, 0.8)' : 'rgba(255, 0, 122, 0.8)';
                 ctx.beginPath(); 
+                
                 if (isLightspeed) {
                     ctx.arc(p.x, p.y, p.s * 1.5, 0, Math.PI*2);
                     p.y += (p.dy * 25);
