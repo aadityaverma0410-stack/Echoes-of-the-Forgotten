@@ -168,7 +168,7 @@
             font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; 
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; 
             animation: fadeHold 1s forwards; margin-bottom: 20px; text-align: center; font-weight: bold;
-            background: transparent; border: none; box-shadow: none; /* Forced minimal */
+            background: transparent; border: none; box-shadow: none; 
         }
         
         /* Exit Button */
@@ -180,7 +180,7 @@
         }
         .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
-        /* --- SNAKE RINGS ANIMATION --- */
+        /* --- SNAKE RINGS ANIMATION (FIXED OVERFLOW SCALING) --- */
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
         .snake-meme {
             position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
@@ -196,12 +196,19 @@
             100% { transform: translate(0, 0) rotate(720deg) scale(0); opacity: 0; }
         }
         
-        .final-snake-text { opacity: 0; animation: fadeHold 4s forwards; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90vw; text-align: center; }
+        .final-snake-text { 
+            opacity: 0; animation: fadeHold 4s forwards; position: absolute; 
+            top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 100vw; text-align: center; padding: 0 20px;
+            display: flex; justify-content: center; align-items: center;
+        }
         .meme-text-snake {
-            font-family: var(--font-elegant); font-size: 10vw; font-weight: bold;
+            font-family: var(--font-elegant); 
+            font-size: clamp(24px, 7vw, 60px); /* Perfectly scales so it never breaks off screen */
+            font-weight: bold;
             background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'); background-size: cover;
             -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
-            display: inline-block; white-space: normal; line-height: 1.2;
+            display: inline-block; white-space: pre-wrap; word-wrap: break-word; line-height: 1.4;
         }
         
         ::-webkit-scrollbar { width: 6px; }
@@ -271,6 +278,7 @@
                 “Curiosity is rare.<br>But the rarest thing is a mind that enjoys both chaos and equations.”
             </p>
             <h1 class="highlight-gold" style="font-family: var(--font-tech); font-size: 1.5em;">THE ARCHIVE</h1>
+            
             <div id="map-container">
                 <div class="planet" data-label="Audio" style="top: 20%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
                 <div class="planet" data-label="Simulations" style="top: 45%; left: 20%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
@@ -521,7 +529,7 @@
             if(audio) { 
                 audio.currentTime = 0; 
                 audio.play().catch(e=>console.log(e)); 
-                setTimeout(() => { audio.pause(); }, 1500); // Strict 1.5s cap
+                setTimeout(() => { audio.pause(); }, 2500); 
             }
             
             bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
@@ -730,7 +738,6 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
-                // Delay Timings (Perfect Sequence)
                 setTimeout(() => {
                     let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
                 }, 0);
@@ -748,13 +755,13 @@
                     let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale);
                 }, 8500);
 
-                // Elegant Gold Text + 1.5s Sound
+                // Elegant Gold Text + Audio
                 setTimeout(() => {
                     let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
                     let r2sound = document.getElementById('r2d2-audio');
                     if(r2sound) { 
                         r2sound.currentTime = 0; r2sound.play(); 
-                        setTimeout(() => r2sound.pause(), 1500); // 1.5s Strict Cap
+                        setTimeout(() => r2sound.pause(), 2500); // FIXED: 2.5s Audio Cap
                     }
                 }, 10000);
 
@@ -798,6 +805,7 @@
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+        
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         
         function draw() {
