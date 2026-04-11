@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&family=VT323&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Orbitron:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&family=VT323&family=Great+Vibes&display=swap');
 
+        /* --- Arcane Baddie + Insta Aesthetic Variables --- */
         :root {
             --bg-dark: #0a0a0c; 
             --text-color: #f0f0f0;
@@ -17,6 +18,7 @@
             --font-elegant: 'Cinzel', serif;
             --font-quote: 'Playfair Display', serif;
             --font-matrix: 'VT323', monospace;
+            --font-italian: 'Great Vibes', cursive; /* Used for "from R2-D2" */
             --glow-pink: 0 0 20px rgba(255, 0, 122, 0.6);
             --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.6);
             --glow-gold: 0 0 20px rgba(212, 175, 55, 0.6);
@@ -57,6 +59,42 @@
         }
         .hex-symbol.unlocked { color: var(--neon-pink); text-shadow: var(--glow-pink); transform: translateX(-50%) scale(1.5); }
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
+
+        /* --- ENTRY NAME OVERLAY --- */
+        #entry-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 5, 8, 0.95); z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 1; transition: opacity 1s ease;
+        }
+        .italian-script {
+            font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold);
+            text-shadow: var(--glow-gold); margin-bottom: 20px;
+            opacity: 0; animation: fadeInScript 1.5s forwards 0.5s;
+        }
+        .name-reveal-container {
+            position: relative; width: 90vw; max-width: 800px; text-align: center;
+            opacity: 0; animation: fadeInScript 1s forwards 1.5s;
+        }
+        /* Uses the memes as the background of the text itself */
+        .meme-text {
+            font-family: var(--font-tech); font-size: 4rem; font-weight: bold; text-transform: uppercase;
+            background-image: 
+                url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'), url('meme9.jpg'), 
+                url('meme10.jpg'), url('meme11.jpg'), url('meme12.jpg');
+            background-size: 30% 30%, 40% 40%, 25% 25%, 35% 35%, 50% 50%, 20% 20%, 45% 45%;
+            background-position: top left, top right, bottom left, bottom right, center, center left, center right;
+            background-repeat: repeat;
+            -webkit-background-clip: text; color: transparent;
+            white-space: nowrap; overflow: hidden;
+            display: inline-block; margin: 0 auto;
+            border-right: 4px solid var(--neon-cyan);
+            animation: typingName 3s steps(30, end) forwards 1.5s, blinkCursor 0.75s step-end infinite;
+        }
+        
+        @keyframes fadeInScript { to { opacity: 1; } }
+        @keyframes typingName { from { width: 0; } to { width: 100%; } }
+        @keyframes blinkCursor { from, to { border-color: transparent; } 50% { border-color: var(--neon-cyan); } }
 
         /* Screens & Panels */
         .screen {
@@ -132,28 +170,19 @@
         .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
+        /* Constellation Puzzle Canvas */
+        #constellation-canvas { background: #000; border: 1px solid var(--royal-gold); border-radius: 8px; box-shadow: inset 0 0 20px rgba(212,175,55,0.3); margin: 20px auto; cursor: crosshair; }
+
         /* Background Aesthetics & FIXED MEMES */
         .floating-element { position: fixed; z-index: 2; animation: floatUp 12s linear forwards; font-size: 20px; opacity: 0.8; pointer-events: none; text-shadow: var(--glow-pink); }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
         
-        /* Corrected Meme Comet Logic */
         .meme-comet { 
-            position: fixed; 
-            z-index: 1; 
-            opacity: 0.4; 
-            animation: shootAcross 5s linear forwards; 
-            border-radius: 8px; 
-            width: 80px;  /* Force maximum width */
-            height: auto; /* Maintain aspect ratio */
-            pointer-events: none; 
-            box-shadow: var(--glow-cyan); 
-            border: 1px solid var(--neon-cyan);
-            object-fit: contain; /* Prevent stretching */
+            position: fixed; z-index: 1; opacity: 0.4; animation: shootAcross 5s linear forwards; 
+            border-radius: 8px; width: 80px; height: auto; pointer-events: none; 
+            box-shadow: var(--glow-cyan); border: 1px solid var(--neon-cyan); object-fit: contain; 
         }
-        @keyframes shootAcross { 
-            0% { transform: translate(-100px, 80vh) rotate(-15deg); } 
-            100% { transform: translate(110vw, -20vh) rotate(15deg); } 
-        }
+        @keyframes shootAcross { 0% { transform: translate(-100px, 80vh) rotate(-15deg); } 100% { transform: translate(110vw, -20vh) rotate(15deg); } }
 
         /* Cinematic */
         .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
@@ -175,6 +204,13 @@
     <div id="door-left" class="door"></div>
     <div id="door-right" class="door"></div>
     <div id="hex-symbol" class="hex-symbol">⬡</div>
+
+    <div id="entry-overlay" class="hidden">
+        <div class="italian-script">from R2-D2</div>
+        <div class="name-reveal-container">
+            <h1 class="meme-text">PRAGYA skywalker</h1>
+        </div>
+    </div>
 
     <div id="gate-1" class="screen">
         <p style="font-family: var(--font-tech); font-size: 0.9em; letter-spacing: 3px; color: #aaa; margin-bottom: 40px; text-shadow: 0 0 10px #000;">Only the curious get in.</p>
@@ -272,7 +308,6 @@
     <div id="quiz-section" class="screen hidden">
         <div class="glass-panel">
             <h2 class="highlight-gold">INTERROGATION</h2>
-            
             <div id="q1">
                 <p style="font-family: var(--font-elegant); font-size: 1.2em;">1. Who is the best character in Star Wars?</p>
                 <button onclick="ansQuiz(1, true)">Anakin Skywalker</button>
@@ -315,13 +350,11 @@
                 <button onclick="ansQuiz(7, true)">Shai-Hulud</button>
                 <button onclick="ansQuiz(7, false)">Graboids</button>
             </div>
-
             <div id="q-end" class="hidden">
                 <h2 style="color: var(--system-green); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);">Verification Complete</h2>
                 <p style="font-family: var(--font-tech);">Niche knowledge confirmed.</p>
                 <p style="margin-top: 20px; font-weight: bold; color: var(--neon-pink); font-family: var(--font-quote); font-style: italic; font-size: 1.2em;">If you reached this far, you’re officially too smart to cr*ck JEE 💔💔💔</p>
             </div>
-
             <div id="quiz-feedback" class="system-text"></div>
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
@@ -341,6 +374,21 @@
             </div>
             <button onclick="generateCompliment()">Generate Compliment</button>
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
+        </div>
+    </div>
+
+    <div id="constellation-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2 class="highlight-cyan">STAR MAP ANOMALY</h2>
+            <p style="font-family: var(--font-tech); font-size: 0.85em; color: #888;">Connect the coordinates in order.</p>
+            
+            <canvas id="constellation-canvas" width="300" height="300"></canvas>
+            
+            <div id="constellation-msg" class="hidden">
+                <h2 style="color: var(--neon-pink); margin-top: 20px; text-shadow: var(--glow-pink);">पाकgya type shii yayyyy.</h2>
+            </div>
+
+            <button class="back-btn" onclick="returnToMap()">Return to Network</button>
         </div>
     </div>
 
@@ -371,7 +419,6 @@
     <audio id="audio-cornershop" src="cornershop.mp3"></audio>
 
     <script>
-        // --- System States ---
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
@@ -401,7 +448,23 @@
                         document.getElementById('gate-2').classList.add('hidden');
                         document.getElementById('door-left').classList.add('open-left');
                         document.getElementById('door-right').classList.add('open-right');
-                        setTimeout(() => { document.getElementById('main-site').classList.remove('hidden'); document.getElementById('hex-symbol').classList.add('hidden'); }, 500);
+                        
+                        // Show Name Overlay After Doors Open
+                        setTimeout(() => { 
+                            let overlay = document.getElementById('entry-overlay');
+                            overlay.classList.remove('hidden');
+                            
+                            // Wait 6 seconds, then fade out overlay and show map
+                            setTimeout(() => {
+                                overlay.style.opacity = '0';
+                                setTimeout(() => {
+                                    overlay.classList.add('hidden');
+                                    document.getElementById('main-site').classList.remove('hidden'); 
+                                    document.getElementById('hex-symbol').classList.add('hidden'); 
+                                }, 1000);
+                            }, 6000);
+
+                        }, 500);
                     }, 1200);
                 }, 800);
             }
@@ -419,7 +482,80 @@
             document.getElementById('main-site').classList.remove('hidden');
         }
 
-        // --- Vintage Music & Global Player ---
+        // --- Constellation Puzzle Logic ---
+        const constCvs = document.getElementById('constellation-canvas');
+        const cCtx = constCvs.getContext('2d');
+        // Points roughly forming a 'P'
+        const starPoints = [
+            {x: 80, y: 250}, {x: 80, y: 50}, {x: 200, y: 50}, 
+            {x: 230, y: 100}, {x: 200, y: 150}, {x: 80, y: 150}
+        ];
+        let connectedStars = 0;
+
+        function drawConstellation() {
+            cCtx.clearRect(0, 0, constCvs.width, constCvs.height);
+            cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)';
+            cCtx.lineWidth = 3;
+            
+            // Draw lines
+            cCtx.beginPath();
+            for(let i=0; i<connectedStars; i++) {
+                if(i===0) cCtx.moveTo(starPoints[i].x, starPoints[i].y);
+                else cCtx.lineTo(starPoints[i].x, starPoints[i].y);
+            }
+            cCtx.stroke();
+
+            // Draw stars
+            starPoints.forEach((p, idx) => {
+                cCtx.beginPath();
+                cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
+                cCtx.fillStyle = (idx < connectedStars) ? '#00f0ff' : '#444';
+                cCtx.fill();
+                cCtx.shadowBlur = (idx < connectedStars) ? 10 : 0;
+                cCtx.shadowColor = '#00f0ff';
+            });
+        }
+        drawConstellation();
+
+        constCvs.addEventListener('click', (e) => {
+            if(connectedStars >= starPoints.length) return;
+            const rect = constCvs.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const targetStar = starPoints[connectedStars];
+            const dist = Math.hypot(mouseX - targetStar.x, mouseY - targetStar.y);
+            
+            if(dist < 20) {
+                connectedStars++;
+                drawConstellation();
+                if(connectedStars === starPoints.length) {
+                    setTimeout(() => {
+                        document.getElementById('constellation-msg').classList.remove('hidden');
+                    }, 500);
+                }
+            }
+        });
+
+        // --- Easter Eggs (Including Secret Map Unlock) ---
+        let r2Seq = '';
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement.tagName === "INPUT") return;
+            let k = e.key.toLowerCase();
+            if (k === 'a') alert("> Anakin Protocol: I don't like sand. It's coarse and rough and irritating.");
+            if (k === 'f') openSection('music-section', null);
+            
+            r2Seq += k;
+            if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
+            if (r2Seq === 'r2') { 
+                // Unlock Secret Constellation Sector
+                document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
+                document.getElementById('constellation-section').classList.remove('hidden');
+                r2Seq = ''; 
+            }
+        });
+
+        // --- Music Player Functions ---
         const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline'];
         const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber'];
         const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg'];
@@ -433,13 +569,11 @@
                 art = songArts[idx];
             }
             
-            // UI Updates for local vinyl player
             document.getElementById('vinyl-disk').classList.add('spin');
             document.getElementById('tone-arm').classList.add('playing');
             document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`;
             document.getElementById('mood-display').innerText = "> Playing: " + name;
             
-            // UI Updates for Global Player
             document.getElementById('global-player').classList.add('active');
             document.getElementById('gp-art').style.backgroundImage = `url('${art}')`;
             document.getElementById('gp-title').innerText = name;
@@ -611,7 +745,7 @@
             document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
         }
 
-        // --- Aesthetics (Particles & FIXED MEMES) ---
+        // --- Aesthetics (Particles & Memes) ---
         const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element';
