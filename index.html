@@ -141,7 +141,7 @@
         .cell { background-color: #1a1a1a; background-image: radial-gradient(circle, #000 3px, transparent 3px); background-size: 15px 15px; border: 1px solid #333; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); }
         .cell:hover { background-color: #2a2a2a; box-shadow: inset 0 0 10px var(--neon-cyan); }
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
-        .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15 rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
         /* Constellation Puzzle Canvas */
@@ -184,18 +184,22 @@
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
         .snake-meme {
             position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
-            top: 50%; left: 50%; animation: ringSwirl 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            top: 50%; left: 50%; 
             box-shadow: 0 0 20px var(--royal-gold); border: 2px solid var(--royal-gold); margin-top: -25px; margin-left: -25px;
-        }
-        @keyframes ringSwirl {
-            0% { transform: translate(-50vw, -50vh) rotate(0deg) scale(0.5); opacity: 0; }
-            20% { opacity: 1; transform: translate(30vw, -30vh) rotate(90deg) scale(1.2); }
-            40% { transform: translate(40vw, 20vh) rotate(180deg) scale(1); }
-            60% { transform: translate(-30vw, 30vh) rotate(270deg) scale(1.5); }
-            80% { transform: translate(-20vw, -10vh) rotate(360deg) scale(1); opacity: 1; }
-            100% { transform: translate(0, 0) rotate(720deg) scale(0); opacity: 0; }
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s; /* Smooth launch transition */
         }
         
+        /* Initial state is the swirling circle */
+        .swirling { animation: fastCircleSwirl 2s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+
+        @keyframes fastCircleSwirl {
+            0% { transform: scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            20% { transform: translate(70px, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(70px, 0) rotate(360deg) scale(1); }
+        }
+
+        /* Final text layout and text texture remains correct */
         .final-snake-text { 
             opacity: 0; animation: fadeHold 4s forwards; position: absolute; 
             top: 50%; left: 50%; transform: translate(-50%, -50%); 
@@ -204,7 +208,7 @@
         }
         .meme-text-snake {
             font-family: var(--font-elegant); 
-            font-size: clamp(24px, 7vw, 60px); /* Perfectly scales so it never breaks off screen */
+            font-size: clamp(24px, 7vw, 60px); 
             font-weight: bold;
             background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'); background-size: cover;
             -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
@@ -708,7 +712,7 @@
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
         // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '✨', '🍭', '🎀'];
+        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
             el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
@@ -738,6 +742,7 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
+                // Delay Timings (Perfect Sequence)
                 setTimeout(() => {
                     let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
                 }, 0);
@@ -761,7 +766,7 @@
                     let r2sound = document.getElementById('r2d2-audio');
                     if(r2sound) { 
                         r2sound.currentTime = 0; r2sound.play(); 
-                        setTimeout(() => r2sound.pause(), 2500); // FIXED: 2.5s Audio Cap
+                        setTimeout(() => r2sound.pause(), 2500); // Strict 2.5s Audio Cap
                     }
                 }, 10000);
 
@@ -777,7 +782,7 @@
             }, 2500); 
         }
 
-        // --- Shang-Chi Style Snake Sequence ---
+        // --- Shang-Chi Style Snake Sequence (Fixed Responsive Sizing & Swirl->Launch Animation) ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
@@ -787,25 +792,68 @@
             snakeContainer.id = "snake-container";
             document.body.appendChild(snakeContainer);
             
-            let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
+            let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg','meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg']; // Double for smooth circle
             
-            for(let i=0; i<30; i++) {
-                let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; m.style.animationDelay = (i * 0.08) + 's';
+            // Phase 1: Create memes in swirling circle state
+            let activeMemes = [];
+            for(let i=0; i<memes.length; i++) {
+                let m = document.createElement('img'); m.src = memes[i]; 
+                m.className = "snake-meme swirling"; // Starts swirling
                 snakeContainer.appendChild(m);
+                activeMemes.push(m);
             }
             
+            // Phase 2: Launch one-by-one to form name
             setTimeout(() => {
+                // Remove swirling animation
+                activeMemes.forEach(m => m.classList.remove('swirling'));
+
+                // Set final formed text visible but 0 opacity (the clamp logic ensures scaling is correct)
                 let finalTxt = document.createElement('div'); finalTxt.className = 'final-snake-text';
                 finalTxt.innerHTML = '<span class="meme-text-snake">पाकgya prayagi 🦄</span>';
                 snakeContainer.appendChild(finalTxt);
-            }, 3500);
+
+                // Now launch each meme one-by-one with staggered delay to its target coordinate
+                // We calculate target coordinate relative to current center
+                let targets = document.querySelectorAll('.meme-text-snake span'); // We need individual spans, so update HTML generation
+                
+                // Regenerate HTML to wrap each character for coordinate tracking
+                let targetString = "पाकgya prayagi 🦄";
+                let spansHTML = '';
+                for (let char of targetString) {
+                    spansHTML += `<span>${char === ' ' ? '&nbsp;' : char}</span>`;
+                }
+                document.querySelector('.meme-text-snake').innerHTML = spansHTML;
+                let characterSpans = document.querySelectorAll('.meme-text-snake span');
+
+                activeMemes.forEach((memeEl, index) => {
+                    if(index >= characterSpans.length) return; // Excess memes fade
+
+                    setTimeout(() => {
+                        let targetSpan = characterSpans[index];
+                        let memeRect = memeEl.getBoundingClientRect();
+                        let spanRect = targetSpan.getBoundingClientRect();
+
+                        let targetX = spanRect.left - memeRect.left + (spanRect.width / 2) - (memeRect.width / 2);
+                        let targetY = spanRect.top - memeRect.top + (spanRect.height / 2) - (memeRect.height / 2);
+
+                        memeEl.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.6)`;
+                        memeEl.style.opacity = 0; // Fades out as it merges
+
+                        // Fade in the actual text span as the meme merges
+                        setTimeout(() => targetSpan.style.opacity = 1, 1000); 
+
+                    }, index * 100); // 100ms staggered delay
+
+                });
+                
+            }, 3000); // Waits for swirl phase before launching
         }
 
         // --- Dynamic Canvas ---
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
-        
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         
         function draw() {
