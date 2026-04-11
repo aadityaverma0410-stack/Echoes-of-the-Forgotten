@@ -31,7 +31,7 @@
             background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-color); font-family: var(--font-elegant);
             overflow-x: hidden; min-height: 100vh;
-            padding-bottom: 70px; /* Space for global player */
+            padding-bottom: 70px;
         }
 
         .grain {
@@ -51,6 +51,7 @@
         #door-right { right: 0; border-left: 2px solid var(--royal-gold); box-shadow: inset 10px 0 30px rgba(212,175,55,0.2); }
         .door.open-left { transform: translateX(-100%); }
         .door.open-right { transform: translateX(100%); }
+        
         .hex-symbol {
             font-size: 5rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan); animation: rotateHex 10s linear infinite; position: absolute; z-index: 6; left: 50%; top: 20%; transform: translateX(-50%); pointer-events: none; transition: color 0.5s, text-shadow 0.5s, transform 0.5s;
         }
@@ -92,7 +93,7 @@
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
-        /* Map Network with Custom Icons */
+        /* Map Network */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container { position: relative; width: 100%; height: 70vh; min-height: 450px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
         .planet { position: absolute; width: 60px; height: 60px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
@@ -100,7 +101,7 @@
         .planet:hover { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 30px var(--neon-pink); border-color: var(--neon-pink); }
         .planet.visited { filter: grayscale(40%); border-color: var(--neon-cyan); box-shadow: var(--glow-cyan); }
 
-        /* Music Player (Album Art Integrated) */
+        /* Music Player */
         .record-player { position: relative; width: 180px; height: 180px; margin: 20px auto; background: #0a0a0c; border-radius: 10px; border: 2px solid var(--royal-gold); padding: 10px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 20px #000, var(--glow-gold); }
         .vinyl { width: 140px; height: 140px; background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; border: 1px solid var(--royal-gold); }
         .vinyl-label { width: 60px; height: 60px; background-size: cover; background-position: center; background-color: var(--neon-pink); border-radius: 50%; border: 2px solid #000; box-shadow: var(--glow-pink); }
@@ -130,6 +131,29 @@
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
         .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
+
+        /* Background Aesthetics & FIXED MEMES */
+        .floating-element { position: fixed; z-index: 2; animation: floatUp 12s linear forwards; font-size: 20px; opacity: 0.8; pointer-events: none; text-shadow: var(--glow-pink); }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        
+        /* Corrected Meme Comet Logic */
+        .meme-comet { 
+            position: fixed; 
+            z-index: 1; 
+            opacity: 0.4; 
+            animation: shootAcross 5s linear forwards; 
+            border-radius: 8px; 
+            width: 80px;  /* Force maximum width */
+            height: auto; /* Maintain aspect ratio */
+            pointer-events: none; 
+            box-shadow: var(--glow-cyan); 
+            border: 1px solid var(--neon-cyan);
+            object-fit: contain; /* Prevent stretching */
+        }
+        @keyframes shootAcross { 
+            0% { transform: translate(-100px, 80vh) rotate(-15deg); } 
+            100% { transform: translate(110vw, -20vh) rotate(15deg); } 
+        }
 
         /* Cinematic */
         .movie-fade { opacity: 0; animation: movieFadeIn 3s forwards; margin: 20px 0; text-align: center; font-size: 1.5em; font-family: var(--font-quote); font-style: italic; color: #ffffff; text-shadow: 0 0 15px var(--royal-gold); }
@@ -587,7 +611,7 @@
             document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`;
         }
 
-        // --- Aesthetics (Particles & Memes) ---
+        // --- Aesthetics (Particles & FIXED MEMES) ---
         const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element';
@@ -600,7 +624,8 @@
         function spawnMeme() {
             let num = Math.floor(Math.random() * 5) + 1;
             let img = document.createElement('img');
-            img.src = "meme" + num + ".jpg"; img.className = 'meme-comet';
+            img.src = "meme" + num + ".jpg"; 
+            img.className = 'meme-comet';
             img.style.top = (Math.random() * 40 + 20) + 'vh';
             document.body.appendChild(img);
             setTimeout(() => img.remove(), 6000);
@@ -610,8 +635,8 @@
         // --- Cinematic Ending & Lightspeed ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
-            document.getElementById('global-player').classList.remove('active'); // Hide global player
-            stopAudio(); // Stop other tracks
+            document.getElementById('global-player').classList.remove('active'); 
+            stopAudio(); 
 
             let bdAudio = document.getElementById('audio-cornershop');
             if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
