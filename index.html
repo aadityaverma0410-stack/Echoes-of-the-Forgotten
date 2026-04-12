@@ -691,8 +691,8 @@
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
         // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '✨', '🎀', '🍭'];
-        function spawnAesthetic()
+        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
+        function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
             el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
         }
