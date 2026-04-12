@@ -163,6 +163,7 @@
         #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2s ease-out forwards; }
         @keyframes r2Enter { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
         
+        /* CLEAN ELEGANT R2 TEXT */
         .r2-elegant-text {
             font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; 
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; 
@@ -179,20 +180,28 @@
         }
         .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
-        /* --- JS POWERED ORBIT TO TEXT ANIMATION --- */
+        /* --- SNAKE RINGS ANIMATION (FIXED HINDI SPLITTING & SCALING) --- */
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; overflow: hidden; }
+        
+        .snake-meme {
+            position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
+            box-shadow: 0 0 20px var(--royal-gold); border: 2px solid var(--royal-gold);
+            /* Transition used during the launch phase */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
+        }
         
         .final-snake-text { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 90vw; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
+            width: 100vw; text-align: center; display: flex; flex-direction: column; gap: 15px;
         }
         .meme-text-snake {
-            font-family: var(--font-elegant); font-size: clamp(30px, 8vw, 60px); font-weight: bold;
+            font-family: var(--font-elegant); font-weight: bold;
             background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'); background-size: cover;
             -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%;
         }
-        .word-group { display: flex; flex-wrap: nowrap; } /* Keeps words intact */
+        .line-1 { font-size: clamp(30px, 8vw, 60px); }
+        .line-2 { font-size: clamp(24px, 6vw, 50px); }
+        .word-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -431,8 +440,7 @@
     <audio id="audio-arcane" src="arcane.mp3"></audio>
     <audio id="audio-flatline" src="flatline.mp3"></audio>
     <audio id="audio-cornershop" src="cornershop.mp3"></audio>
-
-    <script>
+    <audio id="audio-cornershop2" src="cornershop2.mp3"></audio> <script>
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
@@ -691,7 +699,7 @@
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
         // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
+        const aestheticIcons = ['🌸', '✨', '🎀', '🍭'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
             el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
@@ -721,7 +729,6 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
-                // Delay Timings (Perfect Sequence)
                 setTimeout(() => {
                     let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
                 }, 0);
@@ -756,114 +763,127 @@
                     btn.className = "exit-btn";
                     btn.onclick = startSnakeSequence;
                     box.appendChild(btn);
-                }, 12000);
+                }, 13000); // Fixed overlap: button spawns strictly AFTER R2-D2 is done
 
             }, 2500); 
         }
 
-        // --- JS JS ORBIT TO TEXT ANIMATION (FIXED OVERFLOW AND SWIRL) ---
+        // --- JS JS ORBIT TO TEXT ANIMATION (FIXED OVERFLOW AND WORD-TARGETING) ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
-            setTimeout(() => box.innerHTML = "", 1000);
-
-            let snakeContainer = document.createElement('div');
-            snakeContainer.id = "snake-container";
-            document.body.appendChild(snakeContainer);
             
-            // 1. Build the final text layout (hidden opacity)
-            let finalTxt = document.createElement('div'); 
-            finalTxt.className = 'final-snake-text';
-            
-            // Structuring words cleanly so they wrap gracefully on small screens
-            let targetStringWords = ["पाकgya", "prayagi", "🦄"];
-            let spansHTML = '';
-            
-            targetStringWords.forEach(word => {
-                spansHTML += `<div class="word-group">`;
-                for (let char of word) {
-                    spansHTML += `<span class="target-char" style="opacity:0;">${char}</span>`;
-                }
-                spansHTML += `</div>`;
-            });
-            
-            finalTxt.innerHTML = `<div class="meme-text-snake">${spansHTML}</div>`;
-            snakeContainer.appendChild(finalTxt);
+            // Audio switch
+            document.querySelectorAll('audio').forEach(a => a.pause());
+            let audio2 = document.getElementById('audio-cornershop2');
+            if(audio2) { audio2.currentTime = 0; audio2.play().catch(e=>console.log(e)); }
 
-            // 2. Generate Orbiting Memes
-            let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
-            let activeMemes = [];
-            let targetSpans = document.querySelectorAll('.target-char');
-            
-            for(let i=0; i < targetSpans.length; i++) {
-                let m = document.createElement('img'); 
-                m.src = memes[i % memes.length]; 
-                m.className = "snake-meme"; 
-                m.style.position = "absolute";
-                m.style.width = "50px"; m.style.height = "50px";
-                m.style.borderRadius = "50%"; m.style.objectFit = "cover";
-                m.style.border = "2px solid var(--royal-gold)";
-                m.style.boxShadow = "0 0 15px var(--royal-gold)";
-                
-                // Set orbit angle math properties
-                m.angle = (i / targetSpans.length) * Math.PI * 2;
-                m.isOrbiting = true;
-                
-                snakeContainer.appendChild(m);
-                activeMemes.push(m);
-            }
-
-            // 3. Orbit Animation Loop
-            let centerX = window.innerWidth / 2;
-            let centerY = window.innerHeight / 2;
-            let radius = Math.min(window.innerWidth * 0.35, 120); // Scales with screen size
-            let orbitSpeed = 0.05;
-
-            function animateOrbit() {
-                activeMemes.forEach(m => {
-                    if(m.isOrbiting) {
-                        m.angle += orbitSpeed;
-                        let x = centerX + Math.cos(m.angle) * radius - 25; 
-                        let y = centerY + Math.sin(m.angle) * radius - 25;
-                        m.style.left = x + 'px';
-                        m.style.top = y + 'px';
-                    }
-                });
-                if(activeMemes.some(m => m.isOrbiting)) {
-                    requestAnimationFrame(animateOrbit);
-                }
-            }
-            animateOrbit();
-
-            // 4. Detach from orbit and fly to targets one by one
             setTimeout(() => {
-                activeMemes.forEach((memeEl, index) => {
-                    setTimeout(() => {
-                        memeEl.isOrbiting = false; // Detaches from JS circle loop
-                        
-                        let targetSpan = targetSpans[index];
-                        let spanRect = targetSpan.getBoundingClientRect();
-                        
-                        // Calculate target destination (center of the letter)
-                        let targetX = spanRect.left + (spanRect.width / 2) - 25;
-                        let targetY = spanRect.top + (spanRect.height / 2) - 25;
+                box.innerHTML = "";
+                let snakeContainer = document.createElement('div');
+                snakeContainer.id = "snake-container";
+                document.body.appendChild(snakeContainer);
+                
+                // 1. Build the final text layout treating words as solid targets to preserve Hindi rendering
+                let finalTxt = document.createElement('div'); 
+                finalTxt.className = 'final-snake-text';
+                
+                finalTxt.innerHTML = `
+                    <div class="meme-text-snake line-1" style="margin-bottom:15px;">
+                        <span class="target-node word-group" style="opacity:0;">Stayyy</span>
+                        <span class="target-node word-group" style="opacity:0;">DIVAA</span>
+                    </div>
+                    <div class="meme-text-snake line-2">
+                        <span class="target-node word-group" style="opacity:0;">पाकgya</span>
+                        <span class="target-node word-group" style="opacity:0;">prayagi</span>
+                        <span class="target-node word-group" style="opacity:0;">🦄🍭</span>
+                    </div>
+                `;
+                snakeContainer.appendChild(finalTxt);
 
-                        // Fly CSS transition
-                        memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-                        memeEl.style.left = targetX + 'px';
-                        memeEl.style.top = targetY + 'px';
-                        memeEl.style.transform = "scale(0.3)";
-                        memeEl.style.opacity = "0";
+                // 2. Generate Orbiting Memes
+                let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
+                let activeMemes = [];
+                let targetNodes = document.querySelectorAll('.target-node');
+                let totalMemes = 25; // Create enough memes for a solid ring
+                
+                for(let i=0; i < totalMemes; i++) {
+                    let m = document.createElement('img'); 
+                    m.src = memes[i % memes.length]; 
+                    m.className = "snake-meme"; 
+                    m.style.position = "absolute";
+                    m.style.width = "50px"; m.style.height = "50px";
+                    m.style.borderRadius = "50%"; m.style.objectFit = "cover";
+                    m.style.border = "2px solid var(--royal-gold)";
+                    m.style.boxShadow = "0 0 15px var(--royal-gold)";
+                    m.style.opacity = "0"; // Will fade in when orbiting starts
+                    
+                    m.angle = (i / totalMemes) * Math.PI * 2;
+                    m.isOrbiting = true;
+                    
+                    snakeContainer.appendChild(m);
+                    activeMemes.push(m);
+                }
 
-                        // Reveal actual text letter as meme hits it
+                // 3. Orbit Animation Loop
+                let centerX = window.innerWidth / 2;
+                let centerY = window.innerHeight / 2;
+                let radius = Math.min(window.innerWidth * 0.35, 120); 
+                let orbitSpeed = 0.05;
+
+                function animateOrbit() {
+                    activeMemes.forEach(m => {
+                        if(m.isOrbiting) {
+                            m.angle += orbitSpeed;
+                            let x = centerX + Math.cos(m.angle) * radius - 25; 
+                            let y = centerY + Math.sin(m.angle) * radius - 25;
+                            m.style.left = x + 'px';
+                            m.style.top = y + 'px';
+                            m.style.opacity = "1"; // Fade in smoothly
+                        }
+                    });
+                    if(activeMemes.some(m => m.isOrbiting)) {
+                        requestAnimationFrame(animateOrbit);
+                    }
+                }
+                animateOrbit();
+
+                // 4. Detach from orbit and fly to word-targets
+                setTimeout(() => {
+                    activeMemes.forEach((memeEl, index) => {
                         setTimeout(() => {
-                            targetSpan.style.transition = "opacity 0.5s";
-                            targetSpan.style.opacity = "1";
-                        }, 400);
+                            memeEl.isOrbiting = false; // Detaches from JS circle loop
+                            
+                            if(index < targetNodes.length) {
+                                let targetNode = targetNodes[index];
+                                let spanRect = targetNode.getBoundingClientRect();
+                                
+                                // Center of the target word
+                                let targetX = spanRect.left + (spanRect.width / 2) - 25;
+                                let targetY = spanRect.top + (spanRect.height / 2) - 25;
 
-                    }, index * 200); // 200ms delay between each letter launching
-                });
-            }, 3000); // Orbits for exactly 3 seconds before sequence starts
+                                memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
+                                memeEl.style.left = targetX + 'px';
+                                memeEl.style.top = targetY + 'px';
+                                memeEl.style.transform = "scale(0.3)";
+                                memeEl.style.opacity = "0";
+
+                                // Reveal text word as meme hits it
+                                setTimeout(() => {
+                                    targetNode.style.transition = "opacity 0.5s";
+                                    targetNode.style.opacity = "1";
+                                }, 400);
+                            } else {
+                                // Excess memes from the ring just shrink and fade out
+                                memeEl.style.transition = "all 0.6s";
+                                memeEl.style.transform = "scale(0)";
+                                memeEl.style.opacity = "0";
+                            }
+                        }, index * 150); // 150ms delay between each meme launching
+                    });
+                }, 3000); // 3 seconds of orbit
+
+            }, 1000);
         }
 
         // --- Dynamic Canvas ---
