@@ -62,11 +62,11 @@
             opacity: 1; transition: opacity 1.5s ease;
         }
         .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
-        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; }
+        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
         .meme-letter {
             font-family: var(--font-tech); font-weight: bold; text-transform: uppercase;
             background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent;
-            opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
+            opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
@@ -180,13 +180,12 @@
         }
         .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
-        /* --- SNAKE RINGS ANIMATION (FIXED HINDI SPLITTING & SCALING) --- */
+        /* --- SNAKE RINGS ANIMATION (FIXED HINDI SPLITTING, SCALING & CYAN GLOW) --- */
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; overflow: hidden; }
         
         .snake-meme {
             position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
-            box-shadow: 0 0 20px var(--royal-gold); border: 2px solid var(--royal-gold);
-            /* Transition used during the launch phase */
+            box-shadow: 0 0 20px var(--neon-cyan); border: 2px solid var(--neon-cyan);
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
         }
         
@@ -194,11 +193,24 @@
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             width: 100vw; text-align: center; display: flex; flex-direction: column; gap: 15px;
         }
+        
+        /* Cyan Glow on the text instead of Gold */
         .meme-text-snake {
             font-family: var(--font-elegant); font-weight: bold;
-            background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'); background-size: cover;
-            -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
+            background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'), url('meme9.jpg'), url('meme10.jpg'); 
+            background-size: cover;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            color: transparent; filter: drop-shadow(0 0 10px var(--neon-cyan));
         }
+        
+        /* Emojis fixed: no background clipping */
+        .emoji-group {
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+            color: initial !important;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)) !important;
+        }
+
         .line-1 { font-size: clamp(30px, 8vw, 60px); }
         .line-2 { font-size: clamp(24px, 6vw, 50px); }
         .word-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
@@ -501,14 +513,19 @@
             document.getElementById('main-site').classList.remove('hidden');
         }
 
-        // --- R2-D2 Pet Reactions ---
-        const r2Messages = [
+        // --- Autonomous & Interactive R2-D2 Logic ---
+        const r2RandomThoughts = [
             "Beep boop! (You're doing great!)", 
             "*Happy whistle noises*", 
             "Bloop bleep! (I calculate a 100% chance you're cool)",
-            "*Excited spinning*"
+            "*Excited spinning*",
+            "Beep? (Where is Master Luke?)",
+            "Trill-beep! (This layout is aesthetically pleasing)",
+            "Bwoooop. (Processing immense baddie energy...)",
+            "*Confused mechanical grumble*"
         ];
-        function r2d2React() {
+
+        function r2d2React(isAuto = false) {
             let img = document.getElementById('r2d2-img');
             let bubble = document.getElementById('r2d2-bubble');
             let audio = document.getElementById('r2d2-audio');
@@ -517,16 +534,28 @@
             void img.offsetWidth; 
             img.classList.add('r2-wiggle');
             
-            if(audio) { 
+            // Only play sound if user clicks (or if you want auto sound, remove the condition)
+            if(!isAuto && audio) { 
                 audio.currentTime = 0; 
                 audio.play().catch(e=>console.log(e)); 
-                setTimeout(() => { audio.pause(); }, 2500); // 2.5s Audio Cap
+                setTimeout(() => { audio.pause(); }, 1500); // 1.5s Audio Cap
             }
             
-            bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
+            bubble.innerText = r2RandomThoughts[Math.floor(Math.random() * r2RandomThoughts.length)];
             bubble.classList.add('show');
-            setTimeout(() => { bubble.classList.remove('show'); }, 3000);
+            setTimeout(() => { bubble.classList.remove('show'); }, 4000);
         }
+
+        // Autonomous loop giving R2-D2 "feelings" while the user navigates
+        setInterval(() => {
+            let widget = document.getElementById('r2d2-widget');
+            if(!widget.classList.contains('hidden') && !isLightspeed) {
+                // 30% chance to react every 6 seconds on his own
+                if(Math.random() < 0.3) {
+                    r2d2React(true); 
+                }
+            }
+        }, 6000);
 
         // --- Constellation Puzzle Logic ---
         const constCvs = document.getElementById('constellation-canvas');
@@ -729,6 +758,7 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
+                // Delay Timings (Perfect Sequence)
                 setTimeout(() => {
                     let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
                 }, 0);
@@ -752,28 +782,28 @@
                     let r2sound = document.getElementById('r2d2-audio');
                     if(r2sound) { 
                         r2sound.currentTime = 0; r2sound.play(); 
-                        setTimeout(() => r2sound.pause(), 2500); 
+                        setTimeout(() => r2sound.pause(), 1500); // 1.5s Audio Cap
                     }
                 }, 10000);
 
-                // Exit Button
+                // Exit Button Strictly AFTER Sequence
                 setTimeout(() => {
                     let btn = document.createElement('button');
                     btn.innerText = "exit tss 🍎";
                     btn.className = "exit-btn";
                     btn.onclick = startSnakeSequence;
                     box.appendChild(btn);
-                }, 13000); // Fixed overlap: button spawns strictly AFTER R2-D2 is done
+                }, 13000); 
 
             }, 2500); 
         }
 
-        // --- JS JS ORBIT TO TEXT ANIMATION (FIXED OVERFLOW AND WORD-TARGETING) ---
+        // --- JS JS ORBIT TO TEXT ANIMATION (FIXED OVERFLOW, HINDI BLOCK, AND EMOJIS) ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
             
-            // Audio switch
+            // Audio switch to cornershop2.mp3
             document.querySelectorAll('audio').forEach(a => a.pause());
             let audio2 = document.getElementById('audio-cornershop2');
             if(audio2) { audio2.currentTime = 0; audio2.play().catch(e=>console.log(e)); }
@@ -784,7 +814,7 @@
                 snakeContainer.id = "snake-container";
                 document.body.appendChild(snakeContainer);
                 
-                // 1. Build the final text layout treating words as solid targets to preserve Hindi rendering
+                // Build the final text layout treating words as solid blocks so Hindi characters don't split
                 let finalTxt = document.createElement('div'); 
                 finalTxt.className = 'final-snake-text';
                 
@@ -796,12 +826,12 @@
                     <div class="meme-text-snake line-2">
                         <span class="target-node word-group" style="opacity:0;">पाकgya</span>
                         <span class="target-node word-group" style="opacity:0;">prayagi</span>
-                        <span class="target-node word-group" style="opacity:0;">🦄🍭</span>
+                        <span class="target-node emoji-group" style="opacity:0;">🦄🍭</span>
                     </div>
                 `;
                 snakeContainer.appendChild(finalTxt);
 
-                // 2. Generate Orbiting Memes
+                // Generate Orbiting Memes
                 let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
                 let activeMemes = [];
                 let targetNodes = document.querySelectorAll('.target-node');
@@ -814,9 +844,9 @@
                     m.style.position = "absolute";
                     m.style.width = "50px"; m.style.height = "50px";
                     m.style.borderRadius = "50%"; m.style.objectFit = "cover";
-                    m.style.border = "2px solid var(--royal-gold)";
-                    m.style.boxShadow = "0 0 15px var(--royal-gold)";
-                    m.style.opacity = "0"; // Will fade in when orbiting starts
+                    m.style.border = "2px solid var(--neon-cyan)";
+                    m.style.boxShadow = "0 0 15px var(--neon-cyan)";
+                    m.style.opacity = "0"; 
                     
                     m.angle = (i / totalMemes) * Math.PI * 2;
                     m.isOrbiting = true;
@@ -825,7 +855,7 @@
                     activeMemes.push(m);
                 }
 
-                // 3. Orbit Animation Loop
+                // Orbit Animation Loop
                 let centerX = window.innerWidth / 2;
                 let centerY = window.innerHeight / 2;
                 let radius = Math.min(window.innerWidth * 0.35, 120); 
@@ -839,7 +869,7 @@
                             let y = centerY + Math.sin(m.angle) * radius - 25;
                             m.style.left = x + 'px';
                             m.style.top = y + 'px';
-                            m.style.opacity = "1"; // Fade in smoothly
+                            m.style.opacity = "1"; 
                         }
                     });
                     if(activeMemes.some(m => m.isOrbiting)) {
@@ -848,11 +878,11 @@
                 }
                 animateOrbit();
 
-                // 4. Detach from orbit and fly to word-targets
+                // Detach from orbit and fly to word-targets
                 setTimeout(() => {
                     activeMemes.forEach((memeEl, index) => {
                         setTimeout(() => {
-                            memeEl.isOrbiting = false; // Detaches from JS circle loop
+                            memeEl.isOrbiting = false; 
                             
                             if(index < targetNodes.length) {
                                 let targetNode = targetNodes[index];
@@ -874,14 +904,14 @@
                                     targetNode.style.opacity = "1";
                                 }, 400);
                             } else {
-                                // Excess memes from the ring just shrink and fade out
+                                // Excess memes fade away
                                 memeEl.style.transition = "all 0.6s";
                                 memeEl.style.transform = "scale(0)";
                                 memeEl.style.opacity = "0";
                             }
-                        }, index * 150); // 150ms delay between each meme launching
+                        }, index * 150); 
                     });
-                }, 3000); // 3 seconds of orbit
+                }, 3000); 
 
             }, 1000);
         }
