@@ -55,19 +55,10 @@
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
 
         /* --- ENTRY NAME OVERLAY --- */
-        #entry-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 5, 8, 0.98); z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 1; transition: opacity 1.5s ease;
-        }
+        #entry-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 8, 0.98); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 1.5s ease; }
         .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
-        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
-        .meme-letter {
-            font-family: var(--font-tech); font-weight: bold; text-transform: uppercase;
-            background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent;
-            opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; }
+        .meme-letter { font-family: var(--font-tech); font-weight: bold; text-transform: uppercase; background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent; opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4)); }
         .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
         
@@ -88,7 +79,7 @@
         /* Screens & Panels */
         .screen { position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px 80px 20px; z-index: 20; transition: opacity 0.5s ease; }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
-        .glass-panel { background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px; padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15); max-height: 80vh; overflow-y: auto; position: relative; }
+        .glass-panel { background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px; padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15); max-height: 80vh; overflow-y: auto; overflow-x: hidden; position: relative; }
 
         h1, h2, h3 { font-family: var(--font-tech); color: var(--text-color); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
         .highlight-cyan { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
@@ -107,14 +98,15 @@
         .btn-pink:hover { background: var(--neon-pink); border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
         .back-btn { border-color: #555; color: #aaa; margin-top: 30px; }
         .back-btn:hover { background: #555; border-color: #555; color: #fff; box-shadow: none; }
+        
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
-        /* Map Network */
+        /* Map Network - Expanded to 7 Planets */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
-        #map-container { position: relative; width: 100%; height: 70vh; min-height: 450px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
-        .planet { position: absolute; width: 60px; height: 60px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
-        .planet::after { content: attr(data-label); position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); font-size: 12px; font-family: var(--font-tech); color: var(--royal-gold); background: rgba(0,0,0,0.9); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--royal-gold); white-space: nowrap; }
+        #map-container { position: relative; width: 100%; height: 75vh; min-height: 500px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
+        .planet { position: absolute; width: 55px; height: 55px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
+        .planet::after { content: attr(data-label); position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); font-size: 11px; font-family: var(--font-tech); color: var(--royal-gold); background: rgba(0,0,0,0.9); padding: 4px 6px; border-radius: 4px; border: 1px solid var(--royal-gold); white-space: nowrap; }
         .planet:hover { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 30px var(--neon-pink); border-color: var(--neon-pink); }
         .planet.visited { filter: grayscale(40%); border-color: var(--neon-cyan); box-shadow: var(--glow-cyan); }
 
@@ -136,6 +128,30 @@
         .gp-status { font-family: var(--font-matrix); font-size: 0.8em; color: var(--neon-cyan); }
         .gp-controls { cursor: pointer; color: var(--neon-cyan); font-size: 1.5em; width: 40px; text-align: center; }
 
+        /* --- HEXMATCH (Tinder Swipe) --- */
+        .swipe-container { position: relative; width: 100%; height: 350px; margin: 20px auto; perspective: 1000px; touch-action: none; }
+        .swipe-card {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 350px;
+            background-color: #111; background-size: cover; background-position: center;
+            border-radius: 15px; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan);
+            display: flex; align-items: flex-end; padding: 15px; transition: transform 0.4s ease, opacity 0.4s ease;
+            transform-origin: 50% 100%; z-index: 1;
+        }
+        .swipe-card.swiped-left { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+        .swipe-card.swiped-right { transform: translateX(50%) rotate(20deg); opacity: 0; }
+        .card-name { background: rgba(0,0,0,0.8); color: #fff; padding: 5px 10px; border-radius: 5px; font-family: var(--font-tech); font-size: 1.1em; width: 100%; text-align: left; }
+        .swipe-controls { display: flex; justify-content: space-around; margin-top: 15px; width: 100%; }
+        .swipe-btn { width: 60px; height: 60px; border-radius: 50%; font-size: 1.5em; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0 10px; }
+        .pass-btn { border-color: var(--system-red); color: var(--system-red); } .pass-btn:hover { background: var(--system-red); box-shadow: 0 0 15px var(--system-red); }
+        .smash-btn { border-color: var(--system-green); color: var(--system-green); } .smash-btn:hover { background: var(--system-green); box-shadow: 0 0 15px var(--system-green); }
+
+        /* --- COGNITIVE INTERROGATION (Chaos) --- */
+        .chaos-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--neon-pink); }
+        .chaos-progress-fill { height: 100%; background: var(--neon-pink); width: 0%; transition: width 0.4s ease; box-shadow: var(--glow-pink); }
+        .quill-container { width: 100%; display: flex; justify-content: center; margin-top: 15px; min-height: 50px; }
+        .quill-gif { width: 50px; height: auto; opacity: 0; transition: opacity 0.2s; filter: drop-shadow(0 0 10px var(--royal-gold)); }
+        .quill-active { opacity: 1; }
+
         /* Games Container */
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
         .cell { background-color: #1a1a1a; background-image: radial-gradient(circle, #000 3px, transparent 3px); background-size: 15px 15px; border: 1px solid #333; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); }
@@ -144,13 +160,12 @@
         .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
 
-        /* Constellation Puzzle Canvas */
+        /* Constellation */
         #constellation-canvas { background: #000; border: 1px solid var(--royal-gold); border-radius: 8px; box-shadow: inset 0 0 20px rgba(212,175,55,0.3); margin: 20px auto; cursor: crosshair; }
 
         /* Background Aesthetics */
         .floating-element { position: fixed; z-index: 2; animation: floatUp 12s linear forwards; font-size: 20px; opacity: 0.8; pointer-events: none; text-shadow: var(--glow-pink); }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-        
         .meme-comet { position: fixed; z-index: 1; opacity: 0.4; animation: shootAcross 5s linear forwards; border-radius: 8px; width: 80px; height: auto; pointer-events: none; box-shadow: var(--glow-cyan); border: 1px solid var(--neon-cyan); object-fit: contain; }
         @keyframes shootAcross { 0% { transform: translate(-100px, 80vh) rotate(-15deg); } 100% { transform: translate(110vw, -20vh) rotate(15deg); } }
 
@@ -159,58 +174,21 @@
         .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); opacity: 0; animation: fadeHold 1s forwards; }
         @keyframes fadeHold { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        /* Elegant R2-D2 Finale */
         #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2s ease-out forwards; }
         @keyframes r2Enter { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
         
-        /* CLEAN ELEGANT R2 TEXT */
-        .r2-elegant-text {
-            font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; 
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; 
-            animation: fadeHold 1s forwards; margin-bottom: 20px; text-align: center; font-weight: bold;
-            background: transparent; border: none; box-shadow: none; 
-        }
+        .r2-elegant-text { font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; animation: fadeHold 1s forwards; margin-bottom: 20px; text-align: center; font-weight: bold; background: transparent; border: none; box-shadow: none; }
         
-        /* Exit Button */
-        .exit-btn {
-            background: transparent; border: 1px solid var(--royal-gold); color: var(--royal-gold);
-            font-family: var(--font-tech); padding: 12px 25px; border-radius: 4px; cursor: pointer;
-            opacity: 0; animation: fadeHold 1s forwards; margin-top: 15px; font-size: 1em; text-transform: lowercase;
-            transition: all 0.3s;
-        }
+        .exit-btn { background: transparent; border: 1px solid var(--royal-gold); color: var(--royal-gold); font-family: var(--font-tech); padding: 12px 25px; border-radius: 4px; cursor: pointer; opacity: 0; animation: fadeHold 1s forwards; margin-top: 15px; font-size: 1em; text-transform: lowercase; transition: all 0.3s; }
         .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
-        /* --- SNAKE RINGS ANIMATION (FIXED HINDI SPLITTING, SCALING & CYAN GLOW) --- */
+        /* SNAKE RINGS ANIMATION */
         #snake-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none; overflow: hidden; }
+        .snake-meme { position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0; box-shadow: 0 0 20px var(--neon-cyan); border: 2px solid var(--neon-cyan); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; }
         
-        .snake-meme {
-            position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0;
-            box-shadow: 0 0 20px var(--neon-cyan); border: 2px solid var(--neon-cyan);
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
-        }
-        
-        .final-snake-text { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 100vw; text-align: center; display: flex; flex-direction: column; gap: 15px;
-        }
-        
-        /* Cyan Glow on the text instead of Gold */
-        .meme-text-snake {
-            font-family: var(--font-elegant); font-weight: bold;
-            background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'), url('meme9.jpg'), url('meme10.jpg'); 
-            background-size: cover;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            color: transparent; filter: drop-shadow(0 0 10px var(--neon-cyan));
-        }
-        
-        /* Emojis fixed: no background clipping */
-        .emoji-group {
-            background: none !important;
-            -webkit-text-fill-color: initial !important;
-            color: initial !important;
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)) !important;
-        }
-
+        .final-snake-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; text-align: center; display: flex; flex-direction: column; gap: 15px; }
+        .meme-text-snake { font-family: var(--font-elegant); font-weight: bold; background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'), url('meme9.jpg'), url('meme10.jpg'); background-size: cover; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
+        .emoji-group { background: none !important; -webkit-text-fill-color: initial !important; color: initial !important; filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)) !important; }
         .line-1 { font-size: clamp(30px, 8vw, 60px); }
         .line-2 { font-size: clamp(24px, 6vw, 50px); }
         .word-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
@@ -278,17 +256,22 @@
 
     <div id="main-site" class="screen hidden">
         <div class="map-wrapper">
-            <p class="playfair-quote" style="margin-top: -40px;">
+            <p class="playfair-quote" style="margin-top: -20px; font-size: 1.2em;">
                 “Curiosity is rare.<br>But the rarest thing is a mind that enjoys both chaos and equations.”
             </p>
-            <h1 class="highlight-gold" style="font-family: var(--font-tech); font-size: 1.5em;">THE ARCHIVE</h1>
+            <h1 class="highlight-gold" style="font-family: var(--font-tech); font-size: 1.4em;">THE ARCHIVE</h1>
             
             <div id="map-container">
-                <div class="planet" data-label="Audio" style="top: 20%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
-                <div class="planet" data-label="Simulations" style="top: 45%; left: 20%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
-                <div class="planet" data-label="Terminal" style="top: 45%; left: 80%; background-image: url('icon-term.png');" onclick="openSection('compliment-section', this)"></div>
-                <div class="planet" data-label="Interrogation" style="top: 75%; left: 35%; background-image: url('icon-quiz.png');" onclick="openSection('quiz-section', this)"></div>
-                <div class="planet" data-label="Core" style="top: 75%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
+                <div class="planet" data-label="Audio" style="top: 15%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
+                
+                <div class="planet" data-label="Hexmatch" style="top: 35%; left: 15%; background-image: url('icon-hexmatch.png');" onclick="openSection('hexmatch-section', this)"></div>
+                <div class="planet" data-label="Simulations" style="top: 35%; left: 85%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
+                
+                <div class="planet" data-label="Terminal" style="top: 65%; left: 15%; background-image: url('icon-term.png');" onclick="openSection('compliment-section', this)"></div>
+                <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('quiz-section', this)"></div>
+                
+                <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div>
+                <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
             </div>
         </div>
     </div>
@@ -308,9 +291,60 @@
                 <button onclick="playSong('audio-daniel', 'Daniel Caesar', 'art-daniel.jpg')" class="btn-pink">Daniel Caesar</button>
                 <button onclick="playSong('audio-arcane', 'Arcane', 'art-arcane.jpg')" class="btn-pink">Arcane</button>
                 <button onclick="playSong('audio-flatline', 'Justin Bieber', 'art-flatline.jpg')" class="btn-pink">J. Bieber</button>
-                <button onclick="playSong('random', 'Random Vibe', null)" style="border-color:var(--royal-gold); color:var(--royal-gold);">Random</button>
+                <button onclick="playSong('audio-cas', 'Cigarettes After Sex', 'art-cas.jpg')" class="btn-pink">CAS</button>
+                <button onclick="playSong('random', 'Random Vibe', null)" style="grid-column: span 2; border-color:var(--royal-gold); color:var(--royal-gold);">Random Playlist</button>
             </div>
             <button onclick="stopAudio()" style="border-color:var(--system-red); color:var(--system-red); margin-top: 15px;">Stop Playback</button>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
+        </div>
+    </div>
+
+    <div id="hexmatch-section" class="screen hidden">
+        <div class="glass-panel" style="overflow: hidden;">
+            <p style="font-family: var(--font-tech); font-size: 0.8em; letter-spacing: 2px; color: #888;">HEXMATCH PROTOCOL</p>
+            <h2 class="highlight-cyan" style="font-size: 1.2em; margin-top: 5px;">AESTHETIC SCAN</h2>
+            
+            <div class="swipe-container" id="swipe-container">
+                </div>
+            
+            <div class="swipe-controls" id="swipe-controls">
+                <button class="swipe-btn pass-btn" onclick="handleSwipe('left')">✖</button>
+                <button class="swipe-btn smash-btn" onclick="handleSwipe('right')">♥</button>
+            </div>
+
+            <div id="hexmatch-result" class="hidden">
+                <h3 style="color: var(--neon-pink); margin-top: 20px;">Compatibility Scan Complete</h3>
+                <p id="hexmatch-msg" style="font-family: var(--font-tech); color: var(--text-color); font-size: 1.1em;"></p>
+            </div>
+
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
+        </div>
+    </div>
+
+    <div id="chaos-section" class="screen hidden">
+        <div class="glass-panel" id="chaos-panel">
+            <h2 class="highlight-pink" style="font-size: 1.2em;">COGNITIVE INTERROGATION</h2>
+            <p style="font-family: var(--font-quote); font-style: italic; color: #bbb;">Would You Rather: Chaos Edition</p>
+            
+            <div class="chaos-progress-bg">
+                <div class="chaos-progress-fill" id="chaos-progress"></div>
+            </div>
+
+            <div id="chaos-q-container" style="min-height: 180px; display: flex; flex-direction: column; justify-content: center;">
+                <h3 id="chaos-q-text" style="font-family: var(--font-elegant); font-size: 1.3em; text-transform: none; line-height: 1.4;">Question loads...</h3>
+                <button id="chaos-opt1" class="btn-pink" onclick="answerChaos(1)">Option 1</button>
+                <button id="chaos-opt2" class="btn-pink" onclick="answerChaos(2)">Option 2</button>
+            </div>
+
+            <div class="quill-container">
+                <img src="quill.gif" id="quill-gif" class="quill-gif" alt="Writing...">
+            </div>
+
+            <div id="chaos-result" class="hidden">
+                <h3 class="highlight-cyan">Analysis complete.</h3>
+                <p style="font-family: var(--font-tech); font-size: 1.1em;">Conclusion: not boring. That’s rare twinn.</p>
+            </div>
+
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
@@ -452,7 +486,8 @@
     <audio id="audio-arcane" src="arcane.mp3"></audio>
     <audio id="audio-flatline" src="flatline.mp3"></audio>
     <audio id="audio-cornershop" src="cornershop.mp3"></audio>
-    <audio id="audio-cornershop2" src="cornershop2.mp3"></audio> <script>
+    <audio id="audio-cornershop2" src="cornershop2.mp3"></audio>
+    <audio id="audio-cas" src="cas.mp3"></audio> <script>
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
@@ -513,8 +548,8 @@
             document.getElementById('main-site').classList.remove('hidden');
         }
 
-        // --- Autonomous & Interactive R2-D2 Logic ---
-        const r2RandomThoughts = [
+        // --- R2-D2 Pet Reactions ---
+        const r2Messages = [
             "Beep boop! (You're doing great!)", 
             "*Happy whistle noises*", 
             "Bloop bleep! (I calculate a 100% chance you're cool)",
@@ -524,7 +559,6 @@
             "Bwoooop. (Processing immense baddie energy...)",
             "*Confused mechanical grumble*"
         ];
-
         function r2d2React(isAuto = false) {
             let img = document.getElementById('r2d2-img');
             let bubble = document.getElementById('r2d2-bubble');
@@ -534,28 +568,188 @@
             void img.offsetWidth; 
             img.classList.add('r2-wiggle');
             
-            // Only play sound if user clicks (or if you want auto sound, remove the condition)
             if(!isAuto && audio) { 
                 audio.currentTime = 0; 
                 audio.play().catch(e=>console.log(e)); 
-                setTimeout(() => { audio.pause(); }, 1500); // 1.5s Audio Cap
+                setTimeout(() => { audio.pause(); }, 1500); 
             }
             
-            bubble.innerText = r2RandomThoughts[Math.floor(Math.random() * r2RandomThoughts.length)];
+            bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
             bubble.classList.add('show');
             setTimeout(() => { bubble.classList.remove('show'); }, 4000);
         }
 
-        // Autonomous loop giving R2-D2 "feelings" while the user navigates
         setInterval(() => {
             let widget = document.getElementById('r2d2-widget');
             if(!widget.classList.contains('hidden') && !isLightspeed) {
-                // 30% chance to react every 6 seconds on his own
-                if(Math.random() < 0.3) {
-                    r2d2React(true); 
-                }
+                if(Math.random() < 0.3) r2d2React(true); 
             }
         }, 6000);
+
+        // --- Hexmatch Protocol (Tinder Swipe) ---
+        const hexmatchData = [
+            { id: 1, name: "Timothée Chalamet", img: "match1.jpg" },
+            { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
+            { id: 3, name: "OBI-WAN", img: "match3.jpg" },
+            { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
+            { id: 5, name: "Anakin Skywalker", img: "match5.jpg" },
+            { id: 6, name: "Denji-kun", img: "match6.jpg" },
+            { id: 7, name: "Viktor", img: "match7.jpg" },
+            { id: 8, name: "Shadow The hedgehog", img: "match8.jpg" },
+            { id: 9, name: "Ellie fucking williams", img: "match9.jpg" },
+            { id: 10, name: "deviz-पाकgya 🦚", img: "match10.jpg" },
+            { id: 11, name: "Overthinking at 2 AM", img: "match11.jpg", type: "concept" },
+            { id: 12, name: "Random Memes", img: "match12.jpg", type: "concept" }
+        ];
+
+        let currentCardIndex = 0;
+        let hasDepth = false;
+        let hasHumor = false;
+
+        function loadHexmatch() {
+            const container = document.getElementById('swipe-container');
+            container.innerHTML = '';
+            // Render backwards so index 0 is on top
+            for(let i = hexmatchData.length - 1; i >= 0; i--) {
+                let card = document.createElement('div');
+                card.className = "swipe-card";
+                card.id = `hex-card-${i}`;
+                card.style.backgroundImage = `url('${hexmatchData[i].img}')`;
+                // Add slight offset for stack effect
+                card.style.marginTop = `${i * 3}px`;
+                
+                let namePlate = document.createElement('div');
+                namePlate.className = "card-name";
+                namePlate.innerText = hexmatchData[i].name;
+                card.appendChild(namePlate);
+                container.appendChild(card);
+            }
+            currentCardIndex = 0;
+        }
+        
+        // Initialize cards
+        loadHexmatch();
+
+        function handleSwipe(direction) {
+            if(currentCardIndex >= hexmatchData.length) return;
+            
+            let card = document.getElementById(`hex-card-${currentCardIndex}`);
+            let currentData = hexmatchData[currentCardIndex];
+            
+            if(direction === 'right') {
+                card.classList.add('swiped-right');
+                if(currentData.id === 11) hasDepth = true;
+                if(currentData.id === 12) hasHumor = true;
+            } else {
+                card.classList.add('swiped-left');
+            }
+            
+            currentCardIndex++;
+            
+            if(currentCardIndex >= hexmatchData.length) {
+                setTimeout(showHexmatchResult, 400);
+            }
+        }
+
+        function showHexmatchResult() {
+            document.getElementById('swipe-container').classList.add('hidden');
+            document.getElementById('swipe-controls').classList.add('hidden');
+            document.getElementById('hexmatch-result').classList.remove('hidden');
+            
+            let msg = "Result: dangerously similar taste detected.";
+            if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
+            else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
+            else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
+            
+            document.getElementById('hexmatch-msg').innerText = msg;
+        }
+
+        // --- Cognitive Interrogation (Chaos Quiz) ---
+        const chaosQuestions = [
+            { q: "understand everything instantly", a: "question everything forever?" },
+            { q: "Be emotionally stable", a: "have elite music taste?" },
+            { q: "Finish all your work early", a: "romanticize doing it last minute?" },
+            { q: "Be predictable", a: "slightly chaotic but interesting?" },
+            { q: "Read minds", a: "be unreadable?" }
+        ];
+        let currentChaosQ = 0;
+
+        function loadChaosQ() {
+            if(currentChaosQ >= chaosQuestions.length) {
+                document.getElementById('chaos-q-container').classList.add('hidden');
+                document.getElementById('chaos-result').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('chaos-q-text').innerText = "Would you rather...";
+            document.getElementById('chaos-opt1').innerText = chaosQuestions[currentChaosQ].q;
+            document.getElementById('chaos-opt2').innerText = chaosQuestions[currentChaosQ].a;
+            
+            let progress = ((currentChaosQ) / chaosQuestions.length) * 100;
+            document.getElementById('chaos-progress').style.width = progress + '%';
+        }
+        
+        loadChaosQ();
+
+        function answerChaos(opt) {
+            let panel = document.getElementById('chaos-panel');
+            let quill = document.getElementById('quill-gif');
+            
+            panel.classList.add('glitch');
+            quill.classList.add('quill-active');
+            
+            setTimeout(() => {
+                panel.classList.remove('glitch');
+                quill.classList.remove('quill-active');
+                currentChaosQ++;
+                loadChaosQ();
+            }, 800);
+        }
+
+        // --- Music Player Functions (Updated for CAS) ---
+        const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline', 'audio-cas'];
+        const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber', 'Cigarettes After Sex'];
+        const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg', 'art-cas.jpg'];
+
+        function playSong(id, name, art) {
+            stopAudio();
+            if (id === 'random') {
+                let idx = Math.floor(Math.random() * allSongs.length);
+                id = allSongs[idx]; name = songNames[idx]; art = songArts[idx];
+            }
+            
+            document.getElementById('vinyl-disk').classList.add('spin');
+            document.getElementById('tone-arm').classList.add('playing');
+            document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`;
+            document.getElementById('mood-display').innerText = "> Playing: " + name;
+            
+            document.getElementById('global-player').classList.add('active');
+            document.getElementById('gp-art').style.backgroundImage = `url('${art}')`;
+            document.getElementById('gp-title').innerText = name;
+            document.getElementById('gp-status').innerText = "PLAYING";
+            document.getElementById('gp-playbtn').innerText = "⏸";
+
+            currentAudioEl = document.getElementById(id);
+            if(currentAudioEl) { currentAudioEl.currentTime = 0; currentAudioEl.play().catch(e => console.log(e)); isGlobalPlaying = true; }
+        }
+
+        function stopAudio() {
+            document.getElementById('vinyl-disk').classList.remove('spin'); document.getElementById('tone-arm').classList.remove('playing');
+            document.getElementById('mood-display').innerText = "> Playback Stopped"; document.getElementById('global-player').classList.remove('active');
+            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+            currentAudioEl = null; isGlobalPlaying = false;
+        }
+
+        function togglePlayPause() {
+            if(!currentAudioEl) return;
+            if(isGlobalPlaying) {
+                currentAudioEl.pause(); document.getElementById('gp-playbtn').innerText = "▶"; document.getElementById('gp-status').innerText = "PAUSED";
+                document.getElementById('vinyl-disk').classList.remove('spin');
+            } else {
+                currentAudioEl.play(); document.getElementById('gp-playbtn').innerText = "⏸"; document.getElementById('gp-status').innerText = "PLAYING";
+                document.getElementById('vinyl-disk').classList.add('spin');
+            }
+            isGlobalPlaying = !isGlobalPlaying;
+        }
 
         // --- Constellation Puzzle Logic ---
         const constCvs = document.getElementById('constellation-canvas');
@@ -607,53 +801,7 @@
             }
         });
 
-        // --- Music Player Functions ---
-        const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline'];
-        const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber'];
-        const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg'];
-
-        function playSong(id, name, art) {
-            stopAudio();
-            if (id === 'random') {
-                let idx = Math.floor(Math.random() * allSongs.length);
-                id = allSongs[idx]; name = songNames[idx]; art = songArts[idx];
-            }
-            
-            document.getElementById('vinyl-disk').classList.add('spin');
-            document.getElementById('tone-arm').classList.add('playing');
-            document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`;
-            document.getElementById('mood-display').innerText = "> Playing: " + name;
-            
-            document.getElementById('global-player').classList.add('active');
-            document.getElementById('gp-art').style.backgroundImage = `url('${art}')`;
-            document.getElementById('gp-title').innerText = name;
-            document.getElementById('gp-status').innerText = "PLAYING";
-            document.getElementById('gp-playbtn').innerText = "⏸";
-
-            currentAudioEl = document.getElementById(id);
-            if(currentAudioEl) { currentAudioEl.currentTime = 0; currentAudioEl.play().catch(e => console.log(e)); isGlobalPlaying = true; }
-        }
-
-        function stopAudio() {
-            document.getElementById('vinyl-disk').classList.remove('spin'); document.getElementById('tone-arm').classList.remove('playing');
-            document.getElementById('mood-display').innerText = "> Playback Stopped"; document.getElementById('global-player').classList.remove('active');
-            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
-            currentAudioEl = null; isGlobalPlaying = false;
-        }
-
-        function togglePlayPause() {
-            if(!currentAudioEl) return;
-            if(isGlobalPlaying) {
-                currentAudioEl.pause(); document.getElementById('gp-playbtn').innerText = "▶"; document.getElementById('gp-status').innerText = "PAUSED";
-                document.getElementById('vinyl-disk').classList.remove('spin');
-            } else {
-                currentAudioEl.play(); document.getElementById('gp-playbtn').innerText = "⏸"; document.getElementById('gp-status').innerText = "PLAYING";
-                document.getElementById('vinyl-disk').classList.add('spin');
-            }
-            isGlobalPlaying = !isGlobalPlaying;
-        }
-
-        // --- Tic-Tac-Toe (Moderate) ---
+        // --- Tic-Tac-Toe ---
         let board = ["", "", "", "", "", "", "", "", ""];
         let tttActive = true;
         function makeMove(idx) {
@@ -700,7 +848,7 @@
             if(playerSeq.length === sequence.length) { simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000); }
         }
 
-        // --- Quiz ---
+        // --- Quiz (Original Interrogation) ---
         function ansQuiz(qNum, isCorrect) {
             let fb = document.getElementById('quiz-feedback');
             if(isCorrect) {
@@ -727,8 +875,8 @@
         const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
-        // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '✨', '🎀', '🍭'];
+        // --- Aesthetics ---
+        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
         function spawnAesthetic() {
             let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
             el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
@@ -742,7 +890,7 @@
         }
         setInterval(spawnMeme, 8000); 
 
-        // --- Cinematic Ending & Lightspeed ---
+        // --- Cinematic Ending ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
             document.getElementById('global-player').classList.remove('active'); 
@@ -758,52 +906,28 @@
                 isLightspeed = false; 
                 let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 
-                // Delay Timings (Perfect Sequence)
-                setTimeout(() => {
-                    let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img);
-                }, 0);
-
-                setTimeout(() => {
-                    let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1);
-                }, 1500);
-
-                setTimeout(() => {
-                    let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2);
-                }, 5000);
-
-                // Elegant R2-D2
-                setTimeout(() => {
-                    let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale);
-                }, 8500);
-
-                // Elegant Gold Text + Audio
+                setTimeout(() => { let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img); }, 0);
+                setTimeout(() => { let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1); }, 1500);
+                setTimeout(() => { let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2); }, 5000);
+                setTimeout(() => { let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale); }, 8500);
+                
                 setTimeout(() => {
                     let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
                     let r2sound = document.getElementById('r2d2-audio');
-                    if(r2sound) { 
-                        r2sound.currentTime = 0; r2sound.play(); 
-                        setTimeout(() => r2sound.pause(), 1500); // 1.5s Audio Cap
-                    }
+                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 1500); }
                 }, 10000);
 
-                // Exit Button Strictly AFTER Sequence
                 setTimeout(() => {
-                    let btn = document.createElement('button');
-                    btn.innerText = "exit tss 🍎";
-                    btn.className = "exit-btn";
-                    btn.onclick = startSnakeSequence;
-                    box.appendChild(btn);
+                    let btn = document.createElement('button'); btn.innerText = "exit tss 🍎"; btn.className = "exit-btn"; btn.onclick = startSnakeSequence; box.appendChild(btn);
                 }, 13000); 
-
             }, 2500); 
         }
 
-        // --- JS JS ORBIT TO TEXT ANIMATION (FIXED OVERFLOW, HINDI BLOCK, AND EMOJIS) ---
+        // --- SNAKE RINGS ANIMATION ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
             
-            // Audio switch to cornershop2.mp3
             document.querySelectorAll('audio').forEach(a => a.pause());
             let audio2 = document.getElementById('audio-cornershop2');
             if(audio2) { audio2.currentTime = 0; audio2.play().catch(e=>console.log(e)); }
@@ -814,7 +938,6 @@
                 snakeContainer.id = "snake-container";
                 document.body.appendChild(snakeContainer);
                 
-                // Build the final text layout treating words as solid blocks so Hindi characters don't split
                 let finalTxt = document.createElement('div'); 
                 finalTxt.className = 'final-snake-text';
                 
@@ -831,54 +954,36 @@
                 `;
                 snakeContainer.appendChild(finalTxt);
 
-                // Generate Orbiting Memes
                 let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
                 let activeMemes = [];
                 let targetNodes = document.querySelectorAll('.target-node');
-                let totalMemes = 25; // Create enough memes for a solid ring
+                let totalMemes = 25; 
                 
                 for(let i=0; i < totalMemes; i++) {
-                    let m = document.createElement('img'); 
-                    m.src = memes[i % memes.length]; 
-                    m.className = "snake-meme"; 
-                    m.style.position = "absolute";
-                    m.style.width = "50px"; m.style.height = "50px";
-                    m.style.borderRadius = "50%"; m.style.objectFit = "cover";
-                    m.style.border = "2px solid var(--neon-cyan)";
-                    m.style.boxShadow = "0 0 15px var(--neon-cyan)";
-                    m.style.opacity = "0"; 
+                    let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; 
+                    m.style.position = "absolute"; m.style.width = "50px"; m.style.height = "50px";
+                    m.style.borderRadius = "50%"; m.style.objectFit = "cover"; m.style.border = "2px solid var(--neon-cyan)";
+                    m.style.boxShadow = "0 0 15px var(--neon-cyan)"; m.style.opacity = "0"; 
                     
-                    m.angle = (i / totalMemes) * Math.PI * 2;
-                    m.isOrbiting = true;
-                    
-                    snakeContainer.appendChild(m);
-                    activeMemes.push(m);
+                    m.angle = (i / totalMemes) * Math.PI * 2; m.isOrbiting = true;
+                    snakeContainer.appendChild(m); activeMemes.push(m);
                 }
 
-                // Orbit Animation Loop
-                let centerX = window.innerWidth / 2;
-                let centerY = window.innerHeight / 2;
-                let radius = Math.min(window.innerWidth * 0.35, 120); 
-                let orbitSpeed = 0.05;
+                let centerX = window.innerWidth / 2; let centerY = window.innerHeight / 2;
+                let radius = Math.min(window.innerWidth * 0.35, 120); let orbitSpeed = 0.05;
 
                 function animateOrbit() {
                     activeMemes.forEach(m => {
                         if(m.isOrbiting) {
                             m.angle += orbitSpeed;
-                            let x = centerX + Math.cos(m.angle) * radius - 25; 
-                            let y = centerY + Math.sin(m.angle) * radius - 25;
-                            m.style.left = x + 'px';
-                            m.style.top = y + 'px';
-                            m.style.opacity = "1"; 
+                            let x = centerX + Math.cos(m.angle) * radius - 25; let y = centerY + Math.sin(m.angle) * radius - 25;
+                            m.style.left = x + 'px'; m.style.top = y + 'px'; m.style.opacity = "1"; 
                         }
                     });
-                    if(activeMemes.some(m => m.isOrbiting)) {
-                        requestAnimationFrame(animateOrbit);
-                    }
+                    if(activeMemes.some(m => m.isOrbiting)) requestAnimationFrame(animateOrbit);
                 }
                 animateOrbit();
 
-                // Detach from orbit and fly to word-targets
                 setTimeout(() => {
                     activeMemes.forEach((memeEl, index) => {
                         setTimeout(() => {
@@ -887,32 +992,20 @@
                             if(index < targetNodes.length) {
                                 let targetNode = targetNodes[index];
                                 let spanRect = targetNode.getBoundingClientRect();
-                                
-                                // Center of the target word
                                 let targetX = spanRect.left + (spanRect.width / 2) - 25;
                                 let targetY = spanRect.top + (spanRect.height / 2) - 25;
 
                                 memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-                                memeEl.style.left = targetX + 'px';
-                                memeEl.style.top = targetY + 'px';
-                                memeEl.style.transform = "scale(0.3)";
-                                memeEl.style.opacity = "0";
+                                memeEl.style.left = targetX + 'px'; memeEl.style.top = targetY + 'px';
+                                memeEl.style.transform = "scale(0.3)"; memeEl.style.opacity = "0";
 
-                                // Reveal text word as meme hits it
-                                setTimeout(() => {
-                                    targetNode.style.transition = "opacity 0.5s";
-                                    targetNode.style.opacity = "1";
-                                }, 400);
+                                setTimeout(() => { targetNode.style.transition = "opacity 0.5s"; targetNode.style.opacity = "1"; }, 400);
                             } else {
-                                // Excess memes fade away
-                                memeEl.style.transition = "all 0.6s";
-                                memeEl.style.transform = "scale(0)";
-                                memeEl.style.opacity = "0";
+                                memeEl.style.transition = "all 0.6s"; memeEl.style.transform = "scale(0)"; memeEl.style.opacity = "0";
                             }
                         }, index * 150); 
                     });
                 }, 3000); 
-
             }, 1000);
         }
 
@@ -920,7 +1013,6 @@
         const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
         let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
-        
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         
         function draw() {
