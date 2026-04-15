@@ -55,10 +55,15 @@
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
 
         /* --- ENTRY NAME OVERLAY --- */
-        #entry-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 8, 0.98); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 1.5s ease; }
+        #entry-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 5, 8, 0.98); z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 1; transition: opacity 1.5s ease;
+        }
         .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
-        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; }
-        .meme-letter { font-family: var(--font-tech); font-weight: bold; text-transform: uppercase; background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent; opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4)); }
+        .name-word { display: flex; justify-content: center; width: 100%; text-align: center; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
+        .meme-letter { font-family: var(--font-tech); font-weight: bold; text-transform: uppercase; background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent; opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
         
@@ -79,7 +84,7 @@
         /* Screens & Panels */
         .screen { position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px 80px 20px; z-index: 20; transition: opacity 0.5s ease; }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
-        .glass-panel { background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px; padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15); max-height: 80vh; overflow-y: auto; overflow-x: hidden; position: relative; }
+        .glass-panel { background: var(--panel-bg); backdrop-filter: blur(15px); border: 1px solid var(--neon-cyan); border-radius: 8px; padding: 40px 30px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(0,240,255,0.15); max-height: 85vh; overflow-y: auto; overflow-x: hidden; position: relative; }
 
         h1, h2, h3 { font-family: var(--font-tech); color: var(--text-color); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
         .highlight-cyan { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
@@ -102,7 +107,7 @@
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
-        /* Map Network - Expanded to 7 Planets */
+        /* Map Network */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container { position: relative; width: 100%; height: 75vh; min-height: 500px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
         .planet { position: absolute; width: 55px; height: 55px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
@@ -130,13 +135,7 @@
 
         /* --- HEXMATCH (Tinder Swipe) --- */
         .swipe-container { position: relative; width: 100%; height: 350px; margin: 20px auto; perspective: 1000px; touch-action: none; }
-        .swipe-card {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 350px;
-            background-color: #111; background-size: cover; background-position: center;
-            border-radius: 15px; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan);
-            display: flex; align-items: flex-end; padding: 15px; transition: transform 0.4s ease, opacity 0.4s ease;
-            transform-origin: 50% 100%; z-index: 1;
-        }
+        .swipe-card { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 350px; background-color: #111; background-size: cover; background-position: center; border-radius: 15px; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan); display: flex; align-items: flex-end; padding: 15px; transition: transform 0.4s ease, opacity 0.4s ease; transform-origin: 50% 100%; z-index: 1; }
         .swipe-card.swiped-left { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
         .swipe-card.swiped-right { transform: translateX(50%) rotate(20deg); opacity: 0; }
         .card-name { background: rgba(0,0,0,0.8); color: #fff; padding: 5px 10px; border-radius: 5px; font-family: var(--font-tech); font-size: 1.1em; width: 100%; text-align: left; }
@@ -144,6 +143,11 @@
         .swipe-btn { width: 60px; height: 60px; border-radius: 50%; font-size: 1.5em; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0 10px; }
         .pass-btn { border-color: var(--system-red); color: var(--system-red); } .pass-btn:hover { background: var(--system-red); box-shadow: 0 0 15px var(--system-red); }
         .smash-btn { border-color: var(--system-green); color: var(--system-green); } .smash-btn:hover { background: var(--system-green); box-shadow: 0 0 15px var(--system-green); }
+        
+        /* Chat UI */
+        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 80%; font-family: var(--font-tech); font-size: 0.9em; animation: popInBubble 0.3s forwards; }
+        .chat-match { background: rgba(0,240,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .chat-user { background: rgba(255,0,122,0.1); border: 1px solid var(--neon-pink); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
 
         /* --- COGNITIVE INTERROGATION (Chaos) --- */
         .chaos-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--neon-pink); }
@@ -263,15 +267,11 @@
             
             <div id="map-container">
                 <div class="planet" data-label="Audio" style="top: 15%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
-                
                 <div class="planet" data-label="Hexmatch" style="top: 35%; left: 15%; background-image: url('icon-hexmatch.png');" onclick="openSection('hexmatch-section', this)"></div>
                 <div class="planet" data-label="Simulations" style="top: 35%; left: 85%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
-                
                 <div class="planet" data-label="Terminal" style="top: 65%; left: 15%; background-image: url('icon-term.png');" onclick="openSection('compliment-section', this)"></div>
-                <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('quiz-section', this)"></div>
-                
-                <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div>
-                <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
+                <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('chaos-section', this)"></div>
+                <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div> <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
             </div>
         </div>
     </div>
@@ -304,12 +304,21 @@
             <p style="font-family: var(--font-tech); font-size: 0.8em; letter-spacing: 2px; color: #888;">HEXMATCH PROTOCOL</p>
             <h2 class="highlight-cyan" style="font-size: 1.2em; margin-top: 5px;">AESTHETIC SCAN</h2>
             
-            <div class="swipe-container" id="swipe-container">
-                </div>
+            <div class="swipe-container" id="swipe-container"></div>
             
             <div class="swipe-controls" id="swipe-controls">
                 <button class="swipe-btn pass-btn" onclick="handleSwipe('left')">✖</button>
                 <button class="swipe-btn smash-btn" onclick="handleSwipe('right')">♥</button>
+            </div>
+
+            <div id="hexmatch-chat" class="hidden" style="width: 100%; height: 350px; display: flex; flex-direction: column;">
+                <h3 class="highlight-pink" style="margin-bottom: 10px; font-size: 1.4em;">IT'S A MATCH!</h3>
+                <div id="chat-history" style="flex-grow: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 8px; border: 1px solid var(--neon-cyan); margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px;">
+                    </div>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" id="chat-input" placeholder="Say thanks..." style="width: 75%; padding: 10px; font-size: 1em;">
+                    <button id="chat-send-btn" onclick="sendChatReply()" style="width: 25%; padding: 10px; margin-top: 0;">SEND</button>
+                </div>
             </div>
 
             <div id="hexmatch-result" class="hidden">
@@ -330,10 +339,11 @@
                 <div class="chaos-progress-fill" id="chaos-progress"></div>
             </div>
 
-            <div id="chaos-q-container" style="min-height: 180px; display: flex; flex-direction: column; justify-content: center;">
-                <h3 id="chaos-q-text" style="font-family: var(--font-elegant); font-size: 1.3em; text-transform: none; line-height: 1.4;">Question loads...</h3>
+            <div id="chaos-q-container" style="min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                <h3 id="chaos-q-text" style="font-family: var(--font-elegant); font-size: 1.2em; text-transform: none; line-height: 1.4; margin-bottom: 20px;">Question loads...</h3>
                 <button id="chaos-opt1" class="btn-pink" onclick="answerChaos(1)">Option 1</button>
                 <button id="chaos-opt2" class="btn-pink" onclick="answerChaos(2)">Option 2</button>
+                <button id="chaos-opt3" class="btn-pink" onclick="answerChaos(3)">Option 3</button>
             </div>
 
             <div class="quill-container">
@@ -342,7 +352,8 @@
 
             <div id="chaos-result" class="hidden">
                 <h3 class="highlight-cyan">Analysis complete.</h3>
-                <p style="font-family: var(--font-tech); font-size: 1.1em;">Conclusion: not boring. That’s rare twinn.</p>
+                <p style="font-family: var(--font-tech); font-size: 1em; margin-bottom: 20px; line-height: 1.5;">Conclusion: not boring. That’s rare twinn.</p>
+                <p style="font-family: var(--font-quote); font-style: italic; color: var(--neon-pink); font-size: 1.1em;">Nooww do it again and send me the screenshots of every option which was choosed by the CHOSEN ONE</p>
             </div>
 
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
@@ -373,61 +384,6 @@
                 <div id="simon-msg" class="system-text" style="min-height:20px; margin-top:5px;"></div>
                 <button onclick="startSimon()" class="btn-pink">Initialize Matrix</button>
             </div>
-            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
-        </div>
-    </div>
-
-    <div id="quiz-section" class="screen hidden">
-        <div class="glass-panel">
-            <h2 class="highlight-gold">INTERROGATION</h2>
-            <div id="q1">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">1. Who is the best character in Star Wars?</p>
-                <button onclick="ansQuiz(1, true)">Anakin Skywalker</button>
-                <button onclick="ansQuiz(1, true)">R2-D2</button>
-                <button onclick="ansQuiz(1, false)">Jar Jar Binks</button>
-            </div>
-            <div id="q2" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">2. What is the most valuable substance in the universe found on Arrakis?</p>
-                <button onclick="ansQuiz(2, true)">Spice (Melange)</button>
-                <button onclick="ansQuiz(2, false)">Water</button>
-                <button onclick="ansQuiz(2, false)">Vibranium</button>
-            </div>
-            <div id="q3" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">3. In which film does Timothée Chalamet portray a cannibal?</p>
-                <button onclick="ansQuiz(3, false)">Wonka</button>
-                <button onclick="ansQuiz(3, true)">Bones and All</button>
-                <button onclick="ansQuiz(3, false)">Dune</button>
-            </div>
-            <div id="q4" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">4. What is the title of Frank Ocean's critically acclaimed 2016 album?</p>
-                <button onclick="ansQuiz(4, false)">Channel Orange</button>
-                <button onclick="ansQuiz(4, true)">Blonde</button>
-                <button onclick="ansQuiz(4, false)">Nostalgia, Ultra</button>
-            </div>
-            <div id="q5" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">5. Which of these is a popular TV Girl album?</p>
-                <button onclick="ansQuiz(5, false)">Currents</button>
-                <button onclick="ansQuiz(5, false)">Igor</button>
-                <button onclick="ansQuiz(5, true)">French Exit</button>
-            </div>
-            <div id="q6" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">6. Which Daniel Caesar song features H.E.R.?</p>
-                <button onclick="ansQuiz(6, true)">Best Part</button>
-                <button onclick="ansQuiz(6, false)">Get You</button>
-                <button onclick="ansQuiz(6, false)">Japanese Denim</button>
-            </div>
-            <div id="q7" class="hidden">
-                <p style="font-family: var(--font-elegant); font-size: 1.2em;">7. What is the name of the giant sandworms on Arrakis?</p>
-                <button onclick="ansQuiz(7, false)">Sarlacc</button>
-                <button onclick="ansQuiz(7, true)">Shai-Hulud</button>
-                <button onclick="ansQuiz(7, false)">Graboids</button>
-            </div>
-            <div id="q-end" class="hidden">
-                <h2 style="color: var(--system-green); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);">Verification Complete</h2>
-                <p style="font-family: var(--font-tech);">Niche knowledge confirmed.</p>
-                <p style="margin-top: 20px; font-weight: bold; color: var(--neon-pink); font-family: var(--font-quote); font-style: italic; font-size: 1.2em;">If you reached this far, you’re officially too smart to cr*ck JEE 💔💔💔</p>
-            </div>
-            <div id="quiz-feedback" class="system-text"></div>
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
@@ -485,9 +441,12 @@
     <audio id="audio-daniel" src="daniel.mp3"></audio>
     <audio id="audio-arcane" src="arcane.mp3"></audio>
     <audio id="audio-flatline" src="flatline.mp3"></audio>
+    <audio id="audio-cas" src="cas.mp3"></audio> 
     <audio id="audio-cornershop" src="cornershop.mp3"></audio>
-    <audio id="audio-cornershop2" src="cornershop2.mp3"></audio>
-    <audio id="audio-cas" src="cas.mp3"></audio> <script>
+    <audio id="audio-cornershop2" src="cornershop2.mp3"></audio> 
+    <audio id="r2d2-audio" src="r2d2-sound.mp3"></audio>
+
+    <script>
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
@@ -548,33 +507,22 @@
             document.getElementById('main-site').classList.remove('hidden');
         }
 
-        // --- R2-D2 Pet Reactions ---
-        const r2Messages = [
-            "Beep boop! (You're doing great!)", 
-            "*Happy whistle noises*", 
-            "Bloop bleep! (I calculate a 100% chance you're cool)",
-            "*Excited spinning*",
-            "Beep? (Where is Master Luke?)",
-            "Trill-beep! (This layout is aesthetically pleasing)",
-            "Bwoooop. (Processing immense baddie energy...)",
-            "*Confused mechanical grumble*"
-        ];
+        // --- Autonomous & Interactive R2-D2 Logic ---
+        const r2RandomThoughts = ["Beep boop! (You're doing great!)", "*Happy whistle noises*", "Bloop bleep! (I calculate a 100% chance you're cool)", "*Excited spinning*", "Beep? (Where is Master Luke?)", "Trill-beep! (This layout is aesthetically pleasing)", "Bwoooop. (Processing immense baddie energy...)", "*Confused mechanical grumble*"];
+
         function r2d2React(isAuto = false) {
             let img = document.getElementById('r2d2-img');
             let bubble = document.getElementById('r2d2-bubble');
             let audio = document.getElementById('r2d2-audio');
             
-            img.classList.remove('r2-wiggle');
-            void img.offsetWidth; 
-            img.classList.add('r2-wiggle');
+            img.classList.remove('r2-wiggle'); void img.offsetWidth; img.classList.add('r2-wiggle');
             
             if(!isAuto && audio) { 
-                audio.currentTime = 0; 
-                audio.play().catch(e=>console.log(e)); 
+                audio.currentTime = 0; audio.play().catch(e=>console.log(e)); 
                 setTimeout(() => { audio.pause(); }, 1500); 
             }
             
-            bubble.innerText = r2Messages[Math.floor(Math.random() * r2Messages.length)];
+            bubble.innerText = r2RandomThoughts[Math.floor(Math.random() * r2RandomThoughts.length)];
             bubble.classList.add('show');
             setTimeout(() => { bubble.classList.remove('show'); }, 4000);
         }
@@ -586,91 +534,94 @@
             }
         }, 6000);
 
-        // --- Hexmatch Protocol (Tinder Swipe) ---
+        // --- Hexmatch Protocol (Tinder Swipe) + Match Chat ---
         const hexmatchData = [
-            { id: 1, name: "Timothée Chalamet", img: "match1.jpg" },
-            { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
-            { id: 3, name: "OBI-WAN", img: "match3.jpg" },
-            { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
-            { id: 5, name: "Anakin Skywalker", img: "match5.jpg" },
-            { id: 6, name: "Denji-kun", img: "match6.jpg" },
-            { id: 7, name: "Viktor", img: "match7.jpg" },
-            { id: 8, name: "Shadow The hedgehog", img: "match8.jpg" },
-            { id: 9, name: "Ellie fucking williams", img: "match9.jpg" },
-            { id: 10, name: "deviz-पाकgya 🦚", img: "match10.jpg" },
-            { id: 11, name: "Overthinking at 2 AM", img: "match11.jpg", type: "concept" },
-            { id: 12, name: "Random Memes", img: "match12.jpg", type: "concept" }
+            { id: 1, name: "Timothée Chalamet", img: "match1.jpg" }, { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
+            { id: 3, name: "OBI-WAN", img: "match3.jpg" }, { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
+            { id: 5, name: "Anakin Skywalker", img: "match5.jpg" }, { id: 6, name: "Denji-kun", img: "match6.jpg" },
+            { id: 7, name: "Viktor", img: "match7.jpg" }, { id: 8, name: "Shadow The hedgehog", img: "match8.jpg" },
+            { id: 9, name: "Ellie fucking williams", img: "match9.jpg" }, { id: 10, name: "deviz-पाकgya 🦚", img: "match10.jpg" },
+            { id: 11, name: "Overthinking at 2 AM", img: "match11.jpg", type: "concept" }, { id: 12, name: "Random Memes", img: "match12.jpg", type: "concept" }
         ];
 
         let currentCardIndex = 0;
-        let hasDepth = false;
-        let hasHumor = false;
+        let hasDepth = false; let hasHumor = false;
 
         function loadHexmatch() {
-            const container = document.getElementById('swipe-container');
-            container.innerHTML = '';
-            // Render backwards so index 0 is on top
+            const container = document.getElementById('swipe-container'); container.innerHTML = '';
             for(let i = hexmatchData.length - 1; i >= 0; i--) {
-                let card = document.createElement('div');
-                card.className = "swipe-card";
-                card.id = `hex-card-${i}`;
-                card.style.backgroundImage = `url('${hexmatchData[i].img}')`;
-                // Add slight offset for stack effect
+                let card = document.createElement('div'); card.className = "swipe-card"; card.id = `hex-card-${i}`; card.style.backgroundImage = `url('${hexmatchData[i].img}')`;
                 card.style.marginTop = `${i * 3}px`;
-                
-                let namePlate = document.createElement('div');
-                namePlate.className = "card-name";
-                namePlate.innerText = hexmatchData[i].name;
-                card.appendChild(namePlate);
-                container.appendChild(card);
+                let namePlate = document.createElement('div'); namePlate.className = "card-name"; namePlate.innerText = hexmatchData[i].name;
+                card.appendChild(namePlate); container.appendChild(card);
             }
             currentCardIndex = 0;
         }
-        
-        // Initialize cards
         loadHexmatch();
 
         function handleSwipe(direction) {
             if(currentCardIndex >= hexmatchData.length) return;
-            
-            let card = document.getElementById(`hex-card-${currentCardIndex}`);
-            let currentData = hexmatchData[currentCardIndex];
+            let card = document.getElementById(`hex-card-${currentCardIndex}`); let currentData = hexmatchData[currentCardIndex];
             
             if(direction === 'right') {
                 card.classList.add('swiped-right');
-                if(currentData.id === 11) hasDepth = true;
-                if(currentData.id === 12) hasHumor = true;
-            } else {
-                card.classList.add('swiped-left');
-            }
+                if(currentData.id === 11) hasDepth = true; if(currentData.id === 12) hasHumor = true;
+            } else { card.classList.add('swiped-left'); }
             
             currentCardIndex++;
-            
-            if(currentCardIndex >= hexmatchData.length) {
-                setTimeout(showHexmatchResult, 400);
-            }
+            if(currentCardIndex >= hexmatchData.length) { setTimeout(showMatchChat, 400); }
         }
 
-        function showHexmatchResult() {
+        function appendChatMessage(sender, text) {
+            let hist = document.getElementById('chat-history');
+            let bubble = document.createElement('div');
+            bubble.className = "chat-bubble " + (sender === 'match' ? 'chat-match' : 'chat-user');
+            bubble.innerText = text;
+            hist.appendChild(bubble);
+            hist.scrollTop = hist.scrollHeight;
+        }
+
+        function showMatchChat() {
             document.getElementById('swipe-container').classList.add('hidden');
             document.getElementById('swipe-controls').classList.add('hidden');
-            document.getElementById('hexmatch-result').classList.remove('hidden');
-            
-            let msg = "Result: dangerously similar taste detected.";
-            if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
-            else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
-            else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
-            
-            document.getElementById('hexmatch-msg').innerText = msg;
+            document.getElementById('hexmatch-chat').classList.remove('hidden');
+            setTimeout(() => appendChatMessage('match', 'hyyy happpyyy birthdayy'), 800);
         }
 
-        // --- Cognitive Interrogation (Chaos Quiz) ---
+        function sendChatReply() {
+            let input = document.getElementById('chat-input');
+            if(!input.value.trim()) return;
+            appendChatMessage('user', input.value);
+            input.value = ''; input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
+
+            setTimeout(() => appendChatMessage('match', "OMFGGG you're a Coooll DIVAAA"), 1200);
+            setTimeout(() => appendChatMessage('match', "sorryy my server is crashing. Byeeee Pragya"), 3000);
+            setTimeout(() => appendChatMessage('match', "*Appled you*"), 5000);
+            
+            setTimeout(() => {
+                document.getElementById('hexmatch-chat').classList.add('hidden');
+                document.getElementById('hexmatch-result').classList.remove('hidden');
+                
+                let msg = "Result: dangerously similar taste detected.";
+                if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
+                else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
+                else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
+                document.getElementById('hexmatch-msg').innerText = msg;
+            }, 7500);
+        }
+
+        // --- Cognitive Interrogation (Chaos Quiz v2.0) ---
         const chaosQuestions = [
-            { q: "understand everything instantly", a: "question everything forever?" },
-            { q: "Be emotionally stable", a: "have elite music taste?" },
-            { q: "Finish all your work early", a: "romanticize doing it last minute?" },
-            { q: "Be predictable", a: "slightly chaotic but interesting?" },
-            { q: "Read minds", a: "be unreadable?" }
+            { q: "Would you rather:", a1: "Every time you lie a horse appears", a2: "You got chill bees that follow you and correct your posture" },
+            { q: "Would you rather:", a1: "Own a yacht", a2: "Naps don't take time out of your day anymore", a3: "Communicate with cats" },
+            { q: "Would you rather:", a1: "Have a pet dinosaur the size of a dog", a2: "A dog the size of a dinosaur" },
+            { q: "Would you rather:", a1: "Have a chill gorilla that pounds his chest whenever you win", a2: "Have a capybara that forces everyone within 10 ft to calm down" },
+            { q: "Would you rather:", a1: "Have unlimited garlic bread", a2: "Have unlimited mozzarella sticks", a3: "Have unlimited loaded fries" },
+            { q: "Would you rather:", a1: "Have the crunchiest green grapes", a2: "Have the juiciest seedless watermelon", a3: "Have the crispiest sweetango apple" },
+            { q: "Would you rather:", a1: "Be able to talk to bears but they're extremely dramatic", a2: "Talk to sharks but they only respond with riddles" },
+            { q: "Would you rather:", a1: "Have a penguin that holds your hand on an escalator", a2: "Have an owl you can call once per day that answers one question" },
+            { q: "Would you rather:", a1: "Be Chinese but single", a2: "In a happy relationship but never Chinese" },
+            { q: "Would you rather:", a1: "Hate mee", a2: "Be my friend" }
         ];
         let currentChaosQ = 0;
 
@@ -680,32 +631,32 @@
                 document.getElementById('chaos-result').classList.remove('hidden');
                 return;
             }
-            document.getElementById('chaos-q-text').innerText = "Would you rather...";
-            document.getElementById('chaos-opt1').innerText = chaosQuestions[currentChaosQ].q;
-            document.getElementById('chaos-opt2').innerText = chaosQuestions[currentChaosQ].a;
+            let data = chaosQuestions[currentChaosQ];
+            document.getElementById('chaos-q-text').innerText = data.q;
+            document.getElementById('chaos-opt1').innerText = data.a1;
+            document.getElementById('chaos-opt2').innerText = data.a2;
+            
+            let btn3 = document.getElementById('chaos-opt3');
+            if(data.a3) { btn3.innerText = data.a3; btn3.classList.remove('hidden'); } 
+            else { btn3.classList.add('hidden'); }
             
             let progress = ((currentChaosQ) / chaosQuestions.length) * 100;
             document.getElementById('chaos-progress').style.width = progress + '%';
         }
-        
         loadChaosQ();
 
         function answerChaos(opt) {
             let panel = document.getElementById('chaos-panel');
             let quill = document.getElementById('quill-gif');
             
-            panel.classList.add('glitch');
-            quill.classList.add('quill-active');
-            
+            panel.classList.add('glitch'); quill.classList.add('quill-active');
             setTimeout(() => {
-                panel.classList.remove('glitch');
-                quill.classList.remove('quill-active');
-                currentChaosQ++;
-                loadChaosQ();
+                panel.classList.remove('glitch'); quill.classList.remove('quill-active');
+                currentChaosQ++; loadChaosQ();
             }, 800);
         }
 
-        // --- Music Player Functions (Updated for CAS) ---
+        // --- Music Player Functions ---
         const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline', 'audio-cas'];
         const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber', 'Cigarettes After Sex'];
         const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg', 'art-cas.jpg'];
@@ -716,7 +667,6 @@
                 let idx = Math.floor(Math.random() * allSongs.length);
                 id = allSongs[idx]; name = songNames[idx]; art = songArts[idx];
             }
-            
             document.getElementById('vinyl-disk').classList.add('spin');
             document.getElementById('tone-arm').classList.add('playing');
             document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`;
@@ -752,8 +702,7 @@
         }
 
         // --- Constellation Puzzle Logic ---
-        const constCvs = document.getElementById('constellation-canvas');
-        const cCtx = constCvs.getContext('2d');
+        const constCvs = document.getElementById('constellation-canvas'); const cCtx = constCvs.getContext('2d');
         const starPoints = [{x: 80, y: 250}, {x: 80, y: 50}, {x: 200, y: 50}, {x: 230, y: 100}, {x: 200, y: 150}, {x: 80, y: 150}];
         let connectedStars = 0;
 
@@ -761,10 +710,7 @@
             cCtx.clearRect(0, 0, constCvs.width, constCvs.height);
             cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)'; cCtx.lineWidth = 3;
             cCtx.beginPath();
-            for(let i=0; i<connectedStars; i++) {
-                if(i===0) cCtx.moveTo(starPoints[i].x, starPoints[i].y);
-                else cCtx.lineTo(starPoints[i].x, starPoints[i].y);
-            }
+            for(let i=0; i<connectedStars; i++) { if(i===0) cCtx.moveTo(starPoints[i].x, starPoints[i].y); else cCtx.lineTo(starPoints[i].x, starPoints[i].y); }
             cCtx.stroke();
             starPoints.forEach((p, idx) => {
                 cCtx.beginPath(); cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
@@ -778,9 +724,7 @@
             if(connectedStars >= starPoints.length) return;
             const rect = constCvs.getBoundingClientRect();
             const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
-            const targetStar = starPoints[connectedStars];
-            const dist = Math.hypot(mouseX - targetStar.x, mouseY - targetStar.y);
-            
+            const dist = Math.hypot(mouseX - starPoints[connectedStars].x, mouseY - starPoints[connectedStars].y);
             if(dist < 20) {
                 connectedStars++; drawConstellation();
                 if(connectedStars === starPoints.length) setTimeout(() => { document.getElementById('constellation-msg').classList.remove('hidden'); }, 500);
@@ -791,34 +735,22 @@
         let r2Seq = '';
         document.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === "INPUT") return;
-            let k = e.key.toLowerCase();
-            r2Seq += k;
+            r2Seq += e.key.toLowerCase();
             if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
-            if (r2Seq === 'r2') { 
-                document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
-                document.getElementById('constellation-section').classList.remove('hidden');
-                r2Seq = ''; 
-            }
+            if (r2Seq === 'r2') { document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden')); document.getElementById('constellation-section').classList.remove('hidden'); r2Seq = ''; }
         });
 
-        // --- Tic-Tac-Toe ---
-        let board = ["", "", "", "", "", "", "", "", ""];
-        let tttActive = true;
+        // --- Tic Tac Toe & Simon ---
+        let board = ["", "", "", "", "", "", "", "", ""]; let tttActive = true;
         function makeMove(idx) {
-            if(!tttActive || board[idx] !== "") return;
-            board[idx] = "X"; updateTTT();
+            if(!tttActive || board[idx] !== "") return; board[idx] = "X"; updateTTT();
             if(checkWin(board, "X")) { document.getElementById('ttt-msg').innerText = "User Win Registered."; tttActive = false; return; }
             if(!board.includes("")) { document.getElementById('ttt-msg').innerText = "Draw."; tttActive = false; return; }
             setTimeout(() => {
                 let available = board.map((val, i) => val === "" ? i : null).filter(val => val !== null);
                 let move;
                 if (Math.random() < 0.4) { move = available[Math.floor(Math.random() * available.length)]; } 
-                else {
-                    let bestScore = -Infinity;
-                    for(let i=0; i<9; i++) {
-                        if(board[i] === "") { board[i] = "O"; let score = minimax(board, 0, false); board[i] = ""; if(score > bestScore) { bestScore = score; move = i; } }
-                    }
-                }
+                else { let bestScore = -Infinity; for(let i=0; i<9; i++) { if(board[i] === "") { board[i] = "O"; let score = minimax(board, 0, false); board[i] = ""; if(score > bestScore) { bestScore = score; move = i; } } } }
                 board[move] = "O"; updateTTT();
                 if(checkWin(board, "O")) { document.getElementById('ttt-msg').innerText = "System Wins."; tttActive = false; }
             }, 300);
@@ -832,7 +764,6 @@
         }
         function resetTTT() { board = ["", "", "", "", "", "", "", "", ""]; tttActive = true; document.getElementById('ttt-msg').innerText = ""; updateTTT(); }
 
-        // --- Memory Matrix (Simon) ---
         let sequence = []; let playerSeq = []; let simonLevel = 0; let simonActive = false;
         function startSimon() { sequence = []; playerSeq = []; simonLevel = 0; simonActive = true; document.getElementById('simon-msg').innerText = "Observe..."; nextSimonRound(); }
         function nextSimonRound() { playerSeq = []; simonLevel++; sequence.push(Math.floor(Math.random() * 4)); playSimonSequence(); }
@@ -848,49 +779,14 @@
             if(playerSeq.length === sequence.length) { simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000); }
         }
 
-        // --- Quiz (Original Interrogation) ---
-        function ansQuiz(qNum, isCorrect) {
-            let fb = document.getElementById('quiz-feedback');
-            if(isCorrect) {
-                fb.innerText = "> Valid data."; fb.style.color = "var(--system-green)";
-                setTimeout(() => {
-                    document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
-                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden');
-                    else document.getElementById('q-end').classList.remove('hidden');
-                }, 1000);
-            } else { fb.innerText = "> Invalid data."; fb.style.color = "var(--system-red)"; }
-        }
-
-        // --- Terminal Functions ---
-        let isTranslating = false;
         function translateDroid() {
-            if(isTranslating) return;
-            isTranslating = true;
-            let el = document.getElementById('droid-translated');
-            let msg = "> Translation: someone here thinks you're incredibly cool.";
-            el.textContent = "";
-            let i = 0;
+            if(isTranslating) return; isTranslating = true; let el = document.getElementById('droid-translated'); let msg = "> Translation: someone here thinks you're incredibly cool."; el.textContent = ""; let i = 0;
             let int = setInterval(() => { i++; el.textContent = msg.substring(0, i); if(i >= msg.length) { clearInterval(int); isTranslating = false; } }, 50);
         }
         const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
-        // --- Aesthetics ---
-        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
-        function spawnAesthetic() {
-            let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
-            el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
-        }
-        setInterval(spawnAesthetic, 2500);
-
-        function spawnMeme() {
-            let num = Math.floor(Math.random() * 5) + 1;
-            let img = document.createElement('img'); img.src = "meme" + num + ".jpg"; img.className = 'meme-comet';
-            img.style.top = (Math.random() * 40 + 20) + 'vh'; document.body.appendChild(img); setTimeout(() => img.remove(), 6000);
-        }
-        setInterval(spawnMeme, 8000); 
-
-        // --- Cinematic Ending ---
+        // --- Cinematic Ending & Lightspeed ---
         function startEnding() {
             document.getElementById('cinema-panel').classList.add('hidden');
             document.getElementById('global-player').classList.remove('active'); 
@@ -910,20 +806,20 @@
                 setTimeout(() => { let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1); }, 1500);
                 setTimeout(() => { let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2); }, 5000);
                 setTimeout(() => { let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale); }, 8500);
-                
+
                 setTimeout(() => {
                     let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
                     let r2sound = document.getElementById('r2d2-audio');
-                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 1500); }
+                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 2500); }
                 }, 10000);
 
                 setTimeout(() => {
                     let btn = document.createElement('button'); btn.innerText = "exit tss 🍎"; btn.className = "exit-btn"; btn.onclick = startSnakeSequence; box.appendChild(btn);
                 }, 13000); 
+
             }, 2500); 
         }
 
-        // --- SNAKE RINGS ANIMATION ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
@@ -934,13 +830,9 @@
 
             setTimeout(() => {
                 box.innerHTML = "";
-                let snakeContainer = document.createElement('div');
-                snakeContainer.id = "snake-container";
-                document.body.appendChild(snakeContainer);
+                let snakeContainer = document.createElement('div'); snakeContainer.id = "snake-container"; document.body.appendChild(snakeContainer);
                 
-                let finalTxt = document.createElement('div'); 
-                finalTxt.className = 'final-snake-text';
-                
+                let finalTxt = document.createElement('div'); finalTxt.className = 'final-snake-text';
                 finalTxt.innerHTML = `
                     <div class="meme-text-snake line-1" style="margin-bottom:15px;">
                         <span class="target-node word-group" style="opacity:0;">Stayyy</span>
@@ -955,16 +847,11 @@
                 snakeContainer.appendChild(finalTxt);
 
                 let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
-                let activeMemes = [];
-                let targetNodes = document.querySelectorAll('.target-node');
-                let totalMemes = 25; 
+                let activeMemes = []; let targetNodes = document.querySelectorAll('.target-node'); let totalMemes = 25; 
                 
                 for(let i=0; i < totalMemes; i++) {
                     let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; 
-                    m.style.position = "absolute"; m.style.width = "50px"; m.style.height = "50px";
-                    m.style.borderRadius = "50%"; m.style.objectFit = "cover"; m.style.border = "2px solid var(--neon-cyan)";
-                    m.style.boxShadow = "0 0 15px var(--neon-cyan)"; m.style.opacity = "0"; 
-                    
+                    m.style.position = "absolute"; m.style.width = "50px"; m.style.height = "50px"; m.style.borderRadius = "50%"; m.style.objectFit = "cover"; m.style.border = "2px solid var(--neon-cyan)"; m.style.boxShadow = "0 0 15px var(--neon-cyan)"; m.style.opacity = "0"; 
                     m.angle = (i / totalMemes) * Math.PI * 2; m.isOrbiting = true;
                     snakeContainer.appendChild(m); activeMemes.push(m);
                 }
@@ -988,17 +875,10 @@
                     activeMemes.forEach((memeEl, index) => {
                         setTimeout(() => {
                             memeEl.isOrbiting = false; 
-                            
                             if(index < targetNodes.length) {
-                                let targetNode = targetNodes[index];
-                                let spanRect = targetNode.getBoundingClientRect();
-                                let targetX = spanRect.left + (spanRect.width / 2) - 25;
-                                let targetY = spanRect.top + (spanRect.height / 2) - 25;
-
-                                memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-                                memeEl.style.left = targetX + 'px'; memeEl.style.top = targetY + 'px';
-                                memeEl.style.transform = "scale(0.3)"; memeEl.style.opacity = "0";
-
+                                let targetNode = targetNodes[index]; let spanRect = targetNode.getBoundingClientRect();
+                                let targetX = spanRect.left + (spanRect.width / 2) - 25; let targetY = spanRect.top + (spanRect.height / 2) - 25;
+                                memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)"; memeEl.style.left = targetX + 'px'; memeEl.style.top = targetY + 'px'; memeEl.style.transform = "scale(0.3)"; memeEl.style.opacity = "0";
                                 setTimeout(() => { targetNode.style.transition = "opacity 0.5s"; targetNode.style.opacity = "1"; }, 400);
                             } else {
                                 memeEl.style.transition = "all 0.6s"; memeEl.style.transform = "scale(0)"; memeEl.style.opacity = "0";
@@ -1006,28 +886,20 @@
                         }, index * 150); 
                     });
                 }, 3000); 
+
             }, 1000);
         }
 
-        // --- Dynamic Canvas ---
-        const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d');
-        let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; });
-        cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+        const cvs = document.getElementById('bg-canvas'); const ctx = cvs.getContext('2d'); let parts = []; window.addEventListener('resize', () => { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }); cvs.width = window.innerWidth; cvs.height = window.innerHeight;
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
-        
         function draw() {
-            if(isLightspeed) { ctx.fillStyle = 'rgba(10, 10, 15, 0.2)'; ctx.fillRect(0, 0, cvs.width, cvs.height); } 
-            else { ctx.clearRect(0,0,cvs.width,cvs.height); }
-            
+            if(isLightspeed) { ctx.fillStyle = 'rgba(10, 10, 15, 0.2)'; ctx.fillRect(0, 0, cvs.width, cvs.height); } else { ctx.clearRect(0,0,cvs.width,cvs.height); }
             parts.forEach((p, index) => {
-                ctx.fillStyle = (index % 2 === 0) ? 'rgba(0, 240, 255, 0.8)' : 'rgba(255, 0, 122, 0.8)';
-                ctx.beginPath(); 
+                ctx.fillStyle = (index % 2 === 0) ? 'rgba(0, 240, 255, 0.8)' : 'rgba(255, 0, 122, 0.8)'; ctx.beginPath(); 
                 if (isLightspeed) { ctx.arc(p.x, p.y, p.s * 1.5, 0, Math.PI*2); p.y += (p.dy * 25); p.x += (p.dx * 5); } 
                 else { ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); p.x += p.dx; p.y += p.dy; }
                 ctx.fill();
-                if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; }
-                if(p.y < 0) { p.y = cvs.height; p.x = Math.random()*cvs.width; }
-                if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width;
+                if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; } if(p.y < 0) { p.y = cvs.height; p.x = Math.random()*cvs.width; } if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width;
             });
             requestAnimationFrame(draw);
         }
