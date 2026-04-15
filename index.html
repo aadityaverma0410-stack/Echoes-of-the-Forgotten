@@ -55,12 +55,7 @@
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
 
         /* --- ENTRY NAME OVERLAY --- */
-        #entry-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 5, 8, 0.98); z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 1; transition: opacity 1.5s ease;
-        }
+        #entry-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 8, 0.98); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 1.5s ease; }
         .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
         .name-word { display: flex; justify-content: center; width: 100%; text-align: center; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
         .meme-letter { font-family: var(--font-tech); font-weight: bold; text-transform: uppercase; background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent; opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
@@ -107,7 +102,7 @@
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
-        /* Map Network */
+        /* Map Network - All 7 Planets Displayed */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container { position: relative; width: 100%; height: 75vh; min-height: 500px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
         .planet { position: absolute; width: 55px; height: 55px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
@@ -144,10 +139,23 @@
         .pass-btn { border-color: var(--system-red); color: var(--system-red); } .pass-btn:hover { background: var(--system-red); box-shadow: 0 0 15px var(--system-red); }
         .smash-btn { border-color: var(--system-green); color: var(--system-green); } .smash-btn:hover { background: var(--system-green); box-shadow: 0 0 15px var(--system-green); }
         
-        /* Chat UI */
-        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 80%; font-family: var(--font-tech); font-size: 0.9em; animation: popInBubble 0.3s forwards; }
-        .chat-match { background: rgba(0,240,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .chat-user { background: rgba(255,0,122,0.1); border: 1px solid var(--neon-pink); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+        /* Insta Chat UI */
+        .chat-history { background: #000; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; height: 250px; overflow-y: auto; border: 1px solid #333; margin-bottom: 10px; }
+        .chat-bubble { max-width: 75%; padding: 10px 14px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 0.95em; line-height: 1.4; word-wrap: break-word; animation: popInBubble 0.3s forwards; }
+        .chat-match { background: #262626; color: #fff; align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; }
+        .chat-user { background: linear-gradient(135deg, #711c91, #ea4c89, #b5179e); color: #fff; align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; }
+        
+        .chat-input-wrapper { display: flex; align-items: center; background: #262626; border-radius: 25px; padding: 5px 15px; margin-top: 10px; }
+        .chat-input-wrapper input { flex-grow: 1; background: transparent !important; border: none !important; color: #fff !important; padding: 8px 0 !important; outline: none !important; font-family: sans-serif !important; box-shadow: none !important; font-size: 0.95em !important; }
+        .chat-input-wrapper button { width: auto; background: transparent; border: none; color: #0095f6; font-weight: bold; padding: 8px; margin: 0; box-shadow: none; font-size: 0.95em; cursor: pointer; text-transform: none; }
+        .chat-input-wrapper button:hover { background: transparent; transform: none; color: #fff; box-shadow: none; }
+        
+        /* Typing Indicator */
+        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; background: #262626; border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; width: fit-content; animation: popInBubble 0.2s forwards; }
+        .typing-dot { width: 6px; height: 6px; background: #888; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
         /* --- COGNITIVE INTERROGATION (Chaos) --- */
         .chaos-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--neon-pink); }
@@ -196,6 +204,8 @@
         .line-1 { font-size: clamp(30px, 8vw, 60px); }
         .line-2 { font-size: clamp(24px, 6vw, 50px); }
         .word-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+
+        @keyframes popInBubble { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -267,11 +277,15 @@
             
             <div id="map-container">
                 <div class="planet" data-label="Audio" style="top: 15%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
+                
                 <div class="planet" data-label="Hexmatch" style="top: 35%; left: 15%; background-image: url('icon-hexmatch.png');" onclick="openSection('hexmatch-section', this)"></div>
                 <div class="planet" data-label="Simulations" style="top: 35%; left: 85%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
+                
                 <div class="planet" data-label="Terminal" style="top: 65%; left: 15%; background-image: url('icon-term.png');" onclick="openSection('compliment-section', this)"></div>
-                <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('chaos-section', this)"></div>
-                <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div> <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
+                <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('quiz-section', this)"></div>
+                
+                <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div>
+                <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
             </div>
         </div>
     </div>
@@ -311,13 +325,13 @@
                 <button class="swipe-btn smash-btn" onclick="handleSwipe('right')">♥</button>
             </div>
 
-            <div id="hexmatch-chat" class="hidden" style="width: 100%; height: 350px; display: flex; flex-direction: column;">
-                <h3 class="highlight-pink" style="margin-bottom: 10px; font-size: 1.4em;">IT'S A MATCH!</h3>
-                <div id="chat-history" style="flex-grow: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 8px; border: 1px solid var(--neon-cyan); margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px;">
+            <div id="hexmatch-chat" class="hidden" style="width: 100%; height: 380px; display: flex; flex-direction: column;">
+                <h3 class="highlight-pink" style="margin-bottom: 10px; font-size: 1.2em;">IT'S A MATCH!</h3>
+                <div id="chat-history" class="chat-history">
                     </div>
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" id="chat-input" placeholder="Say thanks..." style="width: 75%; padding: 10px; font-size: 1em;">
-                    <button id="chat-send-btn" onclick="sendChatReply()" style="width: 25%; padding: 10px; margin-top: 0;">SEND</button>
+                <div class="chat-input-wrapper">
+                    <input type="text" id="chat-input" placeholder="Message..." autocomplete="off">
+                    <button id="chat-send-btn" onclick="sendChatReply()">Send</button>
                 </div>
             </div>
 
@@ -388,11 +402,66 @@
         </div>
     </div>
 
+    <div id="quiz-section" class="screen hidden">
+        <div class="glass-panel">
+            <h2 class="highlight-gold">INTERROGATION</h2>
+            <div id="q1">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">1. Who is the best character in Star Wars?</p>
+                <button onclick="ansQuiz(1, true)">Anakin Skywalker</button>
+                <button onclick="ansQuiz(1, true)">R2-D2</button>
+                <button onclick="ansQuiz(1, false)">Jar Jar Binks</button>
+            </div>
+            <div id="q2" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">2. What is the most valuable substance in the universe found on Arrakis?</p>
+                <button onclick="ansQuiz(2, true)">Spice (Melange)</button>
+                <button onclick="ansQuiz(2, false)">Water</button>
+                <button onclick="ansQuiz(2, false)">Vibranium</button>
+            </div>
+            <div id="q3" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">3. In which film does Timothée Chalamet portray a cannibal?</p>
+                <button onclick="ansQuiz(3, false)">Wonka</button>
+                <button onclick="ansQuiz(3, true)">Bones and All</button>
+                <button onclick="ansQuiz(3, false)">Dune</button>
+            </div>
+            <div id="q4" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">4. What is the title of Frank Ocean's critically acclaimed 2016 album?</p>
+                <button onclick="ansQuiz(4, false)">Channel Orange</button>
+                <button onclick="ansQuiz(4, true)">Blonde</button>
+                <button onclick="ansQuiz(4, false)">Nostalgia, Ultra</button>
+            </div>
+            <div id="q5" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">5. Which of these is a popular TV Girl album?</p>
+                <button onclick="ansQuiz(5, false)">Currents</button>
+                <button onclick="ansQuiz(5, false)">Igor</button>
+                <button onclick="ansQuiz(5, true)">French Exit</button>
+            </div>
+            <div id="q6" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">6. Which Daniel Caesar song features H.E.R.?</p>
+                <button onclick="ansQuiz(6, true)">Best Part</button>
+                <button onclick="ansQuiz(6, false)">Get You</button>
+                <button onclick="ansQuiz(6, false)">Japanese Denim</button>
+            </div>
+            <div id="q7" class="hidden">
+                <p style="font-family: var(--font-elegant); font-size: 1.2em;">7. What is the name of the giant sandworms on Arrakis?</p>
+                <button onclick="ansQuiz(7, false)">Sarlacc</button>
+                <button onclick="ansQuiz(7, true)">Shai-Hulud</button>
+                <button onclick="ansQuiz(7, false)">Graboids</button>
+            </div>
+            <div id="q-end" class="hidden">
+                <h2 style="color: var(--system-green); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);">Verification Complete</h2>
+                <p style="font-family: var(--font-tech);">Niche knowledge confirmed.</p>
+                <p style="margin-top: 20px; font-weight: bold; color: var(--neon-pink); font-family: var(--font-quote); font-style: italic; font-size: 1.2em;">If you reached this far, you’re officially too smart to cr*ck JEE 💔💔💔</p>
+            </div>
+            <div id="quiz-feedback" class="system-text"></div>
+            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
+        </div>
+    </div>
+
     <div id="compliment-section" class="screen hidden">
         <div class="glass-panel">
             <h2 class="highlight-cyan">HEXTECH TERMINAL</h2>
             <div class="terminal-box">
-                <p id="droid-raw" style="letter-spacing: 2px;">BEEP BOOP BEEP — 011010</p>
+                <p id="droid-raw" style="letter-spacing: 2px; color: #888;">BEEP BOOP BEEP — 011010</p>
                 <div id="droid-translated" style="margin-top: 10px; color: var(--neon-pink);"></div>
             </div>
             <button onclick="translateDroid()" class="btn-pink">Decode Astromech Log</button>
@@ -534,7 +603,7 @@
             }
         }, 6000);
 
-        // --- Hexmatch Protocol (Tinder Swipe) + Match Chat ---
+        // --- Hexmatch Protocol (Tinder Swipe) + INSTA Chat Sequence ---
         const hexmatchData = [
             { id: 1, name: "Timothée Chalamet", img: "match1.jpg" }, { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
             { id: 3, name: "OBI-WAN", img: "match3.jpg" }, { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
@@ -572,6 +641,7 @@
             if(currentCardIndex >= hexmatchData.length) { setTimeout(showMatchChat, 400); }
         }
 
+        // Insta Chat Logic
         function appendChatMessage(sender, text) {
             let hist = document.getElementById('chat-history');
             let bubble = document.createElement('div');
@@ -581,10 +651,26 @@
             hist.scrollTop = hist.scrollHeight;
         }
 
+        function showTypingIndicator() {
+            let hist = document.getElementById('chat-history');
+            let typing = document.createElement('div');
+            typing.className = "typing-indicator";
+            typing.id = "typing-indicator";
+            typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            hist.appendChild(typing);
+            hist.scrollTop = hist.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            let typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
         function showMatchChat() {
             document.getElementById('swipe-container').classList.add('hidden');
             document.getElementById('swipe-controls').classList.add('hidden');
             document.getElementById('hexmatch-chat').classList.remove('hidden');
+            document.getElementById('chat-history').innerHTML = ''; 
             setTimeout(() => appendChatMessage('match', 'hyyy happpyyy birthdayy'), 800);
         }
 
@@ -594,20 +680,41 @@
             appendChatMessage('user', input.value);
             input.value = ''; input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
 
-            setTimeout(() => appendChatMessage('match', "OMFGGG you're a Coooll DIVAAA"), 1200);
-            setTimeout(() => appendChatMessage('match', "sorryy my server is crashing. Byeeee Pragya"), 3000);
-            setTimeout(() => appendChatMessage('match', "*Appled you*"), 5000);
-            
+            // Delayed staggered chat sequence
             setTimeout(() => {
-                document.getElementById('hexmatch-chat').classList.add('hidden');
-                document.getElementById('hexmatch-result').classList.remove('hidden');
-                
-                let msg = "Result: dangerously similar taste detected.";
-                if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
-                else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
-                else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
-                document.getElementById('hexmatch-msg').innerText = msg;
-            }, 7500);
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    appendChatMessage('match', "OMFGGG you're a Coooll DIVAAA");
+                    
+                    setTimeout(() => {
+                        showTypingIndicator();
+                        setTimeout(() => {
+                            hideTypingIndicator();
+                            appendChatMessage('match', "sorryy my server is crashing. Byeeee Pragya");
+                            
+                            setTimeout(() => {
+                                showTypingIndicator();
+                                setTimeout(() => {
+                                    hideTypingIndicator();
+                                    appendChatMessage('match', "*Appled you*");
+                                    
+                                    setTimeout(() => {
+                                        document.getElementById('hexmatch-chat').classList.add('hidden');
+                                        document.getElementById('hexmatch-result').classList.remove('hidden');
+                                        
+                                        let msg = "Result: dangerously similar taste detected.";
+                                        if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
+                                        else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
+                                        else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
+                                        document.getElementById('hexmatch-msg').innerText = msg;
+                                    }, 2000); 
+                                }, 1500); 
+                            }, 500); 
+                        }, 1500);
+                    }, 500);
+                }, 1500);
+            }, 500); 
         }
 
         // --- Cognitive Interrogation (Chaos Quiz v2.0) ---
@@ -735,7 +842,8 @@
         let r2Seq = '';
         document.addEventListener('keydown', (e) => {
             if (document.activeElement.tagName === "INPUT") return;
-            r2Seq += e.key.toLowerCase();
+            let k = e.key.toLowerCase();
+            r2Seq += k;
             if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
             if (r2Seq === 'r2') { document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden')); document.getElementById('constellation-section').classList.remove('hidden'); r2Seq = ''; }
         });
@@ -779,12 +887,49 @@
             if(playerSeq.length === sequence.length) { simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000); }
         }
 
+        // --- Original 7 Interrogation Quiz ---
+        function ansQuiz(qNum, isCorrect) {
+            let fb = document.getElementById('quiz-feedback');
+            if(isCorrect) {
+                fb.innerText = "> Valid data."; fb.style.color = "var(--system-green)";
+                setTimeout(() => {
+                    document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
+                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden');
+                    else document.getElementById('q-end').classList.remove('hidden');
+                }, 1000);
+            } else { fb.innerText = "> Invalid data."; fb.style.color = "var(--system-red)"; }
+        }
+
+        // --- Terminal Functions (Fixed Decode) ---
+        let isTranslating = false;
         function translateDroid() {
-            if(isTranslating) return; isTranslating = true; let el = document.getElementById('droid-translated'); let msg = "> Translation: someone here thinks you're incredibly cool."; el.textContent = ""; let i = 0;
-            let int = setInterval(() => { i++; el.textContent = msg.substring(0, i); if(i >= msg.length) { clearInterval(int); isTranslating = false; } }, 50);
+            if(isTranslating) return; isTranslating = true; 
+            let el = document.getElementById('droid-translated'); 
+            let msg = "> Translation: someone here thinks you're incredibly cool."; 
+            el.textContent = ""; let i = 0;
+            let int = setInterval(() => { 
+                i++; 
+                el.textContent = msg.substring(0, i); 
+                if(i >= msg.length) { clearInterval(int); isTranslating = false; } 
+            }, 50);
         }
         const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
+
+        // --- Aesthetics (Particles & Memes) ---
+        const aestheticIcons = ['🌸', '✨', '💎', '🔥'];
+        function spawnAesthetic() {
+            let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
+            el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
+        }
+        setInterval(spawnAesthetic, 2500);
+
+        function spawnMeme() {
+            let num = Math.floor(Math.random() * 5) + 1;
+            let img = document.createElement('img'); img.src = "meme" + num + ".jpg"; img.className = 'meme-comet';
+            img.style.top = (Math.random() * 40 + 20) + 'vh'; document.body.appendChild(img); setTimeout(() => img.remove(), 6000);
+        }
+        setInterval(spawnMeme, 8000); 
 
         // --- Cinematic Ending & Lightspeed ---
         function startEnding() {
@@ -806,20 +951,20 @@
                 setTimeout(() => { let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1); }, 1500);
                 setTimeout(() => { let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2); }, 5000);
                 setTimeout(() => { let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale); }, 8500);
-
+                
                 setTimeout(() => {
                     let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
                     let r2sound = document.getElementById('r2d2-audio');
-                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 2500); }
+                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 1500); }
                 }, 10000);
 
                 setTimeout(() => {
                     let btn = document.createElement('button'); btn.innerText = "exit tss 🍎"; btn.className = "exit-btn"; btn.onclick = startSnakeSequence; box.appendChild(btn);
                 }, 13000); 
-
             }, 2500); 
         }
 
+        // --- SNAKE RINGS ANIMATION ---
         function startSnakeSequence() {
             let box = document.getElementById('cinema-text-container');
             box.style.transition = "opacity 1s"; box.style.opacity = 0;
@@ -830,9 +975,13 @@
 
             setTimeout(() => {
                 box.innerHTML = "";
-                let snakeContainer = document.createElement('div'); snakeContainer.id = "snake-container"; document.body.appendChild(snakeContainer);
+                let snakeContainer = document.createElement('div');
+                snakeContainer.id = "snake-container";
+                document.body.appendChild(snakeContainer);
                 
-                let finalTxt = document.createElement('div'); finalTxt.className = 'final-snake-text';
+                let finalTxt = document.createElement('div'); 
+                finalTxt.className = 'final-snake-text';
+                
                 finalTxt.innerHTML = `
                     <div class="meme-text-snake line-1" style="margin-bottom:15px;">
                         <span class="target-node word-group" style="opacity:0;">Stayyy</span>
@@ -847,7 +996,9 @@
                 snakeContainer.appendChild(finalTxt);
 
                 let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
-                let activeMemes = []; let targetNodes = document.querySelectorAll('.target-node'); let totalMemes = 25; 
+                let activeMemes = [];
+                let targetNodes = document.querySelectorAll('.target-node');
+                let totalMemes = 25; 
                 
                 for(let i=0; i < totalMemes; i++) {
                     let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; 
