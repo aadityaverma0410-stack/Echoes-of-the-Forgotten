@@ -102,7 +102,7 @@
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
-        /* Map Network - All 7 Planets Displayed */
+        /* Map Network */
         .map-wrapper { width: 100%; max-width: 600px; text-align: center; z-index: 10; }
         #map-container { position: relative; width: 100%; height: 75vh; min-height: 500px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; margin: 20px auto; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%); }
         .planet { position: absolute; width: 55px; height: 55px; background-size: cover; background-position: center; border-radius: 50%; cursor: pointer; transform: translate(-50%, -50%); box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; z-index: 20; background-color: #000; }
@@ -128,7 +128,7 @@
         .gp-status { font-family: var(--font-matrix); font-size: 0.8em; color: var(--neon-cyan); }
         .gp-controls { cursor: pointer; color: var(--neon-cyan); font-size: 1.5em; width: 40px; text-align: center; }
 
-        /* --- HEXMATCH (Tinder Swipe) + INSTA Chat Sequence --- */
+        /* --- HEXMATCH (Tinder Swipe) --- */
         .swipe-container { position: relative; width: 100%; height: 350px; margin: 20px auto; perspective: 1000px; touch-action: none; }
         .swipe-card { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 350px; background-color: #111; background-size: cover; background-position: center; border-radius: 15px; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan); display: flex; align-items: flex-end; padding: 15px; transition: transform 0.4s ease, opacity 0.4s ease; transform-origin: 50% 100%; z-index: 1; }
         .swipe-card.swiped-left { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
@@ -139,26 +139,23 @@
         .pass-btn { border-color: var(--system-red); color: var(--system-red); } .pass-btn:hover { background: var(--system-red); box-shadow: 0 0 15px var(--system-red); }
         .smash-btn { border-color: var(--system-green); color: var(--system-green); } .smash-btn:hover { background: var(--system-green); box-shadow: 0 0 15px var(--system-green); }
         
-        /* Insta Chat UI (Fixed Colors and Mentions) */
+        /* Insta Chat UI */
+        .chat-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #333; }
+        .match-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--neon-pink); background-size: cover; background-position: center; }
         .chat-history { background: transparent; display: flex; flex-direction: column; gap: 12px; height: 280px; overflow-y: auto; margin-bottom: 10px; padding: 10px 5px; }
         .chat-bubble { max-width: 80%; padding: 10px 14px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 0.95em; line-height: 1.4; word-wrap: break-word; animation: popInBubble 0.3s forwards; }
         
-        /* Received bubbles are gray */
-        .chat-match { background: #262626; color: #fff; border: none; align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; box-shadow: none; float: left; }
+        .chat-match { background: rgba(0,0,0,0.4); color: var(--text-color); border: 1px solid var(--neon-cyan); align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
+        .chat-user { background: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-pink); align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; box-shadow: 0 0 10px rgba(255, 0, 122, 0.1); }
         
-        /* Sent bubbles are Insta gradient with white text and pink glow */
-        .chat-user { background: linear-gradient(135deg, #711c91, #ea4c89, #b5179e); color: #fff; border: none; align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; box-shadow: 0 0 15px rgba(255, 0, 122, 0.4); float: right; }
+        .chat-input-wrapper { display: flex; align-items: center; background: transparent; border-bottom: 2px solid var(--neon-pink); padding: 5px 0; margin-top: 10px; box-shadow: 0 5px 10px -5px var(--neon-pink); }
+        .chat-input-wrapper input { flex-grow: 1; background: transparent !important; border: none !important; color: #fff !important; padding: 8px 10px !important; outline: none !important; font-family: var(--font-tech) !important; box-shadow: none !important; font-size: 0.95em !important; }
+        .chat-input-wrapper button { width: auto; background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan); font-weight: bold; padding: 6px 12px; margin: 0; box-shadow: none; font-size: 0.85em; cursor: pointer; border-radius: 4px; }
+        .chat-input-wrapper button:hover { background: var(--neon-cyan); color: #000; box-shadow: var(--glow-cyan); transform: none; }
         
-        .chat-input-wrapper { display: flex; align-items: center; background: transparent; border-bottom: 2px solid var(--neon-pink); padding: 5px 0; margin-top: 10px; }
-        .chat-input-wrapper input { flex-grow: 1; background: transparent !important; border: none !important; color: #fff !important; padding: 8px 10px !important; outline: none !important; font-family: sans-serif !important; box-shadow: none !important; font-size: 0.95em !important; color: white !important; }
-        .chat-input-wrapper button { width: auto; background: transparent; border: none; color: #0095f6; font-weight: bold; padding: 8px; margin: 0; box-shadow: none; font-size: 0.95em; cursor: pointer; text-transform: none; }
-        .chat-input-wrapper button:hover { background: transparent; transform: none; color: #fff; box-shadow: none; }
-        
-        /* Typing Indicator */
-        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; background: #262626; border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; width: fit-content; animation: popInBubble 0.2s forwards; }
-        .typing-dot { width: 6px; height: 6px; background: #888; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; background: transparent; border: 1px solid var(--neon-cyan); border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; width: fit-content; animation: popInBubble 0.2s forwards; }
+        .typing-dot { width: 6px; height: 6px; background: var(--neon-cyan); border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
         /* --- COGNITIVE INTERROGATION (Chaos) --- */
@@ -203,10 +200,9 @@
         .snake-meme { position: absolute; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0; box-shadow: 0 0 20px var(--neon-cyan); border: 2px solid var(--neon-cyan); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), left 0.6s cubic-bezier(0.25, 1, 0.5, 1), top 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; }
         
         .final-snake-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; max-width: 95vw; text-align: center; display: flex; flex-direction: column; gap: 15px; }
-        .meme-text-snake { font-family: var(--font-elegant); font-weight: bold; background-image: url('meme6.jpg'), url('meme7.jpg'), url('meme8.jpg'), url('meme9.jpg'), url('meme10.jpg'); background-size: cover; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
+        .meme-text-snake { font-family: var(--font-elegant); font-weight: bold; background-image: url('match5.jpg'), url('match1.jpg'), url('match11.jpg'); background-size: cover; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
         .emoji-group { background: none !important; -webkit-text-fill-color: initial !important; color: initial !important; filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)) !important; }
         
-        /* Adjusted Clamp to ensure it never gets cut off */
         .line-1 { font-size: clamp(30px, 8vw, 60px); display: flex; flex-wrap: wrap; justify-content: center; width: 100%; white-space: pre-wrap;}
         .line-2 { font-size: clamp(40px, 12vw, 100px); display: flex; flex-wrap: wrap; justify-content: center; width: 100%; white-space: pre-wrap;}
         .word-group { display: flex; flex-wrap: nowrap; margin: 0 8px; }
@@ -283,13 +279,10 @@
             
             <div id="map-container">
                 <div class="planet" data-label="Audio" style="top: 15%; left: 50%; background-image: url('icon-music.png');" onclick="openSection('music-section', this)"></div>
-                
                 <div class="planet" data-label="Hexmatch" style="top: 35%; left: 15%; background-image: url('icon-hexmatch.png');" onclick="openSection('hexmatch-section', this)"></div>
                 <div class="planet" data-label="Simulations" style="top: 35%; left: 85%; background-image: url('icon-game.png');" onclick="openSection('games-section', this)"></div>
-                
                 <div class="planet" data-label="Terminal" style="top: 65%; left: 15%; background-image: url('icon-term.png');" onclick="openSection('compliment-section', this)"></div>
                 <div class="planet" data-label="Interrogation" style="top: 65%; left: 85%; background-image: url('icon-quiz.png');" onclick="openSection('quiz-section', this)"></div>
-                
                 <div class="planet" data-label="Chaos" style="top: 85%; left: 35%; background-image: url('icon-chaos.png');" onclick="openSection('chaos-section', this)"></div>
                 <div class="planet" data-label="Core" style="top: 85%; left: 65%; background-image: url('icon-core.png');" onclick="openSection('cinema-section', this)"></div>
             </div>
@@ -320,35 +313,45 @@
     </div>
 
     <div id="hexmatch-section" class="screen hidden">
-        <div class="glass-panel" style="overflow: hidden;">
-            <p style="font-family: var(--font-tech); font-size: 0.8em; letter-spacing: 2px; color: #888;">HEXMATCH PROTOCOL</p>
-            <h2 class="highlight-cyan" style="font-size: 1.2em; margin-top: 5px;">AESTHETIC SCAN</h2>
-            
-            <div class="swipe-container" id="swipe-container"></div>
-            
-            <div class="swipe-controls" id="swipe-controls">
-                <button class="swipe-btn pass-btn" onclick="handleSwipe('left')">✖</button>
-                <button class="swipe-btn smash-btn" onclick="handleSwipe('right')">♥</button>
+        <div class="glass-panel" style="overflow: hidden; display: flex; flex-direction: column;">
+            <div id="hex-main-ui">
+                <p style="font-family: var(--font-tech); font-size: 0.8em; letter-spacing: 2px; color: #888;">HEXMATCH PROTOCOL</p>
+                <h2 class="highlight-cyan" style="font-size: 1.2em; margin-top: 5px;">AESTHETIC SCAN</h2>
+                
+                <div class="swipe-container" id="swipe-container"></div>
+                
+                <div class="swipe-controls" id="swipe-controls">
+                    <button class="swipe-btn pass-btn" onclick="handleSwipe('left')">✖</button>
+                    <button class="swipe-btn smash-btn" onclick="handleSwipe('right')">♥</button>
+                </div>
             </div>
 
-            <div id="hexmatch-chat" class="hidden" style="width: 100%; height: 350px; display: flex; flex-direction: column;">
-                <div style="text-align: left;">
-                    <h3 class="highlight-pink" style="margin: 0; font-size: 1.1em; letter-spacing: 1px; color: #ff007a; text-shadow: none;">RYLAND GRACE</h3>
+            <div id="hexmatch-chat" class="hidden" style="width: 100%; display: flex; flex-direction: column; flex-grow: 1;">
+                <div class="chat-header">
+                    <div id="matched-avatar" class="match-avatar"></div>
+                    <div style="text-align: left;">
+                        <h3 class="highlight-pink" style="margin: 0; font-size: 1.1em; letter-spacing: 1px;">IT'S A MATCH!</h3>
+                        <p style="font-family: var(--font-tech); font-size: 0.7em; color: #888; margin: 0;">SYSTEM ACTIVE</p>
+                    </div>
                 </div>
+
                 <div id="chat-history" class="chat-history">
                     </div>
                 <div class="chat-input-wrapper">
-                    <input type="text" id="chat-input" placeholder="Message..." autocomplete="off">
-                    <button id="chat-send-btn" onclick="sendChatReply()">Send</button>
+                    <input type="text" id="chat-input" placeholder="Say thanks..." autocomplete="off">
+                    <button id="chat-send-btn" onclick="sendChatReply()">SEND</button>
                 </div>
+                
+                <button onclick="endChatAndShowResults()" style="border-color: var(--royal-gold); color: var(--royal-gold); font-size: 0.8em; padding: 10px; margin-top: 15px;">View Compatibility Results</button>
             </div>
 
             <div id="hexmatch-result" class="hidden">
                 <h3 style="color: var(--neon-pink); margin-top: 20px;">Compatibility Scan Complete</h3>
-                <p id="hexmatch-msg" style="font-family: var(--font-tech); color: var(--text-color); font-size: 1.1em;"></p>
+                <p id="hexmatch-msg" style="font-family: var(--font-tech); color: var(--text-color); font-size: 1.1em; line-height: 1.5; padding: 20px;"></p>
+                <button class="back-btn" onclick="returnToMap()">Close Interface</button>
             </div>
 
-            <button class="back-btn" onclick="returnToMap()">Close Interface</button>
+            <button id="hex-close-btn" class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
 
@@ -527,6 +530,7 @@
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
+        let isTranslating = false; // Resolved missing global scope variable for terminal
         
         // --- Verification Gates & Door Logic ---
         document.getElementById('math-input').addEventListener('input', (e) => {
@@ -611,7 +615,7 @@
             }
         }, 6000);
 
-        // --- Hexmatch Protocol (Tinder Swipe) + RYLAND GRACE POET CHAT ---
+        // --- Hexmatch Protocol (Tinder Swipe) + NICHE AI CHAT ---
         const hexmatchData = [
             { id: 1, name: "Timothée Chalamet", img: "match1.jpg" }, { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
             { id: 3, name: "OBI-WAN", img: "match3.jpg" }, { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
@@ -623,6 +627,7 @@
 
         let currentCardIndex = 0;
         let hasDepth = false; let hasHumor = false;
+        let lastMatchedImage = "match1.jpg";
 
         function loadHexmatch() {
             const container = document.getElementById('swipe-container'); container.innerHTML = '';
@@ -642,6 +647,7 @@
             
             if(direction === 'right') {
                 card.classList.add('swiped-right');
+                lastMatchedImage = currentData.img; 
                 if(currentData.id === 11) hasDepth = true; if(currentData.id === 12) hasHumor = true;
             } else { card.classList.add('swiped-left'); }
             
@@ -649,35 +655,27 @@
             if(currentCardIndex >= hexmatchData.length) { setTimeout(showMatchChat, 400); }
         }
 
-        // Poet Persona and Insta UI fixed
-        const rylandPoeticResponses = [
-            "The universe is a grand poem, written in the language of stars. ✨🍏",
-            "Like a river finding the sea, we all find our way home, in time. 🥀😔",
-            "The simplest things, a blooming flower, a child's laugh, hold the deepest truths. 🍭✨",
-            "Curiosity is the key that unlocks the door to the extraordinary. 🙁💔",
-            "Be kind to yourself, and the rest will follow. 🍎✨",
-            "Every year is a verse in the book of life, unique and precious. 🥀🥀",
-            "Greetings from Ryland Grace. I am but a reflection in your digital sky. 🙁💔",
-            "A kind word is like a blooming rose, spreading fragrance in the heart. 🥀🥀"
+        // Niche AI Chat Logic 
+        const aiNicheResponses = [
+            "Processing... Your aesthetic preferences are highly specific and validated. 📂",
+            "Analyzing... I don't experience emotion, but this takes elite taste. 📼",
+            "Data suggests you have a hyper-specific niche. I respect that. 🎧",
+            "Scanning... Yes, this aligns with optimal atmospheric parameters. 🪐",
+            "My database confirms this is a highly cultured response. 🎬"
         ];
 
         function getRylandGraceResponse(userInput) {
             let text = userInput.toLowerCase();
-            // Non-flirtatious keyword poems
-            if(text.includes("love")) return "Love is a universal song, sung by every heart that beats. 🥀🥀";
-            if(text.includes("birthday")) return "Happy birthday! Each year is a verse in the book of life, unique and precious. 🍎✨";
-            if(text.includes("cool") || text.includes("diva")) return "True divas aren't defined by external shine, but by the fire within. ✨🍭";
-            if(text.includes("space") || text.includes("science")) return "Science is our lamp in the vast dark of the universe. ✨🍏";
-            if(text.includes("hi") || text.includes("hello") || text.includes("hy")) return "Hello. I am but a reflection in your digital sky. 🙁💔";
-            
-            // Poetic fallback
-            return rylandPoeticResponses[Math.floor(Math.random() * rylandPoeticResponses.length)];
+            if(text.includes("music") || text.includes("song")) return "Audio analysis complete. Your playlist is mathematically flawless. 🎶";
+            if(text.includes("movie") || text.includes("film") || text.includes("cinema")) return "Cinephile traits detected. Archiving this take. 📽️";
+            if(text.includes("art") || text.includes("aesthetic")) return "Aesthetic matrices are perfectly aligned. Very cool. 🎨";
+            if(text.includes("hi") || text.includes("hello")) return "System active. Ready to discuss niche topics. 💻";
+            return aiNicheResponses[Math.floor(Math.random() * aiNicheResponses.length)];
         }
 
         function appendChatMessage(sender, text) {
             let hist = document.getElementById('chat-history');
             let bubble = document.createElement('div');
-            // Removed mentions, received is gray, sent is gradient
             bubble.className = "chat-bubble " + (sender === 'match' ? 'chat-match' : 'chat-user');
             bubble.innerText = text;
             hist.appendChild(bubble);
@@ -700,11 +698,16 @@
         }
 
         function showMatchChat() {
-            document.getElementById('swipe-container').classList.add('hidden');
-            document.getElementById('swipe-controls').classList.add('hidden');
+            document.getElementById('hex-main-ui').classList.add('hidden');
             document.getElementById('hexmatch-chat').classList.remove('hidden');
+            document.getElementById('matched-avatar').style.backgroundImage = `url('${lastMatchedImage}')`;
             document.getElementById('chat-history').innerHTML = ''; 
-            setTimeout(() => appendChatMessage('match', 'Hyyy happyyy birthdayy 🎉✨'), 800);
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                appendChatMessage('match', 'Hyyy happyyy birthdayy 🎉✨');
+            }, 1500);
         }
 
         function sendChatReply() {
@@ -712,19 +715,33 @@
             let text = input.value.trim();
             if(!text) return;
             
-            appendChatMessage('user', text); // User sent msg is user-insta style
-            input.value = ''; input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
+            appendChatMessage('user', text); 
+            input.value = ''; 
+            
+            input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
 
             setTimeout(() => {
                 showTypingIndicator();
                 setTimeout(() => {
                     hideTypingIndicator();
-                    appendChatMessage('match', getRylandGraceResponse(text)); // Ryland sent msg is poet gray style
+                    appendChatMessage('match', getRylandGraceResponse(text)); 
                     
                     input.disabled = false; document.getElementById('chat-send-btn').disabled = false;
                     input.focus();
-                }, 1500); 
+                }, 1800); 
             }, 500); 
+        }
+
+        function endChatAndShowResults() {
+            document.getElementById('hexmatch-chat').classList.add('hidden');
+            document.getElementById('hexmatch-result').classList.remove('hidden');
+            document.getElementById('hex-close-btn').classList.remove('hidden');
+            
+            let msg = "Result: dangerously similar taste detected.";
+            if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
+            else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
+            else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
+            document.getElementById('hexmatch-msg').innerText = msg;
         }
 
         // --- Cognitive Interrogation (Chaos Quiz v2.0) ---
@@ -897,9 +914,30 @@
             if(playerSeq.length === sequence.length) { simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000); }
         }
 
+        // --- Original 7 Interrogation Quiz ---
+        function ansQuiz(qNum, isCorrect) {
+            let fb = document.getElementById('quiz-feedback');
+            if(isCorrect) {
+                fb.innerText = "> Valid data."; fb.style.color = "var(--system-green)";
+                setTimeout(() => {
+                    document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
+                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden');
+                    else document.getElementById('q-end').classList.remove('hidden');
+                }, 1000);
+            } else { fb.innerText = "> Invalid data."; fb.style.color = "var(--system-red)"; }
+        }
+
+        // --- Terminal Functions (Fixed Decode) ---
         function translateDroid() {
-            if(isTranslating) return; isTranslating = true; let el = document.getElementById('droid-translated'); let msg = "> Translation: someone here thinks you're incredibly cool."; el.textContent = ""; let i = 0;
-            let int = setInterval(() => { i++; el.textContent = msg.substring(0, i); if(i >= msg.length) { clearInterval(int); isTranslating = false; } }, 50);
+            if(isTranslating) return; isTranslating = true; 
+            let el = document.getElementById('droid-translated'); 
+            let msg = "> Translation: someone here thinks you're incredibly cool."; 
+            el.textContent = ""; let i = 0;
+            let int = setInterval(() => { 
+                i++; 
+                el.textContent = msg.substring(0, i); 
+                if(i >= msg.length) { clearInterval(int); isTranslating = false; } 
+            }, 50);
         }
         const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
@@ -967,7 +1005,6 @@
                 snakeContainer.id = "snake-container";
                 document.body.appendChild(snakeContainer);
                 
-                // Words structured to wrap responsively, grouped so Hindi doesn't split
                 let finalTxt = document.createElement('div'); 
                 finalTxt.className = 'final-snake-text';
                 finalTxt.innerHTML = `
@@ -983,7 +1020,8 @@
                 `;
                 snakeContainer.appendChild(finalTxt);
 
-                let memes = ['meme6.jpg','meme7.jpg','meme8.jpg','meme9.jpg','meme10.jpg','meme11.jpg','meme12.jpg'];
+                // Specific Matches requested
+                let memes = ['match5.jpg', 'match1.jpg', 'match11.jpg'];
                 let activeMemes = [];
                 let targetNodes = document.querySelectorAll('.target-node');
                 let totalMemes = 25; 
@@ -1036,17 +1074,14 @@
         }
 
         function finalizeSnakeAndStartRadhey() {
-            // Wait exact 3 seconds after the entire snake formation text is visible
             setTimeout(() => {
-                // Fade out snake container
                 let snake = document.getElementById('snake-container');
                 snake.style.transition = 'opacity 1s';
                 snake.style.opacity = 0;
                 
                 setTimeout(() => {
-                    snake.remove(); // Clean up
+                    snake.remove(); 
                     
-                    // Full screen finale screen
                     let finale = document.createElement('div');
                     finale.id = "final-finale-screen";
                     finale.style = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 1s;";
@@ -1054,8 +1089,6 @@
                     
                     setTimeout(() => finale.style.opacity = 1, 100);
                     
-                    // Animated peacock GIF (describing movement like Walking/Fanning)
-                    // GIF Description: a high-quality, transparent background animated GIF of a real peacock walking across the screen, fanning its brilliant tail feathers as it moves.
                     let peacock = document.createElement('img');
                     peacock.src = "peacock.gif"; 
                     peacock.style = "max-width:300px; height:auto; opacity:0; transition:opacity 1.5s; filter:drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));";
@@ -1063,7 +1096,6 @@
                     
                     setTimeout(() => peacock.style.opacity = 1, 500);
                     
-                    // Final text writing in
                     setTimeout(() => {
                         let radhey = document.createElement('div');
                         radhey.innerHTML = 'Radhey-Radhey <span class="target-node emoji-group">🦚✨</span>';
@@ -1071,18 +1103,15 @@
                         finale.appendChild(radhey);
                         
                         setTimeout(() => radhey.style.opacity = 1, 500);
-                        
-                        // Peacocks and text have an animation as text appears
                         peacock.style.transition = 'all 2s ease-in-out';
-                        peacock.style.transform = 'translateY(-20px) scale(1.1)'; // Simple movement
+                        peacock.style.transform = 'translateY(-20px) scale(1.1)'; 
                         
-                    }, 2000); // Peacock moves for 2s, then text writes
+                    }, 2000);
                     
-                    // Disable interacting with map or any buttons
                     document.getElementById('main-site').style.pointerEvents = 'none';
                     document.getElementById('global-player').style.pointerEvents = 'none';
                     
-                }, 1000); // wait for fade
+                }, 1000); 
             }, 3000); 
         }
 
