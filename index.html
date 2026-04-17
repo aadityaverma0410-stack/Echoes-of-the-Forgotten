@@ -35,12 +35,7 @@
             padding-bottom: 70px;
         }
 
-        .grain {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
-        }
-
+        .grain { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"); }
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
         /* Door Animation */
@@ -54,27 +49,16 @@
         .hex-symbol.unlocked { color: var(--neon-pink); text-shadow: var(--glow-pink); transform: translateX(-50%) scale(1.5); }
         @keyframes rotateHex { 100% { transform: translateX(-50%) rotate(360deg); } }
 
-        /* --- ENTRY NAME OVERLAY --- */
+        /* ENTRY NAME OVERLAY */
         #entry-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 8, 0.98); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 1; transition: opacity 1.5s ease; }
         .italian-script { font-family: var(--font-italian); font-size: 3rem; color: var(--royal-gold); text-shadow: var(--glow-gold); margin-bottom: 10px; opacity: 0; animation: fadeInScript 1s forwards 0.5s; }
         .name-word { display: flex; justify-content: center; width: 100%; text-align: center; filter: drop-shadow(0 0 10px var(--neon-cyan)); }
         .meme-letter { font-family: var(--font-tech); font-weight: bold; text-transform: uppercase; background-size: cover; background-position: center; -webkit-background-clip: text; color: transparent; opacity: 0; animation: popInLetter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .text-pragya .meme-letter { font-size: 16vw; margin: 0 1vw; } 
         .text-skywalker .meme-letter { font-size: 10vw; letter-spacing: 2px; }
-        
         .m6 { background-image: url('meme6.jpg'); } .m7 { background-image: url('meme7.jpg'); } .m8 { background-image: url('meme8.jpg'); } .m9 { background-image: url('meme9.jpg'); } .m10 { background-image: url('meme10.jpg'); } .m11 { background-image: url('meme11.jpg'); } .m12 { background-image: url('meme12.jpg'); }
-
         @keyframes fadeInScript { to { opacity: 1; } }
         @keyframes popInLetter { 0% { opacity: 0; transform: scale(0.5) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-
-        /* --- R2-D2 PET WIDGET --- */
-        #r2d2-widget { position: fixed; bottom: 85px; right: 20px; z-index: 150; display: flex; flex-direction: column; align-items: flex-end; transition: opacity 0.5s ease; }
-        #r2d2-bubble { background: rgba(255,255,255,0.9); color: #000; font-family: var(--font-tech); font-size: 0.8em; padding: 10px; border-radius: 8px; margin-bottom: 10px; max-width: 150px; text-align: right; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); opacity: 0; transform: translateY(10px); transition: all 0.3s; position: relative; font-weight: bold; }
-        #r2d2-bubble::after { content: ''; position: absolute; bottom: -8px; right: 20px; border-width: 8px 8px 0; border-style: solid; border-color: rgba(255,255,255,0.9) transparent transparent transparent; }
-        #r2d2-bubble.show { opacity: 1; transform: translateY(0); }
-        #r2d2-img { width: 70px; height: auto; cursor: pointer; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3)); transition: transform 0.2s; }
-        .r2-wiggle { animation: wiggleBot 0.5s ease-in-out; }
-        @keyframes wiggleBot { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
 
         /* Screens & Panels */
         .screen { position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px 80px 20px; z-index: 20; transition: opacity 0.5s ease; }
@@ -98,7 +82,6 @@
         .btn-pink:hover { background: var(--neon-pink); border-color: var(--neon-pink); box-shadow: var(--glow-pink); }
         .back-btn { border-color: #555; color: #aaa; margin-top: 30px; }
         .back-btn:hover { background: #555; border-color: #555; color: #fff; box-shadow: none; }
-        
         .glitch { animation: glitchAnim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite; color: var(--neon-pink); }
         @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
 
@@ -128,7 +111,7 @@
         .gp-status { font-family: var(--font-matrix); font-size: 0.8em; color: var(--neon-cyan); }
         .gp-controls { cursor: pointer; color: var(--neon-cyan); font-size: 1.5em; width: 40px; text-align: center; }
 
-        /* --- HEXMATCH (Tinder Swipe) --- */
+        /* HEXMATCH (Tinder Swipe) */
         .swipe-container { position: relative; width: 100%; height: 350px; margin: 20px auto; perspective: 1000px; touch-action: none; }
         .swipe-card { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 350px; background-color: #111; background-size: cover; background-position: center; border-radius: 15px; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan); display: flex; align-items: flex-end; padding: 15px; transition: transform 0.4s ease, opacity 0.4s ease; transform-origin: 50% 100%; z-index: 1; }
         .swipe-card.swiped-left { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
@@ -144,17 +127,16 @@
         .match-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--neon-pink); background-size: cover; background-position: center; }
         .chat-history { background: transparent; display: flex; flex-direction: column; gap: 12px; height: 280px; overflow-y: auto; margin-bottom: 10px; padding: 10px 5px; }
         .chat-bubble { max-width: 80%; padding: 10px 14px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 0.95em; line-height: 1.4; word-wrap: break-word; animation: popInBubble 0.3s forwards; }
-        
-        .chat-match { background: rgba(0,0,0,0.4); color: var(--text-color); border: 1px solid var(--neon-cyan); align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
-        .chat-user { background: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-pink); align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; box-shadow: 0 0 10px rgba(255, 0, 122, 0.1); }
+        .chat-match { background: rgba(0,0,0,0.4); color: var(--text-color); border: 1px solid #555; align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; }
+        .chat-user { background: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
         
         .chat-input-wrapper { display: flex; align-items: center; background: transparent; border-bottom: 2px solid var(--neon-pink); padding: 5px 0; margin-top: 10px; box-shadow: 0 5px 10px -5px var(--neon-pink); }
         .chat-input-wrapper input { flex-grow: 1; background: transparent !important; border: none !important; color: #fff !important; padding: 8px 10px !important; outline: none !important; font-family: var(--font-tech) !important; box-shadow: none !important; font-size: 0.95em !important; }
         .chat-input-wrapper button { width: auto; background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan); font-weight: bold; padding: 6px 12px; margin: 0; box-shadow: none; font-size: 0.85em; cursor: pointer; border-radius: 4px; }
         .chat-input-wrapper button:hover { background: var(--neon-cyan); color: #000; box-shadow: var(--glow-cyan); transform: none; }
         
-        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; background: transparent; border: 1px solid var(--neon-cyan); border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; width: fit-content; animation: popInBubble 0.2s forwards; }
-        .typing-dot { width: 6px; height: 6px; background: var(--neon-cyan); border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; background: rgba(0,0,0,0.4); border: 1px solid #555; border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; width: fit-content; animation: popInBubble 0.2s forwards; }
+        .typing-dot { width: 6px; height: 6px; background: #aaa; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
         .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
@@ -162,16 +144,24 @@
         .chaos-progress-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--neon-pink); }
         .chaos-progress-fill { height: 100%; background: var(--neon-pink); width: 0%; transition: width 0.4s ease; box-shadow: var(--glow-pink); }
         .quill-container { width: 100%; display: flex; justify-content: center; margin-top: 15px; min-height: 50px; }
-        .quill-gif { width: 50px; height: auto; opacity: 0; transition: opacity 0.2s; filter: drop-shadow(0 0 10px var(--royal-gold)); }
+        .quill-gif { width: 100px; height: auto; opacity: 0; transition: opacity 0.2s; filter: drop-shadow(0 0 10px var(--royal-gold)); }
         .quill-active { opacity: 1; }
 
-        /* Games Container */
+        /* Games Container & Dots and Boxes */
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 15px auto; max-width: 240px; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 8px; border: 1px solid var(--neon-cyan); }
         .cell { background-color: #1a1a1a; background-image: radial-gradient(circle, #000 3px, transparent 3px); background-size: 15px 15px; border: 1px solid #333; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 3em; font-family: var(--font-tech); cursor: pointer; transition: background-color 0.3s; color: var(--text-color); }
         .cell:hover { background-color: #2a2a2a; box-shadow: inset 0 0 10px var(--neon-cyan); }
         .simon-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 15px auto; }
         .simon-btn { height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; opacity: 0.4; transition: opacity 0.1s, transform 0.1s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .simon-btn.active { opacity: 1; transform: scale(1.05); }
+
+        .dots-board { display: grid; grid-template-columns: auto 1fr auto 1fr auto 1fr auto; width: 220px; height: 220px; margin: 15px auto; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 8px; border: 1px solid var(--neon-cyan); align-items: center; justify-items: center;}
+        .d-dot { background: var(--neon-cyan); border-radius: 50%; width: 8px; height: 8px; box-shadow: var(--glow-cyan); }
+        .d-hline { background: #222; height: 8px; width: 100%; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .d-vline { background: #222; width: 8px; height: 100%; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .d-box { display: flex; align-items: center; justify-content: center; font-size: 1.5em; width: 100%; height: 100%; }
+        .d-line-active-u { background: var(--neon-pink) !important; cursor: default; box-shadow: var(--glow-pink); }
+        .d-line-active-c { background: var(--neon-cyan) !important; cursor: default; box-shadow: var(--glow-cyan); }
 
         /* Constellation */
         #constellation-canvas { background: #000; border: 1px solid var(--royal-gold); border-radius: 8px; box-shadow: inset 0 0 20px rgba(212,175,55,0.3); margin: 20px auto; cursor: crosshair; }
@@ -187,11 +177,6 @@
         .goat-img { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; box-shadow: var(--glow-gold); border: 2px solid var(--royal-gold); opacity: 0; animation: fadeHold 1s forwards; }
         @keyframes fadeHold { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        #r2d2-finale { width: 120px; margin: 20px auto 5px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.6)); opacity: 0; animation: r2Enter 2s ease-out forwards; }
-        @keyframes r2Enter { 0% { transform: translateY(100px) scale(0.5); opacity: 0; } 40% { transform: translateY(0) scale(1); opacity: 1; } 60% { transform: translateY(0) rotate(-15deg) scale(1); } 80% { transform: translateY(0) rotate(10deg) scale(1.3); } 100% { transform: translateY(0) rotate(0deg) scale(1.3); opacity: 1; } }
-        
-        .r2-elegant-text { font-family: var(--font-elegant); color: var(--royal-gold); font-size: 1.6em; text-shadow: 0 0 15px rgba(212, 175, 55, 0.8); opacity: 0; animation: fadeHold 1s forwards; margin-bottom: 20px; text-align: center; font-weight: bold; background: transparent; border: none; box-shadow: none; }
-        
         .exit-btn { background: transparent; border: 1px solid var(--royal-gold); color: var(--royal-gold); font-family: var(--font-tech); padding: 12px 25px; border-radius: 4px; cursor: pointer; opacity: 0; animation: fadeHold 1s forwards; margin-top: 15px; font-size: 1em; text-transform: lowercase; transition: all 0.3s; }
         .exit-btn:hover { background: var(--royal-gold); color: #000; box-shadow: var(--glow-gold); }
 
@@ -208,10 +193,7 @@
         .word-group { display: flex; flex-wrap: nowrap; margin: 0 8px; }
 
         @keyframes popInBubble { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -236,12 +218,6 @@
         <div class="text-skywalker name-word" style="margin-top: 10px;">
             <span class="meme-letter m12" style="animation-delay: 3.5s;">SKYWALKER</span>
         </div>
-    </div>
-
-    <div id="r2d2-widget" class="hidden">
-        <div id="r2d2-bubble">Beep boop!</div>
-        <img src="r2d2.png" id="r2d2-img" onclick="r2d2React()" alt="R2-D2">
-        <audio id="r2d2-audio" src="r2d2-sound.mp3"></audio>
     </div>
 
     <div id="gate-1" class="screen">
@@ -330,19 +306,18 @@
                 <div class="chat-header">
                     <div id="matched-avatar" class="match-avatar"></div>
                     <div style="text-align: left;">
-                        <h3 class="highlight-pink" style="margin: 0; font-size: 1.1em; letter-spacing: 1px;">IT'S A MATCH!</h3>
-                        <p style="font-family: var(--font-tech); font-size: 0.7em; color: #888; margin: 0;">SYSTEM ACTIVE</p>
+                        <h3 class="highlight-pink" style="margin: 0; font-size: 1.1em; letter-spacing: 1px; color: #f0f0f0; text-shadow: none;">MATCH CONNECTED</h3>
                     </div>
                 </div>
 
                 <div id="chat-history" class="chat-history">
                     </div>
                 <div class="chat-input-wrapper">
-                    <input type="text" id="chat-input" placeholder="Say thanks..." autocomplete="off">
-                    <button id="chat-send-btn" onclick="sendChatReply()">SEND</button>
+                    <input type="text" id="chat-input" placeholder="Type 'Heyy'..." autocomplete="off">
+                    <button id="chat-send-btn" onclick="sendChatReply()">Send</button>
                 </div>
                 
-                <button onclick="endChatAndShowResults()" style="border-color: var(--royal-gold); color: var(--royal-gold); font-size: 0.8em; padding: 10px; margin-top: 15px;">View Compatibility Results</button>
+                <button onclick="endChatAndShowResults()" style="border-color: #555; color: #aaa; font-size: 0.8em; padding: 10px; margin-top: 15px;">View Scan Results</button>
             </div>
 
             <div id="hexmatch-result" class="hidden">
@@ -388,6 +363,7 @@
     <div id="games-section" class="screen hidden">
         <div class="glass-panel">
             <h2 class="highlight-cyan">COMBAT SIMULATIONS</h2>
+            
             <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
                 <h3 style="font-size: 1.1em; color: #fff; text-shadow: none;">Tic-Tac-Toe (Moderate)</h3>
                 <div class="tictactoe-board">
@@ -398,6 +374,14 @@
                 <div id="ttt-msg" style="color:var(--neon-pink); min-height:20px; margin-top:5px; font-family: var(--font-tech); font-size: 0.9em; text-transform: uppercase;"></div>
                 <button onclick="resetTTT()">Reboot Board</button>
             </div>
+
+            <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                <h3 style="font-size: 1.1em; color: #fff; text-shadow: none;">Dots & Boxes (vs R2-D2)</h3>
+                <div id="dots-board" class="dots-board"></div>
+                <div id="dots-msg" style="color:var(--neon-pink); min-height:20px; margin-top:5px; font-family: var(--font-tech); font-size: 0.9em; text-transform: uppercase;">Your turn (🍎)</div>
+                <button onclick="initDots()">Reboot Grid</button>
+            </div>
+
             <div>
                 <h3 style="font-size: 1.1em; color: #fff; text-shadow: none;">Pastel Memory Matrix</h3>
                 <div class="simon-board">
@@ -409,6 +393,7 @@
                 <div id="simon-msg" class="system-text" style="min-height:20px; margin-top:5px;"></div>
                 <button onclick="startSimon()" class="btn-pink">Initialize Matrix</button>
             </div>
+            
             <button class="back-btn" onclick="returnToMap()">Close Interface</button>
         </div>
     </div>
@@ -530,9 +515,9 @@
         let isLightspeed = false;
         let currentAudioEl = null;
         let isGlobalPlaying = false;
-        let isTranslating = false; // Resolved missing global scope variable for terminal
+        let isTranslating = false; 
         
-        // --- Verification Gates & Door Logic ---
+        // --- Verification Gates ---
         document.getElementById('math-input').addEventListener('input', (e) => {
             let val = e.target.value.replace(/\s+/g, '').toLowerCase();
             if(val === 'x+3') {
@@ -548,27 +533,22 @@
                 e.target.disabled = true; e.target.style.borderColor = "var(--system-green)";
                 document.getElementById('chem-msg').innerText = "Knowledge confirmed.";
                 document.getElementById('chem-error').innerText = "";
-                
                 setTimeout(() => {
                     document.getElementById('gate-2').classList.add('glitch');
                     document.getElementById('hex-symbol').classList.add('unlocked');
-                    
                     setTimeout(() => {
                         document.getElementById('gate-2').classList.add('hidden');
                         document.getElementById('door-left').classList.add('open-left');
                         document.getElementById('door-right').classList.add('open-right');
-                        
                         setTimeout(() => { 
                             let overlay = document.getElementById('entry-overlay');
                             overlay.classList.remove('hidden');
-                            
                             setTimeout(() => {
                                 overlay.style.opacity = '0';
                                 setTimeout(() => {
                                     overlay.classList.add('hidden');
                                     document.getElementById('main-site').classList.remove('hidden'); 
                                     document.getElementById('hex-symbol').classList.add('hidden'); 
-                                    document.getElementById('r2d2-widget').classList.remove('hidden');
                                 }, 1500); 
                             }, 8000); 
                         }, 500);
@@ -582,40 +562,12 @@
             document.getElementById(id).classList.remove('hidden');
             if(planetElement) planetElement.classList.add('visited');
         }
-
         function returnToMap() {
             document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
             document.getElementById('main-site').classList.remove('hidden');
         }
 
-        // --- Autonomous & Interactive R2-D2 Logic ---
-        const r2RandomThoughts = ["Beep boop! (You're doing great!)", "*Happy whistle noises*", "Bloop bleep! (I calculate a 100% chance you're cool)", "*Excited spinning*", "Beep? (Where is Master Luke?)", "Trill-beep! (This layout is aesthetically pleasing)", "Bwoooop. (Processing immense baddie energy...)", "*Confused mechanical grumble*"];
-
-        function r2d2React(isAuto = false) {
-            let img = document.getElementById('r2d2-img');
-            let bubble = document.getElementById('r2d2-bubble');
-            let audio = document.getElementById('r2d2-audio');
-            
-            img.classList.remove('r2-wiggle'); void img.offsetWidth; img.classList.add('r2-wiggle');
-            
-            if(!isAuto && audio) { 
-                audio.currentTime = 0; audio.play().catch(e=>console.log(e)); 
-                setTimeout(() => { audio.pause(); }, 1500); 
-            }
-            
-            bubble.innerText = r2RandomThoughts[Math.floor(Math.random() * r2RandomThoughts.length)];
-            bubble.classList.add('show');
-            setTimeout(() => { bubble.classList.remove('show'); }, 4000);
-        }
-
-        setInterval(() => {
-            let widget = document.getElementById('r2d2-widget');
-            if(!widget.classList.contains('hidden') && !isLightspeed) {
-                if(Math.random() < 0.3) r2d2React(true); 
-            }
-        }, 6000);
-
-        // --- Hexmatch Protocol (Tinder Swipe) + NICHE AI CHAT ---
+        // --- Hexmatch Protocol (Tinder Swipe) + SCRIPTED CHAT ---
         const hexmatchData = [
             { id: 1, name: "Timothée Chalamet", img: "match1.jpg" }, { id: 2, name: "Andrew Garfield", img: "match2.jpg" },
             { id: 3, name: "OBI-WAN", img: "match3.jpg" }, { id: 4, name: "𝓕𝓻𝓮𝓪𝓴𝔂Yoda 🍏", img: "match4.jpg" },
@@ -626,7 +578,6 @@
         ];
 
         let currentCardIndex = 0;
-        let hasDepth = false; let hasHumor = false;
         let lastMatchedImage = "match1.jpg";
 
         function loadHexmatch() {
@@ -644,40 +595,60 @@
         function handleSwipe(direction) {
             if(currentCardIndex >= hexmatchData.length) return;
             let card = document.getElementById(`hex-card-${currentCardIndex}`); let currentData = hexmatchData[currentCardIndex];
-            
-            if(direction === 'right') {
-                card.classList.add('swiped-right');
-                lastMatchedImage = currentData.img; 
-                if(currentData.id === 11) hasDepth = true; if(currentData.id === 12) hasHumor = true;
-            } else { card.classList.add('swiped-left'); }
-            
+            if(direction === 'right') { card.classList.add('swiped-right'); lastMatchedImage = currentData.img; } 
+            else { card.classList.add('swiped-left'); }
             currentCardIndex++;
             if(currentCardIndex >= hexmatchData.length) { setTimeout(showMatchChat, 400); }
         }
 
-        // Niche AI Chat Logic 
-        const aiNicheResponses = [
-            "Processing... Your aesthetic preferences are highly specific and validated. 📂",
-            "Analyzing... I don't experience emotion, but this takes elite taste. 📼",
-            "Data suggests you have a hyper-specific niche. I respect that. 🎧",
-            "Scanning... Yes, this aligns with optimal atmospheric parameters. 🪐",
-            "My database confirms this is a highly cultured response. 🎬"
-        ];
-
-        function getRylandGraceResponse(userInput) {
-            let text = userInput.toLowerCase();
-            if(text.includes("music") || text.includes("song")) return "Audio analysis complete. Your playlist is mathematically flawless. 🎶";
-            if(text.includes("movie") || text.includes("film") || text.includes("cinema")) return "Cinephile traits detected. Archiving this take. 📽️";
-            if(text.includes("art") || text.includes("aesthetic")) return "Aesthetic matrices are perfectly aligned. Very cool. 🎨";
-            if(text.includes("hi") || text.includes("hello")) return "System active. Ready to discuss niche topics. 💻";
-            return aiNicheResponses[Math.floor(Math.random() * aiNicheResponses.length)];
+        // Scripted Chat Sequence
+        let chatStep = 0;
+        function updateChatPlaceholder() {
+            let input = document.getElementById('chat-input');
+            if(chatStep === 0) input.placeholder = "Type 'Heyy'...";
+            else if(chatStep === 1) input.placeholder = "Type '7\\'4'...";
+            else if(chatStep === 2) input.placeholder = "Type 'aesthetic'...";
+            else if(chatStep === 3) input.placeholder = "Type 'cinema' or 'movies'...";
+            else if(chatStep === 4) input.placeholder = "Type 'ya nigg Im niche like that'...";
+            else if(chatStep === 5) input.placeholder = "Type 'what abt music'...";
+            else if(chatStep === 6) input.placeholder = "Type 'who doesn\\'t'...";
+            else if(chatStep === 7) input.placeholder = "Type 'byee' to end convo...";
+            else input.placeholder = "Chat ended.";
         }
 
-        function appendChatMessage(sender, text) {
+        function getScriptedResponse(text) {
+            text = text.toLowerCase().replace(/['".,\s]/g, '');
+            let reply = ""; let advance = false; let multi = null;
+
+            if (chatStep === 0 && text.includes("hey")) {
+                reply = "hyyy girl what's your height??"; advance = true;
+            } else if (chatStep === 1 && text.includes("74")) {
+                reply = "Wwoooww Tsireya from Avatar??"; advance = true;
+            } else if (chatStep === 2 && text.includes("aesthetic")) {
+                reply = "ykk I saw your edit and dammmm vroo that's some skills"; advance = true;
+            } else if (chatStep === 3 && (text.includes("cinema") || text.includes("movie"))) {
+                reply = "I saw your likes on some really Goooddd shows and movies edits 🫪🫪"; advance = true;
+            } else if (chatStep === 4 && (text.includes("niche") || text.includes("yanigg"))) {
+                reply = "clearly visible 😭🥀🥀"; advance = true;
+            } else if (chatStep === 5 && text.includes("music")) {
+                reply = "I love arpit bala songs though"; advance = true;
+            } else if (chatStep === 6 && text.includes("whodoesn")) {
+                reply = "yeahh i fw some really bangers too"; advance = true;
+            } else if (chatStep === 7 && text.includes("bye")) {
+                multi = ["whaa 🫪😿", "mmm okayy byee gng 💔🥀", "do balle balle enough coz it's your birthday 🍭🎀💅🏻"];
+                advance = true;
+            } else {
+                reply = "Follow the script! (Look at the placeholder 😉)";
+            }
+            return { reply, advance, multi };
+        }
+
+        function appendChatMessage(sender, text, htmlContent = null) {
             let hist = document.getElementById('chat-history');
             let bubble = document.createElement('div');
             bubble.className = "chat-bubble " + (sender === 'match' ? 'chat-match' : 'chat-user');
-            bubble.innerText = text;
+            if(htmlContent) bubble.innerHTML = htmlContent + (text ? `<div style="margin-top:5px;">${text}</div>` : '');
+            else bubble.innerText = text;
             hist.appendChild(bubble);
             hist.scrollTop = hist.scrollHeight;
         }
@@ -685,29 +656,18 @@
         function showTypingIndicator() {
             let hist = document.getElementById('chat-history');
             let typing = document.createElement('div');
-            typing.className = "typing-indicator";
-            typing.id = "typing-indicator";
+            typing.className = "typing-indicator"; typing.id = "typing-indicator";
             typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-            hist.appendChild(typing);
-            hist.scrollTop = hist.scrollHeight;
+            hist.appendChild(typing); hist.scrollTop = hist.scrollHeight;
         }
-
-        function hideTypingIndicator() {
-            let typing = document.getElementById('typing-indicator');
-            if (typing) typing.remove();
-        }
+        function hideTypingIndicator() { let typing = document.getElementById('typing-indicator'); if (typing) typing.remove(); }
 
         function showMatchChat() {
             document.getElementById('hex-main-ui').classList.add('hidden');
             document.getElementById('hexmatch-chat').classList.remove('hidden');
             document.getElementById('matched-avatar').style.backgroundImage = `url('${lastMatchedImage}')`;
             document.getElementById('chat-history').innerHTML = ''; 
-            
-            showTypingIndicator();
-            setTimeout(() => {
-                hideTypingIndicator();
-                appendChatMessage('match', 'Hyyy happyyy birthdayy 🎉✨');
-            }, 1500);
+            updateChatPlaceholder();
         }
 
         function sendChatReply() {
@@ -716,19 +676,48 @@
             if(!text) return;
             
             appendChatMessage('user', text); 
-            input.value = ''; 
-            
-            input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
+            input.value = ''; input.disabled = true; document.getElementById('chat-send-btn').disabled = true;
+
+            let responseData = getScriptedResponse(text);
 
             setTimeout(() => {
                 showTypingIndicator();
                 setTimeout(() => {
                     hideTypingIndicator();
-                    appendChatMessage('match', getRylandGraceResponse(text)); 
                     
-                    input.disabled = false; document.getElementById('chat-send-btn').disabled = false;
-                    input.focus();
-                }, 1800); 
+                    // Inject random PNG if advancing (and not at the very end)
+                    if (responseData.advance && chatStep < 7 && Math.random() < 0.4) {
+                        let randomImg = hexmatchData[Math.floor(Math.random() * 10)].img;
+                        appendChatMessage('match', '', `<img src="${randomImg}" style="width:100px; border-radius:8px;">`);
+                        // Short delay before actual text
+                        setTimeout(() => {
+                            showTypingIndicator();
+                            setTimeout(() => {
+                                hideTypingIndicator();
+                                appendChatMessage('match', responseData.reply);
+                                if(responseData.advance) chatStep++;
+                                updateChatPlaceholder();
+                                input.disabled = false; document.getElementById('chat-send-btn').disabled = false; input.focus();
+                            }, 1500);
+                        }, 500);
+                    } else if (responseData.multi) {
+                        appendChatMessage('match', responseData.multi[0]);
+                        setTimeout(() => { showTypingIndicator();
+                            setTimeout(() => { hideTypingIndicator(); appendChatMessage('match', responseData.multi[1]);
+                                setTimeout(() => { showTypingIndicator();
+                                    setTimeout(() => { hideTypingIndicator(); appendChatMessage('match', responseData.multi[2]);
+                                        if(responseData.advance) chatStep++; updateChatPlaceholder();
+                                    }, 1500);
+                                }, 800);
+                            }, 1500);
+                        }, 800);
+                    } else {
+                        appendChatMessage('match', responseData.reply);
+                        if(responseData.advance) chatStep++;
+                        updateChatPlaceholder();
+                        input.disabled = false; document.getElementById('chat-send-btn').disabled = false; input.focus();
+                    }
+                }, 1500); 
             }, 500); 
         }
 
@@ -736,15 +725,10 @@
             document.getElementById('hexmatch-chat').classList.add('hidden');
             document.getElementById('hexmatch-result').classList.remove('hidden');
             document.getElementById('hex-close-btn').classList.remove('hidden');
-            
-            let msg = "Result: dangerously similar taste detected.";
-            if(hasDepth && hasHumor) msg = "Result: Deep overthinker but with elite meme humor. You passed. Barely. 😭";
-            else if(hasDepth) msg = "Result: An overthinker with impeccable taste. Detected immense depth.";
-            else if(hasHumor) msg = "Result: Elite humor detected. Brain rot confirmed.";
-            document.getElementById('hexmatch-msg').innerText = msg;
+            document.getElementById('hexmatch-msg').innerText = "Result: dangerously similar taste detected. You passed. Barely. 😭";
         }
 
-        // --- Cognitive Interrogation (Chaos Quiz v2.0) ---
+        // --- Chaos Quiz v2.0 ---
         const chaosQuestions = [
             { q: "Would you rather:", a1: "Every time you lie a horse appears", a2: "You got chill bees that follow you and correct your posture" },
             { q: "Would you rather:", a1: "Own a yacht", a2: "Naps don't take time out of your day anymore", a3: "Communicate with cats" },
@@ -761,119 +745,109 @@
 
         function loadChaosQ() {
             if(currentChaosQ >= chaosQuestions.length) {
-                document.getElementById('chaos-q-container').classList.add('hidden');
-                document.getElementById('chaos-result').classList.remove('hidden');
-                return;
+                document.getElementById('chaos-q-container').classList.add('hidden'); document.getElementById('chaos-result').classList.remove('hidden'); return;
             }
             let data = chaosQuestions[currentChaosQ];
-            document.getElementById('chaos-q-text').innerText = data.q;
-            document.getElementById('chaos-opt1').innerText = data.a1;
-            document.getElementById('chaos-opt2').innerText = data.a2;
-            
+            document.getElementById('chaos-q-text').innerText = data.q; document.getElementById('chaos-opt1').innerText = data.a1; document.getElementById('chaos-opt2').innerText = data.a2;
             let btn3 = document.getElementById('chaos-opt3');
-            if(data.a3) { btn3.innerText = data.a3; btn3.classList.remove('hidden'); } 
-            else { btn3.classList.add('hidden'); }
-            
-            let progress = ((currentChaosQ) / chaosQuestions.length) * 100;
-            document.getElementById('chaos-progress').style.width = progress + '%';
+            if(data.a3) { btn3.innerText = data.a3; btn3.classList.remove('hidden'); } else { btn3.classList.add('hidden'); }
+            let progress = ((currentChaosQ) / chaosQuestions.length) * 100; document.getElementById('chaos-progress').style.width = progress + '%';
         }
         loadChaosQ();
 
         function answerChaos(opt) {
-            let panel = document.getElementById('chaos-panel');
-            let quill = document.getElementById('quill-gif');
-            
+            let panel = document.getElementById('chaos-panel'); let quill = document.getElementById('quill-gif');
             panel.classList.add('glitch'); quill.classList.add('quill-active');
-            setTimeout(() => {
-                panel.classList.remove('glitch'); quill.classList.remove('quill-active');
-                currentChaosQ++; loadChaosQ();
-            }, 800);
+            setTimeout(() => { panel.classList.remove('glitch'); quill.classList.remove('quill-active'); currentChaosQ++; loadChaosQ(); }, 800);
         }
 
-        // --- Music Player Functions ---
-        const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline', 'audio-cas'];
-        const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber', 'Cigarettes After Sex'];
-        const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg', 'art-cas.jpg'];
-
-        function playSong(id, name, art) {
-            stopAudio();
-            if (id === 'random') {
-                let idx = Math.floor(Math.random() * allSongs.length);
-                id = allSongs[idx]; name = songNames[idx]; art = songArts[idx];
+        // --- Dots and Boxes Logic ---
+        let d_hlines = [], d_vlines = [], d_boxes = [], d_turn = 0;
+        function initDots() {
+            d_hlines = Array(12).fill(0); d_vlines = Array(12).fill(0); d_boxes = Array(9).fill(0); d_turn = 0;
+            document.getElementById('dots-msg').innerText = "Your turn (🍎)"; renderDots();
+        }
+        function renderDots() {
+            let html = '';
+            for(let r=0; r<3; r++) {
+                html += '<div style="display:contents;">';
+                for(let c=0; c<3; c++) {
+                    let hi = r*3 + c; let hc = d_hlines[hi]===1?'d-line-active-u':(d_hlines[hi]===2?'d-line-active-c':'');
+                    html += `<div class="d-dot"></div><div class="d-hline ${hc}" onclick="clickDLine('h', ${hi})"></div>`;
+                }
+                html += `<div class="d-dot"></div></div><div style="display:contents;">`;
+                for(let c=0; c<3; c++) {
+                    let vi = r*4 + c; let vc = d_vlines[vi]===1?'d-line-active-u':(d_vlines[vi]===2?'d-line-active-c':'');
+                    let bi = r*3 + c; let bv = d_boxes[bi]===1?'🍎':(d_boxes[bi]===2?'🍏':'');
+                    html += `<div class="d-vline ${vc}" onclick="clickDLine('v', ${vi})"></div><div class="d-box">${bv}</div>`;
+                }
+                let vL = r*4 + 3; let vlC = d_vlines[vL]===1?'d-line-active-u':(d_vlines[vL]===2?'d-line-active-c':'');
+                html += `<div class="d-vline ${vlC}" onclick="clickDLine('v', ${vL})"></div></div>`;
             }
-            document.getElementById('vinyl-disk').classList.add('spin');
-            document.getElementById('tone-arm').classList.add('playing');
-            document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`;
-            document.getElementById('mood-display').innerText = "> Playing: " + name;
+            html += '<div style="display:contents;">';
+            for(let c=0; c<3; c++) {
+                let hi = 9 + c; let hc = d_hlines[hi]===1?'d-line-active-u':(d_hlines[hi]===2?'d-line-active-c':'');
+                html += `<div class="d-dot"></div><div class="d-hline ${hc}" onclick="clickDLine('h', ${hi})"></div>`;
+            }
+            html += `<div class="d-dot"></div></div>`;
+            document.getElementById('dots-board').innerHTML = html;
+        }
+
+        function clickDLine(type, idx, isBot=false) {
+            if(d_turn !== (isBot?1:0)) return;
+            if(type === 'h' && d_hlines[idx] !== 0) return;
+            if(type === 'v' && d_vlines[idx] !== 0) return;
+
+            if(type === 'h') d_hlines[idx] = d_turn + 1; else d_vlines[idx] = d_turn + 1;
             
-            document.getElementById('global-player').classList.add('active');
-            document.getElementById('gp-art').style.backgroundImage = `url('${art}')`;
-            document.getElementById('gp-title').innerText = name;
-            document.getElementById('gp-status').innerText = "PLAYING";
-            document.getElementById('gp-playbtn').innerText = "⏸";
-
-            currentAudioEl = document.getElementById(id);
-            if(currentAudioEl) { currentAudioEl.currentTime = 0; currentAudioEl.play().catch(e => console.log(e)); isGlobalPlaying = true; }
-        }
-
-        function stopAudio() {
-            document.getElementById('vinyl-disk').classList.remove('spin'); document.getElementById('tone-arm').classList.remove('playing');
-            document.getElementById('mood-display').innerText = "> Playback Stopped"; document.getElementById('global-player').classList.remove('active');
-            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
-            currentAudioEl = null; isGlobalPlaying = false;
-        }
-
-        function togglePlayPause() {
-            if(!currentAudioEl) return;
-            if(isGlobalPlaying) {
-                currentAudioEl.pause(); document.getElementById('gp-playbtn').innerText = "▶"; document.getElementById('gp-status').innerText = "PAUSED";
-                document.getElementById('vinyl-disk').classList.remove('spin');
-            } else {
-                currentAudioEl.play(); document.getElementById('gp-playbtn').innerText = "⏸"; document.getElementById('gp-status').innerText = "PLAYING";
-                document.getElementById('vinyl-disk').classList.add('spin');
+            let scored = false;
+            for(let i=0; i<9; i++) {
+                if(d_boxes[i] === 0) {
+                    let r = Math.floor(i/3), c = i%3;
+                    if(d_hlines[r*3+c] && d_hlines[(r+1)*3+c] && d_vlines[r*4+c] && d_vlines[r*4+c+1]) {
+                        d_boxes[i] = d_turn + 1; scored = true;
+                    }
+                }
             }
-            isGlobalPlaying = !isGlobalPlaying;
+            renderDots();
+            
+            if(!d_boxes.includes(0)) { document.getElementById('dots-msg').innerText = "Game Over."; return; }
+            
+            if(!scored) d_turn = 1 - d_turn;
+            document.getElementById('dots-msg').innerText = d_turn === 0 ? "Your turn (🍎)" : "R2-D2 computing (🍏)...";
+            
+            if(d_turn === 1) setTimeout(botDotsMove, 600);
         }
 
-        // --- Constellation Puzzle Logic ---
-        const constCvs = document.getElementById('constellation-canvas'); const cCtx = constCvs.getContext('2d');
-        const starPoints = [{x: 80, y: 250}, {x: 80, y: 50}, {x: 200, y: 50}, {x: 230, y: 100}, {x: 200, y: 150}, {x: 80, y: 150}];
-        let connectedStars = 0;
-
-        function drawConstellation() {
-            cCtx.clearRect(0, 0, constCvs.width, constCvs.height);
-            cCtx.strokeStyle = 'rgba(0, 240, 255, 0.5)'; cCtx.lineWidth = 3;
-            cCtx.beginPath();
-            for(let i=0; i<connectedStars; i++) { if(i===0) cCtx.moveTo(starPoints[i].x, starPoints[i].y); else cCtx.lineTo(starPoints[i].x, starPoints[i].y); }
-            cCtx.stroke();
-            starPoints.forEach((p, idx) => {
-                cCtx.beginPath(); cCtx.arc(p.x, p.y, 6, 0, Math.PI*2);
-                cCtx.fillStyle = (idx < connectedStars) ? '#00f0ff' : '#444'; cCtx.fill();
-                cCtx.shadowBlur = (idx < connectedStars) ? 10 : 0; cCtx.shadowColor = '#00f0ff';
-            });
+        function getBoxLineCount(i) {
+            let r = Math.floor(i/3), c = i%3; let count=0;
+            if(d_hlines[r*3+c]) count++; if(d_hlines[(r+1)*3+c]) count++;
+            if(d_vlines[r*4+c]) count++; if(d_vlines[r*4+c+1]) count++;
+            return count;
         }
-        drawConstellation();
 
-        constCvs.addEventListener('click', (e) => {
-            if(connectedStars >= starPoints.length) return;
-            const rect = constCvs.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
-            const dist = Math.hypot(mouseX - starPoints[connectedStars].x, mouseY - starPoints[connectedStars].y);
-            if(dist < 20) {
-                connectedStars++; drawConstellation();
-                if(connectedStars === starPoints.length) setTimeout(() => { document.getElementById('constellation-msg').classList.remove('hidden'); }, 500);
+        function botDotsMove() {
+            // 1. Complete box if possible
+            for(let i=0; i<9; i++) {
+                if(d_boxes[i]===0 && getBoxLineCount(i) === 3) {
+                    let r = Math.floor(i/3), c = i%3;
+                    if(!d_hlines[r*3+c]) return clickDLine('h', r*3+c, true);
+                    if(!d_hlines[(r+1)*3+c]) return clickDLine('h', (r+1)*3+c, true);
+                    if(!d_vlines[r*4+c]) return clickDLine('v', r*4+c, true);
+                    if(!d_vlines[r*4+c+1]) return clickDLine('v', r*4+c+1, true);
+                }
             }
-        });
-
-        // --- Easter Eggs & Secret Unlock ---
-        let r2Seq = '';
-        document.addEventListener('keydown', (e) => {
-            if (document.activeElement.tagName === "INPUT") return;
-            let k = e.key.toLowerCase();
-            r2Seq += k;
-            if (r2Seq.length > 2) r2Seq = r2Seq.substring(1);
-            if (r2Seq === 'r2') { document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden')); document.getElementById('constellation-section').classList.remove('hidden'); r2Seq = ''; }
-        });
+            // 2. Play random empty
+            let emptyH = [], emptyV = [];
+            d_hlines.forEach((v,i)=> { if(v===0) emptyH.push(i); });
+            d_vlines.forEach((v,i)=> { if(v===0) emptyV.push(i); });
+            let total = emptyH.length + emptyV.length;
+            if(total===0) return;
+            let pick = Math.floor(Math.random() * total);
+            if(pick < emptyH.length) clickDLine('h', emptyH[pick], true);
+            else clickDLine('v', emptyV[pick - emptyH.length], true);
+        }
+        initDots(); // Start game
 
         // --- Tic Tac Toe & Simon ---
         let board = ["", "", "", "", "", "", "", "", ""]; let tttActive = true;
@@ -882,9 +856,9 @@
             if(checkWin(board, "X")) { document.getElementById('ttt-msg').innerText = "User Win Registered."; tttActive = false; return; }
             if(!board.includes("")) { document.getElementById('ttt-msg').innerText = "Draw."; tttActive = false; return; }
             setTimeout(() => {
-                let available = board.map((val, i) => val === "" ? i : null).filter(val => val !== null);
-                let move;
-                if (Math.random() < 0.4) { move = available[Math.floor(Math.random() * available.length)]; } 
+                let available = board.map((val, i) => val === "" ? i : null).filter(val => val !== null); let move;
+                // 50% random, 50% minimax for moderate difficulty
+                if (Math.random() < 0.5) { move = available[Math.floor(Math.random() * available.length)]; } 
                 else { let bestScore = -Infinity; for(let i=0; i<9; i++) { if(board[i] === "") { board[i] = "O"; let score = minimax(board, 0, false); board[i] = ""; if(score > bestScore) { bestScore = score; move = i; } } } }
                 board[move] = "O"; updateTTT();
                 if(checkWin(board, "O")) { document.getElementById('ttt-msg').innerText = "System Wins."; tttActive = false; }
@@ -908,8 +882,7 @@
         }
         function flashSimon(id) { let btn = document.getElementById('simon-'+id); btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 400); }
         function handleSimonClick(id) {
-            if(!simonActive) return;
-            flashSimon(id); playerSeq.push(id);
+            if(!simonActive) return; flashSimon(id); playerSeq.push(id);
             if(playerSeq[playerSeq.length-1] !== sequence[playerSeq.length-1]) { document.getElementById('simon-msg').innerText = "Sequence Failed. Level: " + simonLevel; simonActive = false; return; }
             if(playerSeq.length === sequence.length) { simonActive = false; document.getElementById('simon-msg').innerText = "Correct. Next Level..."; setTimeout(nextSimonRound, 1000); }
         }
@@ -919,134 +892,80 @@
             let fb = document.getElementById('quiz-feedback');
             if(isCorrect) {
                 fb.innerText = "> Valid data."; fb.style.color = "var(--system-green)";
-                setTimeout(() => {
-                    document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
-                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden');
-                    else document.getElementById('q-end').classList.remove('hidden');
+                setTimeout(() => { document.getElementById('q'+qNum).classList.add('hidden'); fb.innerText = "";
+                    if(document.getElementById('q'+(qNum+1))) document.getElementById('q'+(qNum+1)).classList.remove('hidden'); else document.getElementById('q-end').classList.remove('hidden');
                 }, 1000);
             } else { fb.innerText = "> Invalid data."; fb.style.color = "var(--system-red)"; }
         }
 
-        // --- Terminal Functions (Fixed Decode) ---
+        // --- Terminal Functions ---
         function translateDroid() {
-            if(isTranslating) return; isTranslating = true; 
-            let el = document.getElementById('droid-translated'); 
-            let msg = "> Translation: someone here thinks you're incredibly cool."; 
-            el.textContent = ""; let i = 0;
-            let int = setInterval(() => { 
-                i++; 
-                el.textContent = msg.substring(0, i); 
-                if(i >= msg.length) { clearInterval(int); isTranslating = false; } 
-            }, 50);
+            if(isTranslating) return; isTranslating = true; let el = document.getElementById('droid-translated'); let msg = "> Translation: someone here thinks you're incredibly cool."; el.textContent = ""; let i = 0;
+            let int = setInterval(() => { i++; el.textContent = msg.substring(0, i); if(i >= msg.length) { clearInterval(int); isTranslating = false; } }, 50);
         }
         const comps = ["Certified main character energy.", "Performative divaa.", "Scientifically proven kooool.", "Rare niche personality detected."];
         function generateCompliment() { document.getElementById('compliment-output').innerHTML = `> Processing...<br>> "${comps[Math.floor(Math.random() * comps.length)]}"`; }
 
-        // --- Aesthetics (Particles & Memes) ---
-        const aestheticIcons = ['🌸', '🍡', '🩷', '✨', '🍭', '🍎'];
-        function spawnAesthetic() {
-            let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)];
-            el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000);
+        // --- Music Player Functions ---
+        const allSongs = ['audio-frank', 'audio-tvgirl', 'audio-daniel', 'audio-arcane', 'audio-flatline', 'audio-cas'];
+        const songNames = ['Frank Ocean', 'TV Girl', 'Daniel Caesar', 'Arcane', 'Justin Bieber', 'Cigarettes After Sex'];
+        const songArts = ['art-frank.jpg', 'art-tvgirl.jpg', 'art-daniel.jpg', 'art-arcane.jpg', 'art-flatline.jpg', 'art-cas.jpg'];
+        function playSong(id, name, art) {
+            stopAudio(); if (id === 'random') { let idx = Math.floor(Math.random() * allSongs.length); id = allSongs[idx]; name = songNames[idx]; art = songArts[idx]; }
+            document.getElementById('vinyl-disk').classList.add('spin'); document.getElementById('tone-arm').classList.add('playing'); document.getElementById('vinyl-art').style.backgroundImage = `url('${art}')`; document.getElementById('mood-display').innerText = "> Playing: " + name;
+            document.getElementById('global-player').classList.add('active'); document.getElementById('gp-art').style.backgroundImage = `url('${art}')`; document.getElementById('gp-title').innerText = name; document.getElementById('gp-status').innerText = "PLAYING"; document.getElementById('gp-playbtn').innerText = "⏸";
+            currentAudioEl = document.getElementById(id); if(currentAudioEl) { currentAudioEl.currentTime = 0; currentAudioEl.play().catch(e => console.log(e)); isGlobalPlaying = true; }
         }
-        setInterval(spawnAesthetic, 2500);
+        function stopAudio() { document.getElementById('vinyl-disk').classList.remove('spin'); document.getElementById('tone-arm').classList.remove('playing'); document.getElementById('mood-display').innerText = "> Playback Stopped"; document.getElementById('global-player').classList.remove('active'); document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; }); currentAudioEl = null; isGlobalPlaying = false; }
+        function togglePlayPause() { if(!currentAudioEl) return; if(isGlobalPlaying) { currentAudioEl.pause(); document.getElementById('gp-playbtn').innerText = "▶"; document.getElementById('gp-status').innerText = "PAUSED"; document.getElementById('vinyl-disk').classList.remove('spin'); } else { currentAudioEl.play(); document.getElementById('gp-playbtn').innerText = "⏸"; document.getElementById('gp-status').innerText = "PLAYING"; document.getElementById('vinyl-disk').classList.add('spin'); } isGlobalPlaying = !isGlobalPlaying; }
 
-        function spawnMeme() {
-            let num = Math.floor(Math.random() * 5) + 1;
-            let img = document.createElement('img'); img.src = "meme" + num + ".jpg"; img.className = 'meme-comet';
-            img.style.top = (Math.random() * 40 + 20) + 'vh'; document.body.appendChild(img); setTimeout(() => img.remove(), 6000);
-        }
+        // --- Aesthetics ---
+        const aestheticIcons = ['🌸', '✨', '🩷', '🍎', '🍭'];
+        function spawnAesthetic() { let el = document.createElement('div'); el.className = 'floating-element'; el.innerText = aestheticIcons[Math.floor(Math.random() * aestheticIcons.length)]; el.style.left = Math.random() * 90 + 'vw'; document.body.appendChild(el); setTimeout(() => el.remove(), 10000); }
+        setInterval(spawnAesthetic, 2500);
+        function spawnMeme() { let num = Math.floor(Math.random() * 5) + 1; let img = document.createElement('img'); img.src = "meme" + num + ".jpg"; img.className = 'meme-comet'; img.style.top = (Math.random() * 40 + 20) + 'vh'; document.body.appendChild(img); setTimeout(() => img.remove(), 6000); }
         setInterval(spawnMeme, 8000); 
 
         // --- Cinematic Ending & Lightspeed ---
         function startEnding() {
-            document.getElementById('cinema-panel').classList.add('hidden');
-            document.getElementById('global-player').classList.remove('active'); 
-            document.getElementById('r2d2-widget').classList.add('hidden'); 
-            stopAudio(); 
-
-            let bdAudio = document.getElementById('audio-cornershop');
-            if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
-
+            document.getElementById('cinema-panel').classList.add('hidden'); document.getElementById('global-player').classList.remove('active'); document.getElementById('r2d2-widget').classList.add('hidden'); stopAudio(); 
+            let bdAudio = document.getElementById('audio-cornershop'); if(bdAudio) { bdAudio.currentTime = 0; bdAudio.play().catch(e => console.log(e)); }
             isLightspeed = true;
-            
             setTimeout(() => {
-                isLightspeed = false; 
-                let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
-                
+                isLightspeed = false; let box = document.getElementById('cinema-text-container'); box.innerHTML = "";
                 setTimeout(() => { let img = document.createElement('img'); img.src = "goat.jpg"; img.className = "goat-img permanent-fade"; box.appendChild(img); }, 0);
                 setTimeout(() => { let p1 = document.createElement('p'); p1.innerText = "This little corner of the internet exists because I’m glad that I recognised the GOAT inside youu पाकgya."; p1.className = 'movie-fade'; box.appendChild(p1); }, 1500);
                 setTimeout(() => { let p2 = document.createElement('p'); p2.innerText = "Happyyyy birthdayy twinnn 🎀🦄🍎"; p2.className = 'movie-fade'; box.appendChild(p2); }, 5000);
                 setTimeout(() => { let r2Finale = document.createElement('img'); r2Finale.src = "r2d2.png"; r2Finale.id = "r2d2-finale"; box.appendChild(r2Finale); }, 8500);
-                
                 setTimeout(() => {
                     let r2Msg = document.createElement('div'); r2Msg.className = "r2-elegant-text"; r2Msg.innerText = "Happyyyy birthdayy master"; box.appendChild(r2Msg);
-                    let r2sound = document.getElementById('r2d2-audio');
-                    if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 1500); }
+                    let r2sound = document.getElementById('r2d2-audio'); if(r2sound) { r2sound.currentTime = 0; r2sound.play(); setTimeout(() => r2sound.pause(), 1500); }
                 }, 10000);
-
-                setTimeout(() => {
-                    let btn = document.createElement('button'); btn.innerText = "exit tss 🍎"; btn.className = "exit-btn"; btn.onclick = startSnakeSequence; box.appendChild(btn);
-                }, 13000); 
+                setTimeout(() => { let btn = document.createElement('button'); btn.innerText = "exit tss 🍎"; btn.className = "exit-btn"; btn.onclick = startSnakeSequence; box.appendChild(btn); }, 13000); 
             }, 2500); 
         }
 
-        // --- SNAKE RINGS ANIMATION (FIXED RESPONSIVE WRAP & HINDI NO-SPLIT) ---
         function startSnakeSequence() {
-            let box = document.getElementById('cinema-text-container');
-            box.style.transition = "opacity 1s"; box.style.opacity = 0;
-            
-            document.querySelectorAll('audio').forEach(a => a.pause());
-            let audio2 = document.getElementById('audio-cornershop2');
-            if(audio2) { audio2.currentTime = 0; audio2.play().catch(e=>console.log(e)); }
+            let box = document.getElementById('cinema-text-container'); box.style.transition = "opacity 1s"; box.style.opacity = 0;
+            document.querySelectorAll('audio').forEach(a => a.pause()); let audio2 = document.getElementById('audio-cornershop2'); if(audio2) { audio2.currentTime = 0; audio2.play().catch(e=>console.log(e)); }
 
             setTimeout(() => {
-                box.innerHTML = "";
-                let snakeContainer = document.createElement('div');
-                snakeContainer.id = "snake-container";
-                document.body.appendChild(snakeContainer);
-                
-                let finalTxt = document.createElement('div'); 
-                finalTxt.className = 'final-snake-text';
-                finalTxt.innerHTML = `
-                    <div class="meme-text-snake line-1" style="margin-bottom:15px;">
-                        <span class="target-node word-group" style="opacity:0;">Stayyy</span>
-                        <span class="target-node word-group" style="opacity:0;">DIVAA</span>
-                    </div>
-                    <div class="meme-text-snake line-2">
-                        <span class="target-node word-group" style="opacity:0;">पाकgya</span>
-                        <span class="target-node word-group" style="opacity:0;">prayagi</span>
-                        <span class="target-node emoji-group" style="opacity:0;">🦄🍭</span>
-                    </div>
-                `;
+                box.innerHTML = ""; let snakeContainer = document.createElement('div'); snakeContainer.id = "snake-container"; document.body.appendChild(snakeContainer);
+                let finalTxt = document.createElement('div'); finalTxt.className = 'final-snake-text';
+                finalTxt.innerHTML = `<div class="meme-text-snake line-1" style="margin-bottom:15px;"><span class="target-node word-group" style="opacity:0;">Stayyy</span><span class="target-node word-group" style="opacity:0;">DIVAA</span></div><div class="meme-text-snake line-2"><span class="target-node word-group" style="opacity:0;">पाकgya</span><span class="target-node word-group" style="opacity:0;">prayagi</span><span class="target-node emoji-group" style="opacity:0;">🦄🍭</span></div>`;
                 snakeContainer.appendChild(finalTxt);
 
-                // Specific Matches requested
-                let memes = ['match5.jpg', 'match1.jpg', 'match11.jpg'];
-                let activeMemes = [];
-                let targetNodes = document.querySelectorAll('.target-node');
-                let totalMemes = 25; 
-                let processedMemesCount = 0;
+                let memes = ['match5.jpg', 'match1.jpg', 'match11.jpg']; // STRICT USE OF REQUESTED IMAGES
+                let activeMemes = []; let targetNodes = document.querySelectorAll('.target-node'); let totalMemes = 25; let processedMemesCount = 0;
                 
                 for(let i=0; i < totalMemes; i++) {
                     let m = document.createElement('img'); m.src = memes[i % memes.length]; m.className = "snake-meme"; 
                     m.style.position = "absolute"; m.style.width = "50px"; m.style.height = "50px"; m.style.borderRadius = "50%"; m.style.objectFit = "cover"; m.style.border = "2px solid var(--neon-cyan)"; m.style.boxShadow = "0 0 15px var(--neon-cyan)"; m.style.opacity = "0"; 
-                    m.angle = (i / totalMemes) * Math.PI * 2; m.isOrbiting = true;
-                    snakeContainer.appendChild(m); activeMemes.push(m);
+                    m.angle = (i / totalMemes) * Math.PI * 2; m.isOrbiting = true; snakeContainer.appendChild(m); activeMemes.push(m);
                 }
 
-                let centerX = window.innerWidth / 2; let centerY = window.innerHeight / 2;
-                let radius = Math.min(window.innerWidth * 0.35, 120); let orbitSpeed = 0.05;
-
-                function animateOrbit() {
-                    activeMemes.forEach(m => {
-                        if(m.isOrbiting) {
-                            m.angle += orbitSpeed;
-                            let x = centerX + Math.cos(m.angle) * radius - 25; let y = centerY + Math.sin(m.angle) * radius - 25;
-                            m.style.left = x + 'px'; m.style.top = y + 'px'; m.style.opacity = "1"; 
-                        }
-                    });
-                    if(activeMemes.some(m => m.isOrbiting)) requestAnimationFrame(animateOrbit);
-                }
+                let centerX = window.innerWidth / 2; let centerY = window.innerHeight / 2; let radius = Math.min(window.innerWidth * 0.35, 120); let orbitSpeed = 0.05;
+                function animateOrbit() { activeMemes.forEach(m => { if(m.isOrbiting) { m.angle += orbitSpeed; let x = centerX + Math.cos(m.angle) * radius - 25; let y = centerY + Math.sin(m.angle) * radius - 25; m.style.left = x + 'px'; m.style.top = y + 'px'; m.style.opacity = "1"; } }); if(activeMemes.some(m => m.isOrbiting)) requestAnimationFrame(animateOrbit); }
                 animateOrbit();
 
                 setTimeout(() => {
@@ -1054,63 +973,33 @@
                         setTimeout(() => {
                             memeEl.isOrbiting = false; 
                             if(index < targetNodes.length) {
-                                let targetNode = targetNodes[index]; let spanRect = targetNode.getBoundingClientRect();
-                                let targetX = spanRect.left + (spanRect.width / 2) - 25; let targetY = spanRect.top + (spanRect.height / 2) - 25;
+                                let targetNode = targetNodes[index]; let spanRect = targetNode.getBoundingClientRect(); let targetX = spanRect.left + (spanRect.width / 2) - 25; let targetY = spanRect.top + (spanRect.height / 2) - 25;
                                 memeEl.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)"; memeEl.style.left = targetX + 'px'; memeEl.style.top = targetY + 'px'; memeEl.style.transform = "scale(0.3)"; memeEl.style.opacity = "0";
                                 setTimeout(() => { targetNode.style.transition = "opacity 0.5s"; targetNode.style.opacity = "1"; }, 400);
-                            } else {
-                                memeEl.style.transition = "all 0.6s"; memeEl.style.transform = "scale(0)"; memeEl.style.opacity = "0";
-                            }
+                            } else { memeEl.style.transition = "all 0.6s"; memeEl.style.transform = "scale(0)"; memeEl.style.opacity = "0"; }
                             
-                            processedMemesCount++;
-                            if(processedMemesCount === totalMemes) {
-                                setTimeout(finalizeSnakeAndStartRadhey, 400);
-                            }
+                            processedMemesCount++; if(processedMemesCount === totalMemes) { setTimeout(finalizeSnakeAndStartRadhey, 400); }
                         }, index * 150); 
                     });
                 }, 3000); 
-
             }, 1000);
         }
 
         function finalizeSnakeAndStartRadhey() {
             setTimeout(() => {
-                let snake = document.getElementById('snake-container');
-                snake.style.transition = 'opacity 1s';
-                snake.style.opacity = 0;
-                
+                let snake = document.getElementById('snake-container'); snake.style.transition = 'opacity 1s'; snake.style.opacity = 0;
                 setTimeout(() => {
                     snake.remove(); 
-                    
-                    let finale = document.createElement('div');
-                    finale.id = "final-finale-screen";
-                    finale.style = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 1s;";
-                    document.body.appendChild(finale);
-                    
+                    let finale = document.createElement('div'); finale.id = "final-finale-screen"; finale.style = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; transition:opacity 1s;"; document.body.appendChild(finale);
                     setTimeout(() => finale.style.opacity = 1, 100);
-                    
-                    let peacock = document.createElement('img');
-                    peacock.src = "peacock.gif"; 
-                  peacock.style = "max-width:500px; height:auto; opacity:0; transition:opacity 1.5s; filter:drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));";
-           finale.appendChild(peacock);
-                    
+                    let peacock = document.createElement('img'); peacock.src = "peacock.gif"; peacock.style = "max-width:300px; height:auto; opacity:0; transition:opacity 1.5s; filter:drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));"; finale.appendChild(peacock);
                     setTimeout(() => peacock.style.opacity = 1, 500);
-                    
                     setTimeout(() => {
-                        let radhey = document.createElement('div');
-                        radhey.innerHTML = 'radhey-radhey <span class="target-node emoji-group">🦚✨</span><br>devii <span class="target-node emoji-group">🎀</span>';
-                        radhey.style = "font-family: 'Cinzel', serif; font-size:3em; color:var(--royal-gold); text-shadow: 0 0 15px var(--royal-gold); opacity:0; transition:opacity 1.5s; text-align:center; padding: 20px;";
-                        finale.appendChild(radhey);
-                        
+                        let radhey = document.createElement('div'); radhey.innerHTML = 'Radhey-Radhey <span class="target-node emoji-group">🦚✨</span><br>Jai devii <span class="target-node emoji-group">🎀</span>'; radhey.style = "font-family: 'Cinzel', serif; font-size:3em; color:var(--royal-gold); text-shadow: 0 0 15px var(--royal-gold); opacity:0; transition:opacity 1.5s; text-align:center; padding: 20px;"; finale.appendChild(radhey);
                         setTimeout(() => radhey.style.opacity = 1, 500);
-                        peacock.style.transition = 'all 2s ease-in-out';
-                        peacock.style.transform = 'translateY(-20px) scale(1.1)'; 
-                        
+                        peacock.style.transition = 'all 2s ease-in-out'; peacock.style.transform = 'translateY(-20px) scale(1.1)'; 
                     }, 2000);
-                    
-                    document.getElementById('main-site').style.pointerEvents = 'none';
-                    document.getElementById('global-player').style.pointerEvents = 'none';
-                    
+                    document.getElementById('main-site').style.pointerEvents = 'none'; document.getElementById('global-player').style.pointerEvents = 'none';
                 }, 1000); 
             }, 3000); 
         }
@@ -1119,14 +1008,7 @@
         for(let i=0; i<100; i++) parts.push({x: Math.random()*cvs.width, y: Math.random()*cvs.height, s: Math.random()*2, dx: Math.random()*1-0.5, dy: Math.random()*1+0.5});
         function draw() {
             if(isLightspeed) { ctx.fillStyle = 'rgba(10, 10, 15, 0.2)'; ctx.fillRect(0, 0, cvs.width, cvs.height); } else { ctx.clearRect(0,0,cvs.width,cvs.height); }
-            parts.forEach((p, index) => {
-                ctx.fillStyle = (index % 2 === 0) ? 'rgba(0, 240, 255, 0.8)' : 'rgba(255, 0, 122, 0.8)'; ctx.beginPath(); 
-                if (isLightspeed) { ctx.arc(p.x, p.y, p.s * 1.5, 0, Math.PI*2); p.y += (p.dy * 25); p.x += (p.dx * 5); } 
-                else { ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); p.x += p.dx; p.y += p.dy; }
-                ctx.fill();
-                if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; } if(p.y < 0) { p.y = cvs.height; p.x = Math.random()*cvs.width; } if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width;
-            });
-            requestAnimationFrame(draw);
+            parts.forEach((p, index) => { ctx.fillStyle = (index % 2 === 0) ? 'rgba(0, 240, 255, 0.8)' : 'rgba(255, 0, 122, 0.8)'; ctx.beginPath(); if (isLightspeed) { ctx.arc(p.x, p.y, p.s * 1.5, 0, Math.PI*2); p.y += (p.dy * 25); p.x += (p.dx * 5); } else { ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); p.x += p.dx; p.y += p.dy; } ctx.fill(); if(p.y > cvs.height) { p.y = 0; p.x = Math.random()*cvs.width; } if(p.y < 0) { p.y = cvs.height; p.x = Math.random()*cvs.width; } if(p.x > cvs.width) p.x = 0; else if(p.x < 0) p.x = cvs.width; }); requestAnimationFrame(draw);
         }
         draw();
     </script>
